@@ -1,0 +1,19 @@
+services:
+	aksara:
+		build:
+			context: ../backend
+			dockerfile: ../docker/Dockerfile
+		container_name: aksara-app
+		restart: unless-stopped
+		ports:
+			- "3005:3005"
+		env_file:
+			- ../backend/.env
+		volumes:
+			- aksara_db:/app/aksara.db
+			- aksara_uploads:/app/app/static/uploads
+		command: ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "3005"]
+
+volumes:
+	aksara_db:
+	aksara_uploads:
