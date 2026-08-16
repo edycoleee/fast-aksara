@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+{% block title %}E-Library — Ngrembaka Aksara{% endblock %}
+
+{% block content %}
+<section class="section-bg py-5">
+  <div class="container">
+    <h1 class="section-title mb-2">E-Library</h1>
+    <p class="text-muted mb-5">Platform digital untuk mengakses berbagai sumber belajar secara gratis.</p>
+
+    <!-- Filter Kategori -->
+    <div class="d-flex flex-wrap gap-2 mb-5">
+      <a href="/elibrary" class="btn btn-sm {{ 'btn-success' if not aktif_kategori else 'btn-outline-success' }}">Semua</a>
+      {% for slug, label in [
+        ('modul-pembelajaran','Modul'),('ebook','E-Book'),
+        ('buku-cerita','Buku Cerita'),('buku-literasi-digital','Literasi Digital'),
+        ('buku-keterampilan','Life Skills')] %}
+      <a href="/elibrary/{{ slug }}" class="btn btn-sm {{ 'btn-success' if aktif_kategori == slug else 'btn-outline-success' }}">{{ label }}</a>
+      {% endfor %}
+    </div>
+
+    {% if items %}
+    <div class="row g-4">
+      {% for item in items %}
+      <div class="col-md-4 col-lg-3">
+        <div class="card card-aksara h-100">
+          {% if item.gambar %}
+          <img src="{{ item.gambar }}" class="card-img-top" alt="{{ item.judul }}" />
+          {% else %}
+          <div class="d-flex align-items-center justify-content-center" style="height:180px; background:var(--color-bg);">
+            <i class="fa-solid fa-book fa-3x" style="color:var(--color-accent);"></i>
+          </div>
+          {% endif %}
+          <div class="card-body d-flex flex-column">
+            <span class="badge-aksara mb-2 d-inline-block">{{ item.kategori }}</span>
+            <h6 class="fw-bold" style="color:var(--color-dark);">{{ item.judul }}</h6>
+            <p class="text-muted small flex-grow-1">{{ item.deskripsi or '' }}</p>
+            {% if item.link %}
+              {% if item.link_type == 'external' %}
+              <a href="{{ item.link }}" target="_blank" class="btn-aksara d-block text-center mt-2">
+                <i class="fa-brands fa-youtube me-1"></i>Tonton
+              </a>
+              {% else %}
+              <a href="{{ item.link }}" target="_blank" class="btn-aksara d-block text-center mt-2">
+                <i class="fa-solid fa-file-pdf me-1"></i>Unduh PDF
+              </a>
+              {% endif %}
+            {% endif %}
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+    {% else %}
+    <div class="text-center py-5 text-muted">
+      <i class="fa-solid fa-box-open fa-3x mb-3"></i>
+      <p>Belum ada konten untuk kategori ini.</p>
+    </div>
+    {% endif %}
+  </div>
+</section>
+{% endblock %}

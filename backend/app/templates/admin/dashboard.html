@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% block title %}Dashboard Admin{% endblock %}
+{% block content %}
+<section class="section-bg py-5">
+  <div class="container">
+    <div class="d-flex justify-content-between align-items-center mb-5">
+      <h1 class="section-title mb-0">Dashboard Admin</h1>
+      <div class="d-flex align-items-center gap-3">
+        <span class="text-muted small"><i class="fa-solid fa-user me-1"></i>{{ admin_user }}</span>
+        <a href="/admin/logout" class="btn btn-sm btn-outline-danger"><i class="fa-solid fa-right-from-bracket me-1"></i>Logout</a>
+      </div>
+    </div>
+    <div class="row g-4 mb-5">
+      <div class="col-md-4">
+        <div class="card card-aksara p-4 text-center">
+          <i class="fa-solid fa-book fa-2x mb-2" style="color:var(--color-primary);"></i>
+          <h3 class="fw-bold" style="color:var(--color-dark);">{{ total_elibrary }}</h3>
+          <p class="text-muted mb-3">Item E-Library</p>
+          <a href="/admin/elibrary" class="btn-aksara"><i class="fa-solid fa-gear me-1"></i>Kelola</a>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card card-aksara p-4 text-center">
+          <i class="fa-solid fa-images fa-2x mb-2" style="color:var(--color-primary);"></i>
+          <h3 class="fw-bold" style="color:var(--color-dark);">{{ total_dokumentasi }}</h3>
+          <p class="text-muted mb-3">Dokumentasi</p>
+          <a href="/admin/dokumentasi" class="btn-aksara"><i class="fa-solid fa-gear me-1"></i>Kelola</a>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card card-aksara p-4 text-center">
+          <i class="fa-solid fa-newspaper fa-2x mb-2" style="color:var(--color-primary);"></i>
+          <h3 class="fw-bold" style="color:var(--color-dark);">{{ total_artikel }}</h3>
+          <p class="text-muted mb-3">Artikel</p>
+          <a href="/admin/artikel" class="btn-aksara"><i class="fa-solid fa-gear me-1"></i>Kelola</a>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card card-aksara p-4 text-center">
+          <i class="fa-solid fa-gear fa-2x mb-2" style="color:var(--color-primary);"></i>
+          <p class="text-muted mb-3 mt-2">Pengaturan Situs</p>
+          <a href="/admin/settings" class="btn-aksara"><i class="fa-solid fa-sliders me-1"></i>Edit Settings</a>
+        </div>
+      </div>
+    </div>
+    <div class="card card-aksara p-4">
+      <h6 class="fw-bold mb-3" style="color:var(--color-dark);"><i class="fa-solid fa-link me-2"></i>Navigasi Cepat ke Halaman Publik</h6>
+      <div class="d-flex flex-wrap gap-2">
+        <a href="/" target="_blank" class="btn btn-sm btn-outline-success">Landing Page</a>
+        <a href="/elibrary" target="_blank" class="btn btn-sm btn-outline-success">E-Library</a>
+        <a href="/pojok-literasi/tunas" target="_blank" class="btn btn-sm btn-outline-success">Tunas</a>
+        <a href="/pojok-literasi/karya" target="_blank" class="btn btn-sm btn-outline-success">Karya</a>
+        <a href="/pojok-literasi/cakra" target="_blank" class="btn btn-sm btn-outline-success">Cakra</a>
+        <a href="/pojok-literasi/kersa" target="_blank" class="btn btn-sm btn-outline-success">Kersa</a>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

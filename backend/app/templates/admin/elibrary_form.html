@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+{% block title %}Kelola E-Library{% endblock %}
+{% block content %}
+<section class="section-bg py-5">
+  <div class="container">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <h1 class="section-title mb-0">Kelola E-Library</h1>
+      <a href="/admin" class="btn btn-sm btn-outline-secondary"><i class="fa-solid fa-arrow-left me-1"></i>Dashboard</a>
+    </div>
+
+    <!-- Form Tambah -->
+    <div class="card card-aksara p-4 mb-5">
+      <h5 class="fw-bold mb-3" style="color:var(--color-dark);"><i class="fa-solid fa-plus me-2"></i>Tambah Item</h5>
+      <form method="post" action="/admin/elibrary/tambah" enctype="multipart/form-data">
+        <div class="row g-3">
+          <div class="col-md-6"><label class="form-label fw-semibold">Judul</label><input name="judul" class="form-control" required /></div>
+          <div class="col-md-3">
+            <label class="form-label fw-semibold">Kategori</label>
+            <select name="kategori" class="form-select" required>
+              <option value="modul-pembelajaran">Modul Pembelajaran</option>
+              <option value="ebook">E-Book</option>
+              <option value="buku-cerita">Buku Cerita</option>
+              <option value="buku-literasi-digital">Literasi Digital</option>
+              <option value="buku-keterampilan">Life Skills</option>
+            </select>
+          </div>
+          <div class="col-md-3">
+            <label class="form-label fw-semibold">Tipe Link</label>
+            <select name="link_type" class="form-select">
+              <option value="external">External (YouTube/URL)</option>
+              <option value="internal">Internal (PDF lokal)</option>
+            </select>
+          </div>
+          <div class="col-md-6"><label class="form-label fw-semibold">Link YouTube/URL <small class="text-muted">(jika tidak upload PDF)</small></label><input name="link" class="form-control" placeholder="https://youtube.com/..." /></div>
+          <div class="col-md-6"><label class="form-label fw-semibold">Upload PDF <small class="text-muted">(maks 20 MB, opsional)</small></label><input type="file" name="pdf_file" class="form-control" accept=".pdf" /></div>
+          <div class="col-md-6"><label class="form-label fw-semibold">Upload Gambar Thumbnail <small class="text-muted">(maks 2 MB)</small></label><input type="file" name="gambar_file" class="form-control" accept="image/jpeg,image/png,image/webp" /></div>
+          <div class="col-12"><label class="form-label fw-semibold">Deskripsi</label><textarea name="deskripsi" class="form-control" rows="2"></textarea></div>
+          <div class="col-12"><button type="submit" class="btn-aksara"><i class="fa-solid fa-floppy-disk me-1"></i>Simpan</button></div>
+        </div>
+      </form>
+    </div>
+
+    <!-- List Data -->
+    {% if items %}
+    <div class="table-responsive">
+      <table class="table table-aksara table-bordered table-sm">
+        <thead><tr><th>No</th><th>Judul</th><th>Kategori</th><th>Tipe</th><th>Aksi</th></tr></thead>
+        <tbody>
+          {% for item in items %}
+          <tr>
+            <td>{{ loop.index }}</td>
+            <td>{{ item.judul }}</td>
+            <td><span class="badge-aksara">{{ item.kategori }}</span></td>
+            <td><small>{{ item.link_type }}</small></td>
+            <td>
+              <form method="post" action="/admin/elibrary/hapus/{{ item.id }}" onsubmit="return confirm('Hapus item ini?')">
+                <button type="submit" class="btn btn-sm btn-outline-danger"><i class="fa-solid fa-trash"></i></button>
+              </form>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    {% else %}
+    <p class="text-muted text-center">Belum ada data.</p>
+    {% endif %}
+  </div>
+</section>
+{% endblock %}

@@ -1,0 +1,28 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Virtual environment
+.venv/
+venv/
+env/
+
+# Environment & secrets
+.env
+*.env
+
+# Database
+aksara.db
+*.db
+*.sqlite3
+
+# Uploads (konten user, tidak di-commit)
+backend/app/static/uploads/
+
+# macOS
+.DS_Store
+
+# VS Code
+.vscode/

@@ -1,0 +1,118 @@
+{% extends "base.html" %}
+{% block title %}Profil Ngrembaka Aksara{% endblock %}
+
+{% block content %}
+<section class="hero-aksara">
+  <div class="container py-4">
+    <h1 class="fw-bold">Profil Ngrembaka Aksara</h1>
+    <p class="lead" style="color:rgba(255,255,255,0.85);">Program Penguatan Literasi &amp; Edupreneur Skill Lintas Generasi</p>
+  </div>
+</section>
+
+<!-- Sejarah -->
+<section class="section-white py-5">
+  <div class="container">
+    <h2 class="section-title mb-4"><i class="fa-solid fa-clock-rotate-left me-2"></i>Sejarah Terbentuknya</h2>
+    <p>Program Ngrembaka Aksara lahir dari hasil survei lapangan, observasi, wawancara mendalam, dan Focus Group Discussion (FGD) yang dilaksanakan bersama masyarakat Kelurahan Podorejo sejak akhir tahun 2025 hingga Februari 2026. Proses identifikasi ini melibatkan Lurah Podorejo (Bapak Yusdi), perangkat kelurahan, Ketua RW, Ketua RT, serta kader masyarakat.</p>
+    <p>Pada <strong>27 Februari 2026</strong>, melalui FGD di Balai Kelurahan Podorejo, seluruh pihak bersepakat bahwa program <strong>"NGREMBAKA AKSARA"</strong> adalah solusi yang paling sesuai untuk mengatasi permasalahan literasi lintas generasi di wilayah tersebut. Program ini resmi berjalan pada tahun 2026 sebagai bagian dari PPK ORMAWA yang didanai oleh Direktorat Pembelajaran dan Kemahasiswaan (Belmawa) Kemendikbudristek.</p>
+  </div>
+</section>
+
+<!-- Latar Belakang -->
+<section class="section-bg py-5">
+  <div class="container">
+    <h2 class="section-title mb-4"><i class="fa-solid fa-file-lines me-2"></i>Latar Belakang</h2>
+    <p>Kelurahan Podorejo memiliki jumlah penduduk 10.188 jiwa yang tersebar di 12 RW dan 61 RT. Wilayah ini kaya potensi, namun juga dihadapkan pada sejumlah permasalahan serius:</p>
+    <div class="row g-3 mt-2">
+      {% set masalah = [
+        ("fa-book-open",    "Rendahnya literasi dasar anak",            "Dominasi penggunaan gawai menyebabkan rendahnya minat baca dan risiko putus sekolah."),
+        ("fa-mobile-screen","Pemanfaatan teknologi belum optimal",       "Penggunaan gawai remaja lebih banyak untuk hiburan (game online) daripada kegiatan produktif."),
+        ("fa-store",        "Terbatasnya kapasitas UMKM",               "Pelaku usaha lokal belum maksimal dalam inovasi produk dan pemasaran digital."),
+        ("fa-person-cane",  "Rendahnya keterlibatan lansia",            "Minimnya kegiatan produktif dan kesadaran menjaga kesehatan pada kelompok lansia."),
+      ] %}
+      {% for icon, judul, isi in masalah %}
+      <div class="col-md-6">
+        <div class="card card-aksara p-3 h-100">
+          <div class="d-flex align-items-start gap-3">
+            <i class="fa-solid {{ icon }} fa-lg mt-1" style="color:var(--color-primary);"></i>
+            <div><strong style="color:var(--color-dark);">{{ judul }}</strong><p class="text-muted small mb-0 mt-1">{{ isi }}</p></div>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+    <div class="alert mt-4" style="background:var(--color-accent); color:var(--color-dark); border:none; border-radius:10px;">
+      <i class="fa-solid fa-circle-info me-2"></i>
+      Meskipun <strong>91,7%</strong> warga telah memiliki gawai, pemanfaatannya belum diarahkan secara produktif. Hal ini menjadi dasar lahirnya Ngrembaka Aksara sebagai ekosistem literasi lintas generasi yang terarah dan berkelanjutan.
+    </div>
+  </div>
+</section>
+
+<!-- Sasaran -->
+<section class="section-white py-5">
+  <div class="container">
+    <h2 class="section-title mb-4"><i class="fa-solid fa-users me-2"></i>Sasaran Program</h2>
+    <div class="table-responsive">
+      <table class="table table-aksara table-bordered">
+        <thead><tr><th>Kelompok</th><th>Jumlah Sasaran</th><th>Program</th></tr></thead>
+        <tbody>
+          <tr><td>Balita dan Anak-anak</td><td>80 balita + 120 anak</td><td>🌱 Tunas Ngrembaka</td></tr>
+          <tr><td>Remaja</td><td>200 orang</td><td>🎨 Karya Ngrembaka</td></tr>
+          <tr><td>Usia Produktif</td><td>250 orang</td><td>⚙️ Cakra Ngrembaka</td></tr>
+          <tr><td>Lansia</td><td>100 orang</td><td>🌿 Kersa Ngrembaka</td></tr>
+          <tr class="fw-bold"><td>Total</td><td colspan="2">±750 orang</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- Tim -->
+<section class="section-bg py-5">
+  <div class="container">
+    <h2 class="section-title mb-4"><i class="fa-solid fa-people-group me-2"></i>Struktur Tim Pelaksana</h2>
+    <div class="row g-4 mb-4">
+      <div class="col-md-6">
+        <div class="card card-aksara p-4">
+          <span class="badge-aksara mb-2 d-inline-block">Ketua Tim</span>
+          <h6 class="fw-bold mb-0" style="color:var(--color-dark);">Farid Fikri Khoirul Rasyid</h6>
+          <small class="text-muted">NIM. 2401050532 &mdash; Angkatan 2024</small>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="card card-aksara p-4">
+          <span class="badge-aksara mb-2 d-inline-block">Dosen Pendamping</span>
+          <h6 class="fw-bold mb-0" style="color:var(--color-dark);">Nur Indah Wahyuni, S.Pd., M.Pd.</h6>
+          <small class="text-muted">NIP. 199006062024062003</small>
+        </div>
+      </div>
+    </div>
+    <div class="table-responsive">
+      <table class="table table-aksara table-bordered table-sm">
+        <thead><tr><th>No</th><th>Nama</th><th>NIM</th><th>Angkatan</th></tr></thead>
+        <tbody>
+          {% set anggota = [
+            (1,"Putri Windarti","2301050055","2023"),
+            (2,"Didik Purwanto","2301050269","2023"),
+            (3,"Pandu Budi Pratama","2301050482","2023"),
+            (4,"Dwi Nurwati Azizah","2301050513","2023"),
+            (5,"Aura Nila Az-zahra","2401050077","2024"),
+            (6,"Maysla Rose Dinanti","2401050115","2024"),
+            (7,"Mugitya Nurul Maftukhah","2401050202","2024"),
+            (8,"Nuril Qonain Pangestuti","2401050267","2024"),
+            (9,"Imtiyaz Faila Sifa","2401050302","2024"),
+            (10,"Triyas Nurjannah Khairunnisa","2401050346","2024"),
+            (11,"Yoga Pangestu","2401050360","2024"),
+            (12,"Aradisa Zahra Rachma","2401050525","2024"),
+            (13,"Shofiyyatul Musyayyadah","2401050565","2024"),
+            (14,"Atta Choirunnizam Satya Wijaya","2407020152","2024"),
+          ] %}
+          {% for no, nama, nim, angkatan in anggota %}
+          <tr><td>{{ no }}</td><td>{{ nama }}</td><td>{{ nim }}</td><td>{{ angkatan }}</td></tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+{% endblock %}

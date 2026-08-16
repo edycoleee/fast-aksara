@@ -1,0 +1,124 @@
+{% extends "base.html" %}
+{% block title %}E-Library PPK ORMAWA Ngrembaka Aksara{% endblock %}
+
+{% block content %}
+<!-- ===== HERO ===== -->
+<section class="hero-aksara">
+  <div class="container">
+    <div class="row align-items-center g-5">
+      <div class="col-lg-7">
+        <span class="badge-aksara mb-3 d-inline-block">PPK ORMAWA 2026</span>
+        <h1 class="display-5 fw-bold mb-3">E-LIBRARY PPK ORMAWA<br>NGREMBAKA AKSARA</h1>
+        <p class="lead mb-4" style="color: rgba(255,255,255,0.85);">
+          Ngrembaka Aksara adalah program penguatan literasi dan edupreneur skill lintas generasi
+          yang hadir di Kelurahan Podorejo, Kecamatan Ngaliyan, Kota Semarang.
+          Digagas oleh mahasiswa SGL PGSD Universitas Negeri Semarang melalui PPK ORMAWA tahun 2026.
+        </p>
+        <a href="/beranda" class="btn-aksara me-2"><i class="fa-solid fa-arrow-right me-1"></i>Selengkapnya</a>
+        <a href="/elibrary" class="btn-aksara-outline"><i class="fa-solid fa-book me-1"></i>E-Library</a>
+      </div>
+      <div class="col-lg-5 text-center">
+        <div class="bg-white bg-opacity-10 rounded-3 p-5">
+          <i class="fa-solid fa-book-open-reader fa-6x" style="color: var(--color-accent);"></i>
+          <p class="mt-3 mb-0" style="color: rgba(255,255,255,0.7); font-style: italic;">
+            "Tumbuh dan berkembangnya ilmu pengetahuan"
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== PROFIL ===== -->
+<section class="section-bg py-5">
+  <div class="container">
+    <h2 class="section-title text-center mb-5">Profil Program</h2>
+    <div class="row g-4">
+      <div class="col-md-6">
+        <div class="card card-aksara h-100 p-4">
+          <div class="d-flex align-items-center mb-3">
+            <i class="fa-solid fa-users fa-2x me-3" style="color: var(--color-primary);"></i>
+            <h5 class="fw-bold mb-0" style="color: var(--color-dark);">Profil Ngrembaka Aksara</h5>
+          </div>
+          <p class="text-muted small">
+            Program Ngrembaka Aksara lahir dari hasil survei lapangan, observasi, wawancara mendalam,
+            dan FGD yang dilaksanakan bersama masyarakat Kelurahan Podorejo...
+          </p>
+          <a href="/profil/ngrembaka-aksara" class="btn-aksara d-inline-block mt-auto" style="width: fit-content;">
+            <i class="fa-solid fa-arrow-right me-1"></i>Baca Selengkapnya
+          </a>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="card card-aksara h-100 p-4">
+          <div class="d-flex align-items-center mb-3">
+            <i class="fa-solid fa-map-location-dot fa-2x me-3" style="color: var(--color-primary);"></i>
+            <h5 class="fw-bold mb-0" style="color: var(--color-dark);">Profil Kelurahan Podorejo</h5>
+          </div>
+          <p class="text-muted small">
+            Kelurahan Podorejo merupakan salah satu kelurahan di Kecamatan Ngaliyan, Kota Semarang.
+            Luas wilayah 605,349 Ha dengan 10.188 jiwa tersebar di 12 RW dan 61 RT...
+          </p>
+          <a href="/profil/kelurahan-podorejo" class="btn-aksara d-inline-block mt-auto" style="width: fit-content;">
+            <i class="fa-solid fa-arrow-right me-1"></i>Baca Selengkapnya
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== E-LIBRARY ===== -->
+<section class="section-white py-5">
+  <div class="container">
+    <h2 class="section-title text-center mb-5">E-Library</h2>
+    <div class="row g-3 justify-content-center">
+      {% set elibrary_menu = [
+        ("fa-chalkboard-teacher", "Modul Pembelajaran", "modul-pembelajaran"),
+        ("fa-book",              "E-Book",              "ebook"),
+        ("fa-feather-pointed",   "Buku Cerita",         "buku-cerita"),
+        ("fa-laptop",            "Literasi Digital",    "buku-literasi-digital"),
+        ("fa-screwdriver-wrench","Life Skills",         "buku-keterampilan"),
+      ] %}
+      {% for icon, label, slug in elibrary_menu %}
+      <div class="col-6 col-md-4 col-lg-2">
+        <a href="/elibrary/{{ slug }}" class="text-decoration-none">
+          <div class="card card-aksara text-center p-3 h-100">
+            <i class="fa-solid {{ icon }} fa-2x mb-2" style="color: var(--color-primary);"></i>
+            <small class="fw-semibold" style="color: var(--color-dark);">{{ label }}</small>
+          </div>
+        </a>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<!-- ===== POJOK LITERASI ===== -->
+<section class="section-bg py-5">
+  <div class="container">
+    <h2 class="section-title text-center mb-5">Pojok Literasi</h2>
+    <div class="row g-4">
+      {% set pojok = [
+        ("tunas",  "🌱", "Tunas Ngrembaka",  "Balita & Anak",   "Literasi dasar, numerasi, karakter, dan budaya lokal."),
+        ("karya",  "🎨", "Karya Ngrembaka",  "Remaja",          "Literasi digital, desain visual, konten kreatif."),
+        ("cakra",  "⚙️", "Cakra Ngrembaka",  "Usia Produktif",  "Inovasi produk, branding, dan pemasaran digital."),
+        ("kersa",  "🌿", "Kersa Ngrembaka",  "Lansia",          "Kesehatan, TOGA, dan keterampilan produktif."),
+      ] %}
+      {% for slug, emoji, nama, sasaran, deskripsi in pojok %}
+      <div class="col-md-6 col-lg-3">
+        <div class="card card-aksara h-100 p-4">
+          <div class="fs-2 mb-2">{{ emoji }}</div>
+          <h6 class="fw-bold" style="color: var(--color-dark);">{{ nama }}</h6>
+          <span class="badge-aksara mb-2 d-inline-block">{{ sasaran }}</span>
+          <p class="text-muted small">{{ deskripsi }}</p>
+          <a href="/pojok-literasi/{{ slug }}" class="btn-aksara d-inline-block mt-auto" style="width: fit-content; font-size: 0.85rem;">
+            <i class="fa-solid fa-arrow-right me-1"></i>Lihat Program
+          </a>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endblock %}

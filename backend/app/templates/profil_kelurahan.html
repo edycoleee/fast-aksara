@@ -1,0 +1,104 @@
+{% extends "base.html" %}
+{% block title %}Profil Kelurahan Podorejo{% endblock %}
+
+{% block content %}
+<section class="hero-aksara">
+  <div class="container py-4">
+    <h1 class="fw-bold">Profil Kelurahan Podorejo</h1>
+    <p class="lead" style="color:rgba(255,255,255,0.85);">Kecamatan Ngaliyan, Kota Semarang</p>
+  </div>
+</section>
+
+<!-- Gambaran Umum -->
+<section class="section-white py-5">
+  <div class="container">
+    <h2 class="section-title mb-4"><i class="fa-solid fa-city me-2"></i>Gambaran Umum</h2>
+    <p>Kelurahan Podorejo merupakan salah satu kelurahan di Kecamatan Ngaliyan, Kota Semarang. Kelurahan ini memiliki luas wilayah <strong>605,349 Ha</strong> dengan jumlah penduduk sebanyak <strong>10.188 jiwa</strong> terdiri dari 3.399 KK (5.066 laki-laki dan 5.122 perempuan) yang tersebar di <strong>12 RW</strong> dan <strong>61 RT</strong>.</p>
+    <div class="row g-3 mt-3">
+      {% set stats = [
+        ("fa-people-roof","10.188 jiwa","Jumlah Penduduk"),
+        ("fa-house-chimney","3.399 KK","Jumlah KK"),
+        ("fa-map","605,349 Ha","Luas Wilayah"),
+        ("fa-sitemap","12 RW / 61 RT","Pembagian Wilayah"),
+      ] %}
+      {% for icon, nilai, label in stats %}
+      <div class="col-6 col-md-3">
+        <div class="card card-aksara text-center p-3">
+          <i class="fa-solid {{ icon }} fa-2x mb-2" style="color:var(--color-primary);"></i>
+          <div class="fw-bold fs-5" style="color:var(--color-dark);">{{ nilai }}</div>
+          <small class="text-muted">{{ label }}</small>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<!-- Letak Geografis -->
+<section class="section-bg py-5">
+  <div class="container">
+    <h2 class="section-title mb-4"><i class="fa-solid fa-map-location-dot me-2"></i>Letak Geografis</h2>
+    <p>Kelurahan Podorejo terletak di wilayah Kecamatan Ngaliyan, bagian barat Kota Semarang. Wilayah ini terbagi menjadi dua karakteristik sosial-ekonomi:</p>
+    <div class="row g-4 mt-2">
+      <div class="col-md-6">
+        <div class="card card-aksara p-4">
+          <h6 class="fw-bold" style="color:var(--color-dark);"><i class="fa-solid fa-wheat-awn me-2"></i>RW 1–9</h6>
+          <p class="text-muted small mb-0">Didominasi area perkampungan dengan pekerjaan utama di sektor <strong>pertanian dan peternakan</strong>.</p>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="card card-aksara p-4">
+          <h6 class="fw-bold" style="color:var(--color-dark);"><i class="fa-solid fa-building me-2"></i>RW 10–12</h6>
+          <p class="text-muted small mb-0">Kawasan perumahan dengan pekerjaan lebih beragam, seperti <strong>wiraswasta dan tenaga pengajar</strong>.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Kondisi Masyarakat -->
+<section class="section-white py-5">
+  <div class="container">
+    <h2 class="section-title mb-4"><i class="fa-solid fa-seedling me-2"></i>Potensi Masyarakat</h2>
+    <div class="row g-3">
+      {% set potensi = [
+        ("fa-graduation-cap", "Potensi Demografis",      "Keberagaman kelompok usia dari balita hingga lansia membentuk ekosistem pembelajaran sepanjang hayat yang alami."),
+        ("fa-store",          "Potensi UMKM Lokal",       "Produk olahan hasil pertanian: ceriping gadung, ceriping pisang, ceriping singkong, tape singkong, dan madu."),
+        ("fa-wifi",           "Potensi Digital",          "Kepemilikan gawai yang tinggi (91,7%) menjadi peluang pengembangan pembelajaran dan pemasaran digital."),
+        ("fa-people-group",   "Potensi Kelembagaan",      "Organisasi masyarakat aktif (PKK, Karang Taruna, Posyandu) sebagai mitra strategis program."),
+        ("fa-leaf",           "Potensi Kearifan Lokal",   "Pengetahuan pengolahan bahan alam (gadung, singkong, pisang) yang dimiliki warga, terutama kelompok lansia."),
+      ] %}
+      {% for icon, judul, isi in potensi %}
+      <div class="col-md-6">
+        <div class="card card-aksara p-3 h-100">
+          <div class="d-flex align-items-start gap-3">
+            <i class="fa-solid {{ icon }} fa-lg mt-1" style="color:var(--color-primary);"></i>
+            <div><strong style="color:var(--color-dark);">{{ judul }}</strong><p class="text-muted small mb-0 mt-1">{{ isi }}</p></div>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<!-- Data Pendukung -->
+<section class="section-bg py-5">
+  <div class="container">
+    <h2 class="section-title mb-4"><i class="fa-solid fa-chart-bar me-2"></i>Data Pendukung</h2>
+    <div class="table-responsive">
+      <table class="table table-aksara table-bordered">
+        <tbody>
+          <tr><td class="fw-semibold">Jumlah Penduduk</td><td>10.188 jiwa (Data Monografi, Juni 2025)</td></tr>
+          <tr><td class="fw-semibold">Jumlah KK</td><td>3.399 KK</td></tr>
+          <tr><td class="fw-semibold">Kepemilikan Gawai</td><td>91,7% (Angket Survei Tim, 2025)</td></tr>
+          <tr><td class="fw-semibold">Mayoritas Pendidikan</td><td>Lulusan SMA</td></tr>
+          <tr><td class="fw-semibold">Sektor Pekerjaan Dominan</td><td>Pertanian/Peternakan (799 orang), Wiraswasta (681 orang)</td></tr>
+          <tr><td class="fw-semibold">Dasar Kebijakan</td><td>Peraturan Wali Kota Semarang No. 55 Tahun 2024; Musrenbang Kelurahan Podorejo 2025</td></tr>
+          <tr><td class="fw-semibold">Kontribusi SDGs</td><td>No. 4 (Pendidikan Berkualitas), No. 8 (Pekerjaan Layak), No. 12 (Konsumsi Bertanggung Jawab)</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+{% endblock %}

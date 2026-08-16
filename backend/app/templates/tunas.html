@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block title %}Pojok Literasi Tunas Ngrembaka{% endblock %}
+{% block content %}
+<section class="hero-aksara"><div class="container py-4">
+  <h1 class="fw-bold">🌱 Pojok Literasi Tunas Ngrembaka</h1>
+  <p class="lead" style="color:rgba(255,255,255,0.85);">"Aruna" — Cahaya Pertama bagi Generasi Penerus</p>
+</div></section>
+<section class="section-bg py-5"><div class="container">
+  <p>Pojok Literasi Tunas Ngrembaka adalah program literasi yang dirancang khusus untuk balita dan anak-anak di Kelurahan Podorejo.</p>
+  {% if dokumentasi %}
+  <h2 class="section-title mt-5 mb-4">Dokumentasi Kegiatan</h2>
+  <div class="row g-4">
+    {% for item in dokumentasi %}
+    <div class="col-md-4">
+      <div class="card card-aksara h-100">
+        {% if item.link_gambar %}<img src="{{ item.link_gambar }}" class="card-img-top" alt="">{% endif %}
+        <div class="card-body"><h6 class="fw-bold">{{ item.judul }}</h6><p class="text-muted small">{{ item.deskripsi }}</p></div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+  {% endif %}
+</div></section>
+{% endblock %}
