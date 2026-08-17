@@ -94,9 +94,9 @@ uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
 - `http://localhost:8000`
 - `http://localhost:8000/admin/login`
 
-## Deployment Docker (Port 3005)
+## Deployment Docker (Port 3004)
 
-Konfigurasi Docker sudah disiapkan di folder `docker` untuk menjalankan aplikasi di port `3005`.
+Konfigurasi Docker sudah disiapkan di folder `docker` untuk menjalankan aplikasi di port `3004`.
 
 1. Masuk ke folder docker:
 
@@ -124,7 +124,7 @@ docker compose logs -f
 
 App akan tersedia di:
 
-- `http://192.10.10.152:3005`
+- `http://192.10.10.152:3004`
 
 ## Persistensi Data
 
@@ -137,4 +137,5 @@ App akan tersedia di:
 
 - Ganti `SECRET_KEY` dengan nilai acak yang kuat.
 - Ganti `ADMIN_PASSWORD` default sebelum go-live.
+- SQLite cocok untuk satu server kecil; untuk production publik atau multi-instance, pindah ke database yang lebih sesuai lewat `DATABASE_URL`.
 - Pastikan DNS/reverse proxy domain sudah mengarah ke server dan port aplikasi.
