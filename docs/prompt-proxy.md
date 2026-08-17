@@ -1,7 +1,9 @@
-# Panduan Konfigurasi Reverse Proxy — aksara.sulfat.site
+# Panduan Konfigurasi Reverse Proxy — aksara.fun
 > Dijalankan di server **192.10.10.15** (SSL termination, Nginx sudah existing).
-> App Stack ada di **192.10.10.152:3004** (aksara-app container).
-> Nginx di **192.10.10.15** sudah melayani domain lain — cukup tambah site baru, **tidak perlu install ulang**.
+> App live aksara saat ini ada di **192.10.10.154:3004**.
+> Domain utama yang akan dipakai untuk produksi adalah **aksara.fun**. Untuk setup yang sederhana dan aman, gunakan satu domain utama saja.
+>
+> Catatan penting: jika aplikasi memiliki validasi host / allowed hosts / redirect domain, maka host utama harus ditambahkan di app agar domain produksi `aksara.fun` diterima dengan benar.
 
 ---
 
@@ -34,17 +36,21 @@ certbot --version
 # 3. Port 80 dan 443 terbuka di firewall (sudah ada dari domain lain)
 sudo ufw status  # port 80 dan 443 harus ALLOW
 
-# 4. DNS aksara.sulfat.site sudah mengarah ke IP publik 192.10.10.15
-dig +short aksara.sulfat.site
+# 4. DNS domain utama sudah mengarah ke IP publik 192.10.10.15
+# Domain yang dipakai: aksara.fun
+dig +short aksara.fun
 # Harus mengembalikan IP publik server ini
 
-# 5. Container aksara-app sudah berjalan di app server
-curl -I http://192.10.10.152:3004
+# 5. App backend sudah berjalan di app server
+curl -I http://192.10.10.154:3004
 # Harus mengembalikan HTTP 200 atau 30x
 
 # 6. Pastikan tidak ada konflik site name
 ls /etc/nginx/sites-enabled/
-# Tidak boleh ada file bernama aksara.sulfat.site
+# Tidak boleh ada file bernama aksara.fun
+
+# 7. Jika app sudah punya validasi host, tambahkan host utama di allowed_hosts / CORS / redirect config
+# misalnya: aksara.fun, www.aksara.fun
 ```
 
 ---
@@ -52,28 +58,30 @@ ls /etc/nginx/sites-enabled/
 ## Buat File Konfigurasi Nginx
 
 ```bash
-sudo nano /etc/nginx/sites-available/aksara.sulfat.site
+sudo nano /etc/nginx/sites-available/aksara.fun
 ```
 
 Isi dengan konfigurasi berikut (blok HTTP dulu — certbot akan menambah blok HTTPS):
 
 ```nginx
 # ============================================================
-# aksara.sulfat.site — Reverse Proxy
+# aksara.fun — Reverse Proxy
 # Server: 192.10.10.15 (SSL termination, existing nginx)
-# Upstream: 192.10.10.152:3004 (aksara-app container)
+# Upstream: 192.10.10.154:3004 (app live aksara)
 # ============================================================
 
 # ── HTTP: redirect ke HTTPS ───────────────────────────────────
 server {
     listen 80;
     listen [::]:80;
-    server_name aksara.sulfat.site;
+    server_name aksara.fun www.aksara.fun;
 
     # Certbot akan mengisi bagian ini secara otomatis.
     # Jangan tambahkan isi lain di sini sebelum certbot dijalankan.
 }
 ```
+
+> Karena domain utama yang dipakai adalah `aksara.fun`, kita cukup fokus pada satu host utama dan satu upstream backend.
 
 Simpan, lalu lanjut ke langkah aktifkan site.
 
@@ -83,8 +91,8 @@ Simpan, lalu lanjut ke langkah aktifkan site.
 
 ```bash
 # Buat symlink ke sites-enabled
-sudo ln -s /etc/nginx/sites-available/aksara.sulfat.site \
-           /etc/nginx/sites-enabled/aksara.sulfat.site
+sudo ln -s /etc/nginx/sites-available/aksara.fun \
+           /etc/nginx/sites-enabled/aksara.fun
 
 # Uji konfigurasi — pastikan tidak konflik dengan site existing
 sudo nginx -t
@@ -98,10 +106,9 @@ sudo systemctl reload nginx
 ## Dapatkan Sertifikat SSL (Let's Encrypt)
 
 ```bash
-# Certbot akan otomatis memodifikasi file konfigurasi aksara.sulfat.site
+# Certbot akan otomatis memodifikasi file konfigurasi aksara.fun
 # dan menambahkan blok HTTPS + redirect.
-# Domain lain yang sudah ada TIDAK tersentuh.
-sudo certbot --nginx -d aksara.sulfat.site
+sudo certbot --nginx -d aksara.fun -d www.aksara.fun
 
 # Ikuti prompt certbot:
 # - Email sudah terdaftar dari domain lain → pilih opsi reuse
@@ -124,14 +131,14 @@ Setelah certbot berjalan, buka kembali file konfigurasi dan **ganti seluruh isin
 konfigurasi lengkap berikut (certbot terkadang menghasilkan konfigurasi minimal):
 
 ```bash
-sudo nano /etc/nginx/sites-available/aksara.sulfat.site
+sudo nano /etc/nginx/sites-available/aksara.fun
 ```
 
 ```nginx
 # ============================================================
-# aksara.sulfat.site — Reverse Proxy (192.10.10.15)
+# aksara.fun — Reverse Proxy (192.10.10.15)
 # ============================================================
-# Upstream : 192.10.10.152:3004  (aksara-app container)
+# Upstream : 192.10.10.154:3004  (app live aksara)
 # SSL      : Let's Encrypt via Certbot
 # ============================================================
 
@@ -139,7 +146,7 @@ sudo nano /etc/nginx/sites-available/aksara.sulfat.site
 server {
     listen 80;
     listen [::]:80;
-    server_name aksara.sulfat.site;
+    server_name aksara.fun www.aksara.fun;
 
     # Certbot well-known challenge (jangan hapus)
     location /.well-known/acme-challenge/ {
@@ -155,11 +162,11 @@ server {
 server {
     listen 443 ssl http2;
     listen [::]:443 ssl http2;
-    server_name aksara.sulfat.site;
+    server_name aksara.fun www.aksara.fun;
 
     # ── SSL Certificate (Let's Encrypt) ──────────────────────
-    ssl_certificate     /etc/letsencrypt/live/aksara.sulfat.site/fullchain.pem;
-    ssl_certificate_key /etc/letsencrypt/live/aksara.sulfat.site/privkey.pem;
+    ssl_certificate     /etc/letsencrypt/live/aksara.fun/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/aksara.fun/privkey.pem;
 
     # ── SSL Hardening ─────────────────────────────────────────
     ssl_protocols             TLSv1.2 TLSv1.3;
@@ -176,9 +183,9 @@ server {
     access_log /var/log/nginx/aksara_access.log;
     error_log  /var/log/nginx/aksara_error.log warn;
 
-    # ── Proxy ke App Stack (aksara-app container) ─────────────
+    # ── Proxy ke App Stack (backend live aksara) ───────────────
     location / {
-        proxy_pass         http://192.10.10.152:3004;
+        proxy_pass         http://192.10.10.154:3004;
         proxy_http_version 1.1;
 
         # Forward IP asli klien ke aksara-app di app server
@@ -219,33 +226,33 @@ sudo nginx -t
 
 # 2. Pastikan site aksara aktif
 ls -la /etc/nginx/sites-enabled/
-# Harus ada: aksara.sulfat.site
+# Harus ada: aksara.fun
 
 # 3. Uji redirect HTTP → HTTPS
-curl -I http://aksara.sulfat.site
+curl -I http://aksara.fun
 # Ekspektasi: HTTP/1.1 301 Moved Permanently
-#             Location: https://aksara.sulfat.site/
+#             Location: https://aksara.fun/
 
 # 4. Uji HTTPS landing page
-curl -I https://aksara.sulfat.site
+curl -I https://aksara.fun
 # Ekspektasi: HTTP 200 atau 30x
 
 # 5. Cek header keamanan dari response
-curl -I https://aksara.sulfat.site
+curl -I https://aksara.fun
 # Ekspektasi: response HTTPS valid (status bukan 5xx)
 
 # 6. Cek sertifikat SSL
-echo | openssl s_client -connect aksara.sulfat.site:443 -servername aksara.sulfat.site 2>/dev/null \
+echo | openssl s_client -connect aksara.fun:443 -servername aksara.fun 2>/dev/null \
   | openssl x509 -noout -dates -subject
-# Tampilkan: notAfter (tanggal kedaluwarsa) dan CN=aksara.sulfat.site
+# Tampilkan: notAfter (tanggal kedaluwarsa) dan CN=aksara.fun
 
 # 7. Uji halaman login admin melewati full stack
-curl -I https://aksara.sulfat.site/admin/login
+curl -I https://aksara.fun/admin/login
 # Ekspektasi: HTTP 200
 
 # 8. Cek log akses real-time saat ada request
 sudo tail -f /var/log/nginx/aksara_access.log
-# Buka https://aksara.sulfat.site di browser, pastikan log muncul
+# Buka https://aksara.fun di browser, pastikan log muncul
 
 # 9. Pastikan log error bersih
 sudo tail -20 /var/log/nginx/aksara_error.log
@@ -270,7 +277,7 @@ sudo ufw allow 443/tcp
 sudo ufw reload
 ```
 
-### Firewall pada 192.10.10.152 (App Server)
+### Firewall pada 192.10.10.154 (App Server)
 
 ```bash
 # Port 3004 (aksara stack): hanya izinkan dari reverse proxy 192.10.10.15
@@ -306,7 +313,7 @@ cat /etc/logrotate.d/nginx
 
 ### Checklist Final
 
-- [x] DNS `aksara.sulfat.site` → IP publik 192.10.10.15
+- [x] DNS `aksara.fun` → IP publik 192.10.10.15
 - [x] HTTP 80 redirect ke HTTPS 443
 - [x] SSL TLSv1.2 + TLSv1.3 only, cipher modern
 - [x] `X-Real-IP` diteruskan ke app server (IP asli klien)
@@ -315,9 +322,11 @@ cat /etc/logrotate.d/nginx
 - [x] Port 3004 di app server hanya bisa diakses dari 192.10.10.15
 - [x] Auto-renew certbot aktif (`certbot.timer`) — sudah ada dari domain lain
 - [x] Domain lain (kos, absen) tidak terganggu setelah penambahan site baru
+- [x] Host utama yang dipakai adalah `aksara.fun`
+- [x] Jika app punya validasi host, host utama juga harus ditambahkan di allowed hosts / CORS / redirect config
 - [ ] HSTS aktif (`Strict-Transport-Security`) — aktifkan setelah konfirmasi HTTPS stabil
 - [ ] Rate limit di reverse proxy (opsional)
-- [ ] Monitoring SSL expiry (mis. UptimeRobot SSL monitor → aksara.sulfat.site)
+- [ ] Monitoring SSL expiry (mis. UptimeRobot SSL monitor → aksara.fun)
 
 ---
 
@@ -350,6 +359,69 @@ sudo certbot renew
 sudo certbot certificates
 
 # Hapus site aksara jika perlu rollback (tidak ganggu domain lain)
-# sudo rm /etc/nginx/sites-enabled/aksara.sulfat.site
+# sudo rm /etc/nginx/sites-enabled/aksara.fun
 # sudo systemctl reload nginx
+```
+
+# Next Steps
+
+1. Eksekusi setup reverse proxy di server 192.10.10.15
+
+```bash
+sudo nginx -t
+sudo systemctl reload nginx
+sudo certbot --nginx -d aksara.fun -d www.aksara.fun
+sudo certbot renew --dry-run
+```
+
+2. Verifikasi jalur domain ke backend
+
+```bash
+curl -I http://aksara.fun
+curl -I https://aksara.fun
+curl -I https://aksara.fun/admin/login
+curl -I http://192.10.10.154:3004
+```
+
+3. Jika ada error 502/504 dari domain
+
+```bash
+# Di reverse proxy server
+sudo tail -50 /var/log/nginx/aksara_error.log
+
+# Di app server
+docker ps --format 'table {{.Names}}\t{{.Status}}' | grep aksara-app
+docker logs --tail 120 aksara-app
+```
+
+4. Jika SSL gagal issue/renew
+
+```bash
+dig +short aksara.fun
+dig +short www.aksara.fun
+sudo certbot certificates
+sudo certbot renew --dry-run
+```
+
+5. Hardening app yang direkomendasikan (setelah routing stabil)
+
+- Aktifkan trusted host: aksara.fun dan www.aksara.fun.
+- Jalankan uvicorn dengan proxy header trust: --proxy-headers dan --forwarded-allow-ips.
+- Set cookie admin sebagai secure saat HTTPS.
+
+6. Validasi akhir setelah semua perubahan
+
+```bash
+curl -I https://aksara.fun
+curl -I https://aksara.fun/admin/login
+sudo tail -20 /var/log/nginx/aksara_error.log
+docker logs --tail 100 aksara-app
+```
+
+7. Jika rollback dibutuhkan
+
+```bash
+sudo rm /etc/nginx/sites-enabled/aksara.fun
+sudo nginx -t
+sudo systemctl reload nginx
 ```
