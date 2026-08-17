@@ -28,6 +28,29 @@ Website literasi berbasis FastAPI + Jinja2 + SQLite dengan admin CMS untuk menge
 	- CRUD Artikel (`/admin/artikel`)
 	- Pengaturan website (`/admin/settings`)
 
+## Dokumentasi
+
+Panduan berikut disediakan agar pengguna dan admin bisa langsung membuka alur yang dibutuhkan:
+
+- [Panduan Pengguna](docs/user.md)
+- [Panduan Admin](docs/admin.md)
+- [Panduan Tunneling](docs/tunneling.md)
+- [Panduan Domain / Reverse Proxy](docs/domain.md)
+- [Referensi Teknis Aplikasi](docs/fast-aksara.md)
+
+### Untuk pengguna umum
+
+- Baca [Panduan Pengguna](docs/user.md) untuk memahami cara memakai halaman publik.
+
+### Untuk admin pengelola
+
+- Baca [Panduan Admin](docs/admin.md) untuk login, kelola konten, dan mengubah settings.
+
+### Untuk deployment
+
+- Baca [Panduan Tunneling](docs/tunneling.md) jika ingin menghubungkan domain ke server.
+- Baca [Panduan Domain / Reverse Proxy](docs/domain.md) jika memakai Nginx atau proxy domain.
+
 ## Struktur Folder
 
 ```text
