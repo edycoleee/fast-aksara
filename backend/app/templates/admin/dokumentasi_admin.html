@@ -1,0 +1,105 @@
+{% extends "base.html" %}
+{% block title %}Dokumentasi Admin{% endblock %}
+{% block content %}
+<section class="section-bg py-5">
+  <div class="container">
+    <div class="d-flex flex-wrap justify-content-between align-items-center gap-3 mb-4">
+      <div>
+        <h1 class="section-title mb-1">Dokumentasi Admin</h1>
+        <p class="text-muted mb-0">Panduan singkat untuk mengelola konten website Ngrembaka Aksara.</p>
+      </div>
+      <div class="d-flex align-items-center gap-3">
+        <span class="text-muted small"><i class="fa-solid fa-user me-1"></i>{{ admin_user }}</span>
+        <a href="/admin" class="btn btn-sm btn-outline-secondary">
+          <i class="fa-solid fa-arrow-left me-1"></i>Kembali ke Dashboard
+        </a>
+      </div>
+    </div>
+
+    <div class="row g-4">
+      <div class="col-lg-6">
+        <div class="card card-aksara p-4 h-100">
+          <h5 class="fw-bold mb-3" style="color:var(--color-dark);">
+            <i class="fa-solid fa-book me-2" style="color:var(--color-primary);"></i>Kelola E-Library
+          </h5>
+          <ol class="mb-3 text-muted">
+            <li>Buka menu E-Library dari dashboard admin.</li>
+            <li>Isi judul, kategori, deskripsi, dan pilih link eksternal atau file PDF.</li>
+            <li>Opsional: upload gambar sampul untuk tampilan kartu.</li>
+            <li>Klik tambah untuk menyimpan data.</li>
+            <li>Gunakan tombol hapus pada item yang tidak dipakai.</li>
+          </ol>
+          <a href="/admin/elibrary" class="btn-aksara align-self-start">
+            <i class="fa-solid fa-gear me-1"></i>Ke Halaman E-Library
+          </a>
+        </div>
+      </div>
+
+      <div class="col-lg-6">
+        <div class="card card-aksara p-4 h-100">
+          <h5 class="fw-bold mb-3" style="color:var(--color-dark);">
+            <i class="fa-solid fa-images me-2" style="color:var(--color-primary);"></i>Kelola Dokumentasi
+          </h5>
+          <ol class="mb-3 text-muted">
+            <li>Buka menu Dokumentasi dari dashboard admin.</li>
+            <li>Isi judul kegiatan, kategori, dan deskripsi ringkas.</li>
+            <li>Upload gambar dokumentasi dengan ukuran proporsional.</li>
+            <li>Tambahkan link video (opsional) jika tersedia.</li>
+            <li>Klik tambah, lalu cek hasilnya di halaman publik.</li>
+          </ol>
+          <a href="/admin/dokumentasi" class="btn-aksara align-self-start">
+            <i class="fa-solid fa-gear me-1"></i>Ke Halaman Dokumentasi
+          </a>
+        </div>
+      </div>
+
+      <div class="col-lg-6">
+        <div class="card card-aksara p-4 h-100">
+          <h5 class="fw-bold mb-3" style="color:var(--color-dark);">
+            <i class="fa-solid fa-newspaper me-2" style="color:var(--color-primary);"></i>Kelola Artikel
+          </h5>
+          <ol class="mb-3 text-muted">
+            <li>Buka menu Artikel dari dashboard admin.</li>
+            <li>Isi judul, kategori, dan deskripsi konten.</li>
+            <li>Upload gambar dan file PDF jika diperlukan.</li>
+            <li>Klik tambah untuk menyimpan item baru.</li>
+            <li>Hapus item lama yang sudah tidak relevan.</li>
+          </ol>
+          <a href="/admin/artikel" class="btn-aksara align-self-start">
+            <i class="fa-solid fa-gear me-1"></i>Ke Halaman Artikel
+          </a>
+        </div>
+      </div>
+
+      <div class="col-lg-6">
+        <div class="card card-aksara p-4 h-100">
+          <h5 class="fw-bold mb-3" style="color:var(--color-dark);">
+            <i class="fa-solid fa-sliders me-2" style="color:var(--color-primary);"></i>Kelola Pengaturan Situs
+          </h5>
+          <ol class="mb-3 text-muted">
+            <li>Buka menu Settings dari dashboard admin.</li>
+            <li>Perbarui nama situs, tagline, WhatsApp, alamat, email, dan peta.</li>
+            <li>Pastikan URL Google Maps embed valid.</li>
+            <li>Klik simpan, lalu refresh halaman publik untuk verifikasi.</li>
+            <li>Lakukan perubahan seperlunya agar konsisten dengan identitas situs.</li>
+          </ol>
+          <a href="/admin/settings" class="btn-aksara align-self-start">
+            <i class="fa-solid fa-sliders me-1"></i>Ke Halaman Settings
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="card card-aksara p-4 mt-4">
+      <h6 class="fw-bold mb-2" style="color:var(--color-dark);">
+        <i class="fa-solid fa-triangle-exclamation me-2" style="color:var(--color-primary);"></i>Catatan Penting
+      </h6>
+      <ul class="mb-0 text-muted">
+        <li>Gunakan gambar dengan ukuran ringan agar website tetap cepat.</li>
+        <li>Pastikan tautan eksternal dan video masih aktif sebelum dipublikasi.</li>
+        <li>Setiap perubahan admin langsung memengaruhi tampilan publik.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+{% endblock %}

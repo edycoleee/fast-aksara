@@ -56,6 +56,13 @@ def dashboard(request: Request, db: Session = Depends(get_db), admin=Depends(req
     })
 
 
+@router.get("/dokumentasi-admin", name="admin_dokumentasi_admin")
+def dokumentasi_admin_page(request: Request, admin=Depends(require_admin)):
+    return templates.TemplateResponse(request, "admin/dokumentasi_admin.html", {
+        "admin_user": admin,
+    })
+
+
 # ===== E-LIBRARY =====
 
 @router.get("/elibrary", name="admin_elibrary")

@@ -1,19 +1,21 @@
 services:
-	aksara:
-		build:
-			context: ../backend
-			dockerfile: ../docker/Dockerfile
-		container_name: aksara-app
-		restart: unless-stopped
-		ports:
-			- "3004:3004"
-		env_file:
-			- ../backend/.env
-		volumes:
-			- aksara_db:/app/aksara.db
-			- aksara_uploads:/app/app/static/uploads
-		command: ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "3004"]
+  aksara:
+    build:
+      context: ../backend
+      dockerfile: ../docker/Dockerfile
+    container_name: aksara-app
+    restart: unless-stopped
+    ports:
+      - "3004:3004"
+    env_file:
+      - ../backend/.env
+    environment:
+      DATABASE_URL: sqlite:////app/data/aksara.db
+    volumes:
+      - aksara_db:/app/data
+      - aksara_uploads:/app/app/static/uploads
+    command: ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "3004"]
 
 volumes:
-	aksara_db:
-	aksara_uploads:
+  aksara_db:
+  aksara_uploads:
