@@ -1,0 +1,97 @@
+{% extends "base.html" %}
+{% block title %}{{ page_title }}{% endblock %}
+
+{% block content %}
+<section class="hero-aksara py-5">
+  <div class="container">
+    <div class="row align-items-center g-4">
+      <div class="col-lg-8">
+        <div class="section-kicker text-white-50 mb-3">{{ section_label }}</div>
+        <span class="badge-aksara mb-3 d-inline-block">{{ detail_label }}</span>
+        <h1 class="fw-bold mb-3">{{ item.judul }}</h1>
+        <div class="d-flex flex-wrap align-items-center gap-3 text-white-50 small">
+          <span><i class="fa-regular fa-clock me-1"></i>{{ item.created_at.strftime('%d %b %Y, %H:%M') if item.created_at else 'Baru' }}</span>
+          <span><i class="fa-solid fa-tag me-1"></i>{{ detail_label }}</span>
+          <span><i class="fa-solid fa-layer-group me-1"></i>{{ section_label }}</span>
+        </div>
+      </div>
+      <div class="col-lg-4 text-lg-end">
+        <a href="{{ back_url }}" class="btn-aksara-outline d-inline-flex align-items-center gap-2">
+          <i class="fa-solid fa-arrow-left"></i> Kembali
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section-bg py-5">
+  <div class="container">
+    <div class="program-detail-hero p-4 p-lg-5">
+      <div class="row g-4 align-items-start">
+        <div class="col-lg-4">
+          <div class="card card-aksara h-100 overflow-hidden">
+            {% if item.link_gambar or item.gambar %}
+              <img src="{{ item.link_gambar or item.gambar }}" class="card-img-top" alt="{{ item.judul }}">
+            {% elif item.link_video %}
+              {% if 'youtube' in item.link_video or 'youtu.be' in item.link_video %}
+              <div class="ratio ratio-16x9">
+                <iframe src="{{ item.link_video|replace('watch?v=', 'embed/')|replace('youtu.be/', 'www.youtube.com/embed/') }}" title="{{ item.judul }}" allowfullscreen></iframe>
+              </div>
+              {% else %}
+              <div class="ratio ratio-16x9 bg-body-tertiary d-flex align-items-center justify-content-center">
+                <span class="text-muted small">Video tersedia pada tautan eksternal</span>
+              </div>
+              {% endif %}
+            {% else %}
+              <div class="ratio ratio-16x9 bg-body-tertiary d-flex align-items-center justify-content-center">
+                <span class="text-muted small">Media belum tersedia</span>
+              </div>
+            {% endif %}
+            <div class="card-body p-4">
+              <span class="badge-aksara mb-2 d-inline-block">{{ detail_label }}</span>
+              <h5 class="fw-bold mb-2" style="color: var(--color-dark);">{{ item.judul }}</h5>
+              <div class="text-muted small">{{ section_label }}</div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-8">
+          <article class="card card-aksara p-4 p-lg-5 h-100">
+            <div class="d-flex flex-wrap align-items-center gap-2 mb-4 small text-muted">
+              <span class="badge-aksara">{{ section_label }}</span>
+              <span><i class="fa-regular fa-clock me-1"></i>{{ item.created_at.strftime('%d %b %Y, %H:%M') if item.created_at else 'Baru' }}</span>
+            </div>
+            <h2 class="section-title mb-4">Isi Lengkap</h2>
+            <p class="text-muted mb-0 elibrary-modal-description" style="white-space: pre-line; font-size: 1.02rem;">{{ item.deskripsi or 'Deskripsi belum diisi.' }}</p>
+            {% if item.link_pdf %}
+            <div class="mt-4">
+              <a href="{{ item.link_pdf }}" target="_blank" rel="noopener" class="btn-aksara d-inline-flex align-items-center gap-2 text-decoration-none">
+                <i class="fa-solid fa-file-pdf"></i>Buka PDF
+              </a>
+            </div>
+            {% endif %}
+            {% if item.link and not item.link_pdf %}
+            <div class="mt-4">
+              {% if item.link_type == 'external' %}
+              <a href="{{ item.link }}" target="_blank" rel="noopener" class="btn btn-outline-success d-inline-flex align-items-center gap-2">
+                <i class="fa-solid fa-arrow-up-right-from-square"></i>Buka Tautan
+              </a>
+              {% else %}
+              <a href="{{ item.link }}" target="_blank" rel="noopener" class="btn btn-outline-success d-inline-flex align-items-center gap-2">
+                <i class="fa-solid fa-download"></i>Unduh File
+              </a>
+              {% endif %}
+            </div>
+            {% endif %}
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="mt-4 d-flex flex-wrap gap-2">
+      <a href="{{ back_url }}" class="btn btn-outline-success d-inline-flex align-items-center gap-2">
+        <i class="fa-solid fa-arrow-left"></i>Kembali ke daftar
+      </a>
+    </div>
+  </div>
+</section>
+{% endblock %}
