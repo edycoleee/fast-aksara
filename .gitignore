@@ -26,3 +26,5 @@ backend/app/static/uploads/
 
 # VS Code
 .vscode/
+
+dummy/
