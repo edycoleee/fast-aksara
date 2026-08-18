@@ -84,7 +84,12 @@ cd backend
 
 ```bash
 python3 -m venv .venv
+
+# Linux / MacOS
 source .venv/bin/activate
+
+# Windows
+.venv\Scripts\activate
 ```
 
 3. Install dependensi:
