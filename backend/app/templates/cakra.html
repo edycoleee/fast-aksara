@@ -6,11 +6,11 @@
     <div class="row align-items-center g-4">
       <div class="col-lg-8">
         <span class="badge-aksara mb-3 d-inline-block">Pojok Literasi Edupreneur</span>
-        <h1 class="fw-bold mb-3">⚙️ Pojok Literasi Cakra Ngrembaka</h1>
-        <p class="lead mb-0" style="color:rgba(255,255,255,0.85);">"Amerta" Air Kehidupan yang Menghidupi Ekonomi Masyarakat</p>
+        <h1 class="fw-bold mb-3">⚙️ Cakra Ngrembaka</h1>
+        <p class="lead mb-0" style="color:rgba(255,255,255,0.85);">"Amerta" air kehidupan yang menghidupi ekonomi masyarakat.</p>
       </div>
       <div class="col-lg-4 text-lg-end">
-        <div class="card card-aksara p-4 bg-white bg-opacity-10 border-0 text-white">
+        <div class="card card-aksara p-4 bg-white bg-opacity-10 border-0 text-white program-hero-card">
           <div class="fs-1 mb-2">💡</div>
           <strong>Fokus Program</strong>
           <p class="mb-0 small" style="color:rgba(255,255,255,0.85);">Inovasi produk, rebranding, repacking, pemasaran digital, dan penguatan ketahanan keluarga.</p>
@@ -24,14 +24,14 @@
   <div class="container">
     <div class="row g-4 mb-5">
       <div class="col-lg-8">
-        <div class="card card-aksara h-100 p-4 p-lg-5">
+        <div class="card card-aksara h-100 p-4 p-lg-5 program-detail-card">
           <h2 class="section-title mb-4">Deskripsi Program</h2>
           <p class="mb-3">Pojok Literasi Cakra Ngrembaka adalah program literasi berbasis edupreneur skill yang ditujukan untuk masyarakat usia produktif dan pelaku UMKM di Kelurahan Podorejo. Program ini berfokus pada peningkatan kapasitas usaha melalui inovasi produk, rebranding, repacking, dan pemasaran digital.</p>
           <p class="mb-0">Pojok ini juga menghadirkan program penguatan ketahanan keluarga melalui workshop peran orang tua, guna menjawab permasalahan KDRT dan pekerja anak yang ditemukan di lapangan.</p>
         </div>
       </div>
       <div class="col-lg-4">
-        <div class="card card-aksara h-100 p-4 p-lg-5">
+        <div class="card card-aksara h-100 p-4 p-lg-5 program-detail-card">
           <h2 class="section-title mb-4">Kader Penggerak</h2>
           <p class="mb-0">Kader Amerta Aksara, bermakna "air kehidupan", melambangkan peran mereka sebagai penggerak ekonomi yang menghidupi dan menyegarkan masyarakat.</p>
         </div>
@@ -60,7 +60,7 @@
     <div class="row g-4">
       {% for item in artikel %}
       <div class="col-md-6 col-lg-4">
-        <div class="card card-aksara h-100 overflow-hidden">
+        <div class="card card-aksara program-media-card h-100 overflow-hidden">
           {% if item.gambar %}
           <img src="{{ item.gambar }}" class="card-img-top" alt="{{ item.judul }}">
           {% else %}

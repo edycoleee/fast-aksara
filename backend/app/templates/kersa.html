@@ -6,11 +6,11 @@
     <div class="row align-items-center g-4">
       <div class="col-lg-8">
         <span class="badge-aksara mb-3 d-inline-block">Pojok Literasi Lansia</span>
-        <h1 class="fw-bold mb-3">🌿 Pojok Literasi Kersa Ngrembaka</h1>
-        <p class="lead mb-0" style="color:rgba(255,255,255,0.85);">"Abiyasa" Kebijaksanaan yang Tak Lekang oleh Waktu</p>
+        <h1 class="fw-bold mb-3">🌿 Kersa Ngrembaka</h1>
+        <p class="lead mb-0" style="color:rgba(255,255,255,0.85);">"Abiyasa" kebijaksanaan yang tak lekang oleh waktu.</p>
       </div>
       <div class="col-lg-4 text-lg-end">
-        <div class="card card-aksara p-4 bg-white bg-opacity-10 border-0 text-white">
+        <div class="card card-aksara p-4 bg-white bg-opacity-10 border-0 text-white program-hero-card">
           <div class="fs-1 mb-2">🌿</div>
           <strong>Fokus Program</strong>
           <p class="mb-0 small" style="color:rgba(255,255,255,0.85);">Kesehatan lansia, TOGA, senam, budidaya sederhana, dan keterampilan produktif.</p>
@@ -22,20 +22,20 @@
 
 <section class="section-bg py-5">
   <div class="container">
-    <div class="card card-aksara p-4 p-lg-5 mb-5">
+    <div class="card card-aksara program-detail-card p-4 p-lg-5 mb-5">
       <h2 class="section-title mb-4">Deskripsi Program</h2>
       <p class="mb-0">Pojok Literasi Kersa Ngrembaka adalah program yang dirancang khusus untuk kelompok lansia di Kelurahan Podorejo. Program ini mengintegrasikan kegiatan kesehatan dengan pengembangan keterampilan produktif, sehingga lansia tetap aktif, sehat, dan berdaya di usia senja.</p>
     </div>
 
     <div class="row g-4 mb-5">
       <div class="col-lg-5">
-        <div class="card card-aksara h-100 p-4">
+        <div class="card card-aksara h-100 p-4 program-detail-card">
           <h3 class="h5 fw-bold mb-3" style="color: var(--color-dark);">Kader Penggerak</h3>
           <p class="mb-0 text-muted">Kader Abiyasa Aksara, bermakna sosok berilmu, pandai, dan penuh kebijaksanaan, menggambarkan peran para sesepuh desa yang menjadi sumber kearifan bagi generasi berikutnya.</p>
         </div>
       </div>
       <div class="col-lg-7">
-        <div class="card card-aksara h-100 p-4">
+        <div class="card card-aksara h-100 p-4 program-detail-card">
           <h3 class="h5 fw-bold mb-3" style="color: var(--color-dark);">Mitra Utama</h3>
           <div class="row g-3">
             <div class="col-md-4"><div class="p-3 rounded-3 h-100" style="background: var(--color-bg);"><div class="fw-bold">Kelompok Lansia</div><div class="text-muted small">Peserta utama program</div></div></div>
@@ -81,7 +81,7 @@
     <div class="row g-4 mb-5">
       {% for item in artikel_kesehatan %}
       <div class="col-md-6 col-lg-4">
-        <div class="card card-aksara h-100 overflow-hidden">
+        <div class="card card-aksara program-media-card h-100 overflow-hidden">
           {% if item.gambar %}
           <img src="{{ item.gambar }}" class="card-img-top" alt="{{ item.judul }}">
           {% else %}
@@ -110,7 +110,7 @@
     <div class="row g-4">
       {% for item in artikel_keterampilan %}
       <div class="col-md-6 col-lg-4">
-        <div class="card card-aksara h-100 overflow-hidden">
+        <div class="card card-aksara program-media-card h-100 overflow-hidden">
           {% if item.gambar %}
           <img src="{{ item.gambar }}" class="card-img-top" alt="{{ item.judul }}">
           {% else %}

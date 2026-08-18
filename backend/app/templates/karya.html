@@ -6,11 +6,11 @@
     <div class="row align-items-center g-4">
       <div class="col-lg-8">
         <span class="badge-aksara mb-3 d-inline-block">Pojok Literasi Remaja</span>
-        <h1 class="fw-bold mb-3">🎨 Pojok Literasi Karya Ngrembaka</h1>
-        <p class="lead mb-0" style="color:rgba(255,255,255,0.85);">"Ananta" Tanpa Batas, Kreativitas Remaja yang Tak Terkira</p>
+        <h1 class="fw-bold mb-3">🎨 Karya Ngrembaka</h1>
+        <p class="lead mb-0" style="color:rgba(255,255,255,0.85);">"Ananta" Tanpa Batas, kreativitas remaja yang tak terkira.</p>
       </div>
       <div class="col-lg-4 text-lg-end">
-        <div class="card card-aksara p-4 bg-white bg-opacity-10 border-0 text-white">
+        <div class="card card-aksara p-4 bg-white bg-opacity-10 border-0 text-white program-hero-card">
           <div class="fs-1 mb-2">✨</div>
           <strong>Fokus Program</strong>
           <p class="mb-0 small" style="color:rgba(255,255,255,0.85);">Literasi digital, desain visual, konten kreatif, dan hasil karya yang siap dipublikasikan.</p>
@@ -22,20 +22,20 @@
 
 <section class="section-bg py-5">
   <div class="container">
-    <div class="card card-aksara p-4 p-lg-5 mb-5">
+    <div class="card card-aksara program-detail-card p-4 p-lg-5 mb-5">
       <h2 class="section-title mb-4">Deskripsi Program</h2>
       <p class="mb-0">Pojok Literasi Karya Ngrembaka adalah program literasi digital yang dirancang untuk remaja Kelurahan Podorejo. Program ini hadir sebagai solusi atas dominasi penggunaan gawai yang tidak produktif, dengan mengarahkan remaja pada kegiatan kreatif dan positif berbasis teknologi digital.</p>
     </div>
 
     <div class="row g-4 mb-5">
       <div class="col-lg-4">
-        <div class="card card-aksara h-100 p-4">
+        <div class="card card-aksara h-100 p-4 program-detail-card">
           <h3 class="h5 fw-bold mb-3" style="color: var(--color-dark);">Kader Penggerak</h3>
           <p class="mb-0 text-muted">Kader Ananta Aksara, bermakna "tanpa batas", mewakili potensi dan kreativitas remaja yang tidak terbatas dalam mengeksplorasi dunia digital untuk kebaikan bersama.</p>
         </div>
       </div>
       <div class="col-lg-8">
-        <div class="card card-aksara h-100 p-4">
+        <div class="card card-aksara h-100 p-4 program-detail-card">
           <h3 class="h5 fw-bold mb-3" style="color: var(--color-dark);">Hasil Karya Peserta</h3>
           <div class="row g-3">
             <div class="col-md-4">
@@ -66,7 +66,7 @@
     <div class="row g-4 mb-5">
       {% for item in karya_digital %}
       <div class="col-md-6 col-lg-4">
-        <div class="card card-aksara h-100 overflow-hidden">
+        <div class="card card-aksara program-media-card h-100 overflow-hidden">
           {% if item.link_gambar %}
           <img src="{{ item.link_gambar }}" class="card-img-top" alt="{{ item.judul }}">
           {% else %}
@@ -90,7 +90,7 @@
     <div class="row g-4 mb-5">
       {% for item in karya_sosmed %}
       <div class="col-md-6 col-lg-4">
-        <div class="card card-aksara h-100 overflow-hidden">
+        <div class="card card-aksara program-media-card h-100 overflow-hidden">
           {% if item.link_video %}
           <div class="ratio ratio-16x9 bg-body-tertiary d-flex align-items-center justify-content-center"><span class="text-muted small">Video tersedia</span></div>
           {% elif item.link_gambar %}
@@ -116,7 +116,7 @@
     <div class="row g-4">
       {% for item in carousel %}
       <div class="col-md-6 col-lg-3">
-        <div class="card card-aksara h-100 overflow-hidden">
+        <div class="card card-aksara program-media-card h-100 overflow-hidden">
           {% if item.link_gambar %}
           <img src="{{ item.link_gambar }}" class="card-img-top" alt="{{ item.judul }}">
           {% else %}

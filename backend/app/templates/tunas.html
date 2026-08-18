@@ -6,11 +6,11 @@
     <div class="row align-items-center g-4">
       <div class="col-lg-8">
         <span class="badge-aksara mb-3 d-inline-block">Pojok Literasi Anak</span>
-        <h1 class="fw-bold mb-3">🌱 Pojok Literasi Tunas Ngrembaka</h1>
-        <p class="lead mb-0" style="color:rgba(255,255,255,0.85);">"Aruna" Cahaya Pertama bagi Generasi Penerus</p>
+        <h1 class="fw-bold mb-3" style="font-size: clamp(2.2rem, 4vw, 3.4rem);">🌱 Pojok Literasi Tunas Ngrembaka</h1>
+        <p class="lead mb-0" style="color:rgba(255,255,255,0.85); max-width: 42rem;">"Aruna" Cahaya Pertama bagi Generasi Penerus</p>
       </div>
       <div class="col-lg-4 text-lg-end">
-        <div class="card card-aksara p-4 bg-white bg-opacity-10 border-0 text-white">
+        <div class="card card-aksara p-4 bg-white bg-opacity-10 border-0 text-white program-hero-card">
           <div class="fs-1 mb-2">🌟</div>
           <strong>Fokus Program</strong>
           <p class="mb-0 small" style="color:rgba(255,255,255,0.85);">Calistung, numerasi, karakter, budaya lokal, dan pengenalan teknologi belajar imersif.</p>
@@ -24,21 +24,21 @@
   <div class="container">
     <div class="row g-4 align-items-stretch">
       <div class="col-lg-7">
-        <div class="card card-aksara h-100 p-4 p-lg-5">
+        <div class="card card-aksara h-100 p-4 p-lg-5 program-detail-card">
           <h2 class="section-title mb-4">Deskripsi Program</h2>
           <p class="mb-3">Pojok Literasi Tunas Ngrembaka adalah program literasi yang dirancang khusus untuk balita dan anak-anak di Kelurahan Podorejo. Hadir sebagai ruang belajar nonformal yang menyenangkan, program ini berfokus pada penguatan literasi dasar, numerasi, karakter, dan budaya lokal.</p>
           <p class="mb-0">Program ini juga mengintegrasikan teknologi Metaverse berbasis Hak Paten Sederhana IDS000011665 melalui platform Spatial.io untuk meningkatkan motivasi belajar anak secara imersif, sekaligus menghadirkan permainan tradisional sebagai alternatif yang memperkuat budaya lokal.</p>
         </div>
       </div>
       <div class="col-lg-5">
-        <div class="card card-aksara h-100 p-4 p-lg-5">
+        <div class="card card-aksara h-100 p-4 p-lg-5 program-detail-card">
           <h2 class="section-title mb-4">Sasaran Peserta</h2>
           <div class="d-grid gap-3">
-            <div class="p-3 rounded-3" style="background: var(--color-bg);">
+            <div class="p-3 rounded-3" style="background: linear-gradient(135deg, rgba(79,122,78,0.08), rgba(184,215,168,0.18));">
               <div class="fw-bold" style="color: var(--color-dark);">Balita</div>
               <div class="text-muted small">±80 orang, didukung PKK dan Posyandu</div>
             </div>
-            <div class="p-3 rounded-3" style="background: var(--color-bg);">
+            <div class="p-3 rounded-3" style="background: linear-gradient(135deg, rgba(79,122,78,0.08), rgba(184,215,168,0.18));">
               <div class="fw-bold" style="color: var(--color-dark);">Anak-anak</div>
               <div class="text-muted small">±120 orang, usia SD, difasilitasi bersama RA Islamiyah, SDN Podorejo 01, 02, dan 03</div>
             </div>
@@ -57,7 +57,7 @@
     <div class="row g-4">
       {% for item in dokumentasi %}
       <div class="col-md-6 col-lg-4">
-        <div class="card card-aksara h-100 overflow-hidden">
+        <div class="card card-aksara h-100 overflow-hidden program-media-card">
           {% if item.link_gambar %}
           <img src="{{ item.link_gambar }}" class="card-img-top" alt="{{ item.judul }}">
           {% elif item.link_video %}
@@ -92,7 +92,7 @@
     <div class="row g-4">
       {% for item in artikel %}
       <div class="col-md-6 col-lg-4">
-        <div class="card card-aksara h-100 overflow-hidden">
+        <div class="card card-aksara h-100 overflow-hidden program-media-card">
           {% if item.gambar %}
           <img src="{{ item.gambar }}" class="card-img-top" alt="{{ item.judul }}">
           {% else %}
