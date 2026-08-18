@@ -1,11 +1,88 @@
 {% extends "base.html" %}
 {% block title %}Pojok Literasi Cakra Ngrembaka{% endblock %}
 {% block content %}
-<section class="hero-aksara"><div class="container py-4">
-  <h1 class="fw-bold">⚙️ Pojok Literasi Cakra Ngrembaka</h1>
-  <p class="lead" style="color:rgba(255,255,255,0.85);">"Amerta" — Air Kehidupan yang Menghidupi Ekonomi Masyarakat</p>
-</div></section>
-<section class="section-bg py-5"><div class="container">
-  <p>Program literasi berbasis edupreneur skill untuk masyarakat usia produktif dan pelaku UMKM.</p>
-</div></section>
+<section class="hero-aksara">
+  <div class="container py-4 py-lg-5">
+    <div class="row align-items-center g-4">
+      <div class="col-lg-8">
+        <span class="badge-aksara mb-3 d-inline-block">Pojok Literasi Edupreneur</span>
+        <h1 class="fw-bold mb-3">⚙️ Pojok Literasi Cakra Ngrembaka</h1>
+        <p class="lead mb-0" style="color:rgba(255,255,255,0.85);">"Amerta" Air Kehidupan yang Menghidupi Ekonomi Masyarakat</p>
+      </div>
+      <div class="col-lg-4 text-lg-end">
+        <div class="card card-aksara p-4 bg-white bg-opacity-10 border-0 text-white">
+          <div class="fs-1 mb-2">💡</div>
+          <strong>Fokus Program</strong>
+          <p class="mb-0 small" style="color:rgba(255,255,255,0.85);">Inovasi produk, rebranding, repacking, pemasaran digital, dan penguatan ketahanan keluarga.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section-bg py-5">
+  <div class="container">
+    <div class="row g-4 mb-5">
+      <div class="col-lg-8">
+        <div class="card card-aksara h-100 p-4 p-lg-5">
+          <h2 class="section-title mb-4">Deskripsi Program</h2>
+          <p class="mb-3">Pojok Literasi Cakra Ngrembaka adalah program literasi berbasis edupreneur skill yang ditujukan untuk masyarakat usia produktif dan pelaku UMKM di Kelurahan Podorejo. Program ini berfokus pada peningkatan kapasitas usaha melalui inovasi produk, rebranding, repacking, dan pemasaran digital.</p>
+          <p class="mb-0">Pojok ini juga menghadirkan program penguatan ketahanan keluarga melalui workshop peran orang tua, guna menjawab permasalahan KDRT dan pekerja anak yang ditemukan di lapangan.</p>
+        </div>
+      </div>
+      <div class="col-lg-4">
+        <div class="card card-aksara h-100 p-4 p-lg-5">
+          <h2 class="section-title mb-4">Kader Penggerak</h2>
+          <p class="mb-0">Kader Amerta Aksara, bermakna "air kehidupan", melambangkan peran mereka sebagai penggerak ekonomi yang menghidupi dan menyegarkan masyarakat.</p>
+        </div>
+      </div>
+    </div>
+
+    <h2 class="section-title mb-4">Materi Program</h2>
+    <div class="table-responsive mb-5">
+      <table class="table table-aksara table-bordered align-middle">
+        <thead>
+          <tr><th style="width: 60px;">No</th><th>Fokus</th><th>Kegiatan</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>1</td><td>Literasi Ekonomi Kreatif</td><td>Pengenalan konsep edupreneur, inovasi produk, dan nilai ekonomi produk lokal</td></tr>
+          <tr><td>2</td><td>Lokakarya Inovasi Produk</td><td>Inovasi ceriping gadung, singkong, pisang; tape singkong; dan madu dengan TTG Alat Sablon Manual dan Alat Peniris Minyak</td></tr>
+          <tr><td>3</td><td>Rebranding &amp; Repacking</td><td>Desain kemasan baru, cetak stiker, dan branding visual menggunakan desain digital</td></tr>
+          <tr><td>4</td><td>Pemasaran Digital</td><td>Pembuatan akun marketplace, strategi penjualan online, dan fotografi produk</td></tr>
+          <tr><td>5</td><td>Edukasi Ketahanan Keluarga</td><td>Workshop peran orang tua, lingkungan keluarga positif, pencegahan KDRT</td></tr>
+          <tr><td>6</td><td>Festival "Podo Gelar Ngrembaka"</td><td>Pameran dan mini market produk edupreneur UMKM Podorejo</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2 class="section-title mb-4">Artikel Terkait</h2>
+    {% if artikel %}
+    <div class="row g-4">
+      {% for item in artikel %}
+      <div class="col-md-6 col-lg-4">
+        <div class="card card-aksara h-100 overflow-hidden">
+          {% if item.gambar %}
+          <img src="{{ item.gambar }}" class="card-img-top" alt="{{ item.judul }}">
+          {% else %}
+          <div class="ratio ratio-16x9 bg-body-tertiary d-flex align-items-center justify-content-center"><span class="text-muted small">Gambar artikel belum tersedia</span></div>
+          {% endif %}
+          <div class="card-body p-4 d-flex flex-column">
+            <span class="badge-aksara mb-2 d-inline-block">Artikel</span>
+            <h6 class="fw-bold mb-2" style="color: var(--color-dark);">{{ item.judul }}</h6>
+            <p class="text-muted small mb-3">{{ item.deskripsi or 'Deskripsi artikel belum diisi.' }}</p>
+            {% if item.link_pdf %}
+            <a class="btn-aksara mt-auto text-center text-decoration-none" href="{{ item.link_pdf }}" target="_blank" rel="noopener">
+              <i class="fa-solid fa-file-pdf me-1"></i>Buka PDF
+            </a>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+    {% else %}
+    <div class="alert alert-light border">Belum ada artikel untuk kategori Cakra Ngrembaka.</div>
+    {% endif %}
+  </div>
+</section>
 {% endblock %}

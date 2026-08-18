@@ -83,12 +83,12 @@ cd backend
 2. Buat virtual environment dan aktifkan:
 
 ```bash
-python3 -m venv .venv
-
 # Linux / MacOS
+python3 -m venv .venv
 source .venv/bin/activate
 
 # Windows
+python -m venv .venv
 .venv\Scripts\activate
 ```
 
@@ -167,3 +167,37 @@ App akan tersedia di:
 - Ganti `ADMIN_PASSWORD` default sebelum go-live.
 - SQLite cocok untuk satu server kecil; untuk production publik atau multi-instance, pindah ke database yang lebih sesuai lewat `DATABASE_URL`.
 - Pastikan DNS/reverse proxy domain sudah mengarah ke server dan port aplikasi.
+
+## QNA
+
+### Halaman kosong saat dibuka di browser
+
+Kalau aplikasi sudah di-start tapi browser menampilkan halaman kosong atau error, cek tiga hal ini dulu:
+
+1. Buka aplikasi lewat `http://localhost:8000` atau `http://127.0.0.1:8000`, jangan lewat `http://0.0.0.0:8000` karena itu bukan alamat yang dibuka dari browser.
+2. Pastikan server benar-benar berjalan dari folder `backend/` dan memakai virtual environment proyek.
+3. Jika port `8000` sudah dipakai proses lain, jalankan di port lain, misalnya `8001`.
+
+Contoh perintah yang aman di Windows:
+
+```bash
+cd backend
+.venv\Scripts\activate
+python -m uvicorn app.main:app --reload --host 127.0.0.1 --port 8001
+```
+
+Kalau masih gagal start, biasanya penyebabnya dependensi belum terpasang di venv. Jalankan:
+
+```bash
+pip install -r requirements.txt
+```
+
+4. Kill port 
+```bash
+sudo lsof -t -i:8000 | xargs sudo kill -9
+
+# Windows
+netstat -ano | findstr :8000
+# Kill proses berdasarkan PID
+taskkill /PID 1234 /F
+```

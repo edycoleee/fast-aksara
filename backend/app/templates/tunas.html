@@ -1,24 +1,122 @@
 {% extends "base.html" %}
 {% block title %}Pojok Literasi Tunas Ngrembaka{% endblock %}
 {% block content %}
-<section class="hero-aksara"><div class="container py-4">
-  <h1 class="fw-bold">🌱 Pojok Literasi Tunas Ngrembaka</h1>
-  <p class="lead" style="color:rgba(255,255,255,0.85);">"Aruna" — Cahaya Pertama bagi Generasi Penerus</p>
-</div></section>
-<section class="section-bg py-5"><div class="container">
-  <p>Pojok Literasi Tunas Ngrembaka adalah program literasi yang dirancang khusus untuk balita dan anak-anak di Kelurahan Podorejo.</p>
-  {% if dokumentasi %}
-  <h2 class="section-title mt-5 mb-4">Dokumentasi Kegiatan</h2>
-  <div class="row g-4">
-    {% for item in dokumentasi %}
-    <div class="col-md-4">
-      <div class="card card-aksara h-100">
-        {% if item.link_gambar %}<img src="{{ item.link_gambar }}" class="card-img-top" alt="">{% endif %}
-        <div class="card-body"><h6 class="fw-bold">{{ item.judul }}</h6><p class="text-muted small">{{ item.deskripsi }}</p></div>
+<section class="hero-aksara">
+  <div class="container py-4 py-lg-5">
+    <div class="row align-items-center g-4">
+      <div class="col-lg-8">
+        <span class="badge-aksara mb-3 d-inline-block">Pojok Literasi Anak</span>
+        <h1 class="fw-bold mb-3">🌱 Pojok Literasi Tunas Ngrembaka</h1>
+        <p class="lead mb-0" style="color:rgba(255,255,255,0.85);">"Aruna" Cahaya Pertama bagi Generasi Penerus</p>
+      </div>
+      <div class="col-lg-4 text-lg-end">
+        <div class="card card-aksara p-4 bg-white bg-opacity-10 border-0 text-white">
+          <div class="fs-1 mb-2">🌟</div>
+          <strong>Fokus Program</strong>
+          <p class="mb-0 small" style="color:rgba(255,255,255,0.85);">Calistung, numerasi, karakter, budaya lokal, dan pengenalan teknologi belajar imersif.</p>
+        </div>
       </div>
     </div>
-    {% endfor %}
   </div>
-  {% endif %}
-</div></section>
+</section>
+
+<section class="section-bg py-5">
+  <div class="container">
+    <div class="row g-4 align-items-stretch">
+      <div class="col-lg-7">
+        <div class="card card-aksara h-100 p-4 p-lg-5">
+          <h2 class="section-title mb-4">Deskripsi Program</h2>
+          <p class="mb-3">Pojok Literasi Tunas Ngrembaka adalah program literasi yang dirancang khusus untuk balita dan anak-anak di Kelurahan Podorejo. Hadir sebagai ruang belajar nonformal yang menyenangkan, program ini berfokus pada penguatan literasi dasar, numerasi, karakter, dan budaya lokal.</p>
+          <p class="mb-0">Program ini juga mengintegrasikan teknologi Metaverse berbasis Hak Paten Sederhana IDS000011665 melalui platform Spatial.io untuk meningkatkan motivasi belajar anak secara imersif, sekaligus menghadirkan permainan tradisional sebagai alternatif yang memperkuat budaya lokal.</p>
+        </div>
+      </div>
+      <div class="col-lg-5">
+        <div class="card card-aksara h-100 p-4 p-lg-5">
+          <h2 class="section-title mb-4">Sasaran Peserta</h2>
+          <div class="d-grid gap-3">
+            <div class="p-3 rounded-3" style="background: var(--color-bg);">
+              <div class="fw-bold" style="color: var(--color-dark);">Balita</div>
+              <div class="text-muted small">±80 orang, didukung PKK dan Posyandu</div>
+            </div>
+            <div class="p-3 rounded-3" style="background: var(--color-bg);">
+              <div class="fw-bold" style="color: var(--color-dark);">Anak-anak</div>
+              <div class="text-muted small">±120 orang, usia SD, difasilitasi bersama RA Islamiyah, SDN Podorejo 01, 02, dan 03</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section-white py-5">
+  <div class="container">
+    <h2 class="section-title mb-4">Dokumentasi Kegiatan</h2>
+    <p class="text-muted mb-4">Kumpulan kegiatan Tunas Ngrembaka yang tersimpan di sistem admin.</p>
+    {% if dokumentasi %}
+    <div class="row g-4">
+      {% for item in dokumentasi %}
+      <div class="col-md-6 col-lg-4">
+        <div class="card card-aksara h-100 overflow-hidden">
+          {% if item.link_gambar %}
+          <img src="{{ item.link_gambar }}" class="card-img-top" alt="{{ item.judul }}">
+          {% elif item.link_video %}
+          <div class="ratio ratio-16x9 bg-body-tertiary d-flex align-items-center justify-content-center">
+            <span class="text-muted small">Video dokumentasi tersedia</span>
+          </div>
+          {% else %}
+          <div class="ratio ratio-16x9 bg-body-tertiary d-flex align-items-center justify-content-center">
+            <span class="text-muted small">Belum ada media</span>
+          </div>
+          {% endif %}
+          <div class="card-body p-4">
+            <span class="badge-aksara mb-2 d-inline-block">Dokumentasi</span>
+            <h6 class="fw-bold mb-2" style="color: var(--color-dark);">{{ item.judul }}</h6>
+            <p class="text-muted small mb-0">{{ item.deskripsi or 'Deskripsi kegiatan belum diisi.' }}</p>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+    {% else %}
+    <div class="alert alert-light border">Belum ada dokumentasi untuk kategori Tunas Ngrembaka.</div>
+    {% endif %}
+  </div>
+</section>
+
+<section class="section-bg py-5">
+  <div class="container">
+    <h2 class="section-title mb-4">Artikel Terkait</h2>
+    <p class="text-muted mb-4">Artikel yang berkaitan dengan kegiatan literasi anak dan penguatan budaya baca.</p>
+    {% if artikel %}
+    <div class="row g-4">
+      {% for item in artikel %}
+      <div class="col-md-6 col-lg-4">
+        <div class="card card-aksara h-100 overflow-hidden">
+          {% if item.gambar %}
+          <img src="{{ item.gambar }}" class="card-img-top" alt="{{ item.judul }}">
+          {% else %}
+          <div class="ratio ratio-16x9 bg-body-tertiary d-flex align-items-center justify-content-center">
+            <span class="text-muted small">Gambar artikel belum tersedia</span>
+          </div>
+          {% endif %}
+          <div class="card-body p-4 d-flex flex-column">
+            <span class="badge-aksara mb-2 d-inline-block">Artikel</span>
+            <h6 class="fw-bold mb-2" style="color: var(--color-dark);">{{ item.judul }}</h6>
+            <p class="text-muted small mb-3">{{ item.deskripsi or 'Deskripsi artikel belum diisi.' }}</p>
+            {% if item.link_pdf %}
+            <a class="btn-aksara mt-auto text-center text-decoration-none" href="{{ item.link_pdf }}" target="_blank" rel="noopener">
+              <i class="fa-solid fa-file-pdf me-1"></i>Buka PDF
+            </a>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+    {% else %}
+    <div class="alert alert-light border">Belum ada artikel untuk kategori Tunas Ngrembaka.</div>
+    {% endif %}
+  </div>
+</section>
 {% endblock %}
