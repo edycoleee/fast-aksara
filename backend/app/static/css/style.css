@@ -127,36 +127,52 @@ body {
 /* ===== Hero ===== */
 .hero-aksara {
   background:
-    radial-gradient(circle at top right, rgba(255,255,255,0.10), transparent 24%),
-    linear-gradient(135deg, #12301a 0%, #1f4b2b 48%, #2f5e34 100%);
+    radial-gradient(circle at 15% 18%, rgba(255,255,255,0.20), transparent 18%),
+    radial-gradient(circle at 82% 10%, rgba(184,215,168,0.26), transparent 24%),
+    radial-gradient(circle at 76% 86%, rgba(95,163,90,0.30), transparent 28%),
+    linear-gradient(135deg, #0e2b18 0%, #163f27 26%, #245335 60%, #3a7143 100%);
+  background-color: #12301a;
   color: var(--color-white);
   padding: 5.5rem 0;
   position: relative;
   overflow: hidden;
+  isolation: isolate;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.06);
 }
 .hero-aksara h1 {
   font-weight: 700;
   line-height: 1.3;
   letter-spacing: -0.03em;
+  text-shadow: 0 10px 30px rgba(0,0,0,0.16);
 }
 .hero-aksara::before {
   content: '';
   position: absolute;
-  inset: auto -8rem -8rem auto;
-  width: 24rem;
-  height: 24rem;
-  background: radial-gradient(circle, rgba(184,215,168,0.22), transparent 68%);
+  right: -6rem;
+  bottom: -7rem;
+  width: 26rem;
+  height: 26rem;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(184,215,168,0.28), rgba(184,215,168,0.04) 42%, transparent 72%);
   pointer-events: none;
+  z-index: 0;
 }
 .hero-aksara::after {
   content: '';
   position: absolute;
-  inset: 1.5rem auto auto -6rem;
-  width: 16rem;
-  height: 16rem;
+  left: -4rem;
+  top: 1.5rem;
+  width: 18rem;
+  height: 18rem;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(255,255,255,0.08), transparent 70%);
+  background: radial-gradient(circle, rgba(255,255,255,0.12), rgba(255,255,255,0.04) 38%, transparent 70%);
   pointer-events: none;
+  z-index: 0;
+}
+
+.hero-aksara > .container {
+  position: relative;
+  z-index: 1;
 }
 
 .hero-panel {
@@ -187,11 +203,13 @@ body {
   border-radius: 20px;
   padding: 1.25rem;
   background:
-    radial-gradient(circle at top right, rgba(255,255,255,0.18), transparent 28%),
-    linear-gradient(135deg, #4f7a4e 0%, #6f9b62 52%, #a6c88f 100%);
+    radial-gradient(circle at 18% 14%, rgba(255,255,255,0.24), transparent 14%),
+    radial-gradient(circle at 82% 12%, rgba(255,255,255,0.12), transparent 22%),
+    linear-gradient(135deg, #4f7a4e 0%, #6e9d63 42%, #a9d190 100%);
   color: var(--color-white);
   position: relative;
   overflow: hidden;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.12);
 }
 
 .hero-cover .cover-visual::after {
@@ -323,32 +341,40 @@ body {
   font-style: italic;
 }
 
-.testimony-card {
+.mini-feature-card {
   position: relative;
-  border-radius: 24px;
-  background: linear-gradient(180deg, rgba(255,255,255,0.98), rgba(248,251,246,0.96));
+  border-radius: 22px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.96), rgba(244,248,241,0.96));
+  border: 1px solid rgba(79,122,78,0.09);
+  box-shadow: 0 12px 28px rgba(18,48,26,0.05);
+  transition: transform 0.22s ease, box-shadow 0.22s ease;
+  overflow: hidden;
 }
 
-.testimony-card::before {
-  content: '“';
+.mini-feature-card::before {
+  content: '';
   position: absolute;
-  top: 0.25rem;
-  left: 1rem;
-  font-size: 4rem;
-  line-height: 1;
-  color: rgba(79,122,78,0.12);
+  inset: 0 auto auto 0;
+  width: 100%;
+  height: 4px;
+  background: linear-gradient(90deg, var(--color-primary), var(--color-accent));
 }
 
-.testimony-avatar {
+.mini-feature-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 16px 32px rgba(18,48,26,0.09);
+}
+
+.mini-feature-card .icon-wrap {
   width: 3rem;
   height: 3rem;
-  border-radius: 999px;
+  border-radius: 14px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(135deg, rgba(79,122,78,0.10), rgba(184,215,168,0.36));
+  background: linear-gradient(135deg, rgba(79,122,78,0.10), rgba(184,215,168,0.32));
   color: var(--color-dark);
-  font-weight: 700;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.4);
 }
 
 .faq-wrap .accordion-item {
