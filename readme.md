@@ -247,3 +247,35 @@ netstat -ano | findstr :8000
 # Kill proses berdasarkan PID
 taskkill /PID 1234 /F
 ```
+
+## Pembelajaran Pembuatan Website Aksara
+
+Dokumen pembelajaran proyek ini sudah tersedia di folder [docs/](docs/). Silakan pilih materi sesuai tahap belajar:
+
+- [Pembelajaran 1](docs/pembelajaran-1.md) — pengenalan proyek, tujuan, dan ruang lingkup website Aksara.
+- [Pembelajaran 2](docs/pembelajaran-2.md) — perancangan mockup dan struktur halaman utama yang akan dibuat.
+- [Pembelajaran 3](docs/pembelajaran-3.md) — implementasi HTML halaman utama dan halaman pendukung sesuai mockup.
+- [Pembelajaran 4](docs/pembelajaran-4.md) — styling dasar CSS dan tata letak responsif.
+- [Pembelajaran 5](docs/pembelajaran-5.md) — mapping objek data ke halaman dan solusi detail per file.
+- [Pembelajaran 5A](docs/pembelajaran-5a.md) — Jinja dasar dan interaksi CRUD sederhana dengan data in-memory.
+- [Pembelajaran 5B](docs/pembelajaran-5b.md) — CRUD dengan SQLite dan model data yang lebih nyata.
+- [Pembelajaran 6](docs/pembelajaran-6.md) — render data dinamis dari backend ke template Jinja2.
+- [Pembelajaran 7](docs/pembelajaran-7.md) — CRUD admin dan form untuk manajemen konten.
+- [Pembelajaran 8](docs/pembelajaran-8.md) — skema database lanjutan, model, seed, dan pengelolaan data.
+- [Pembelajaran 9](docs/pembelajaran-9.md) — autentikasi admin, role, dan keamanan upload file.
+- [Pembelajaran 10](docs/pembelajaran-10.md) — unit test API dengan Pytest untuk validasi endpoint.
+- [Pembelajaran 11](docs/pembelajaran-11.md) — penghubungan full flow dari form admin ke database sampai halaman publik.
+- [Pembelajaran 12](docs/pembelajaran-12.md) — deployment aplikasi dengan Docker Compose.
+- [Pembelajaran 13](docs/pembelajaran-13.md) — hosting, domain, dan Cloudflare Tunnel untuk akses publik.
+
+Materi tambahan yang relevan:
+
+- [Panduan Pengguna](docs/user.md) — panduan penggunaan halaman publik untuk pengguna umum.
+- [Panduan Admin](docs/admin.md) — panduan login, CRUD, dan pengelolaan konten admin.
+- [Panduan Tunneling](docs/tunneling.md) — langkah menghubungkan server lokal ke domain publik lewat Cloudflare Tunnel.
+- [Panduan Domain / Reverse Proxy](docs/domain.md) — panduan konfigurasi domain dan proxy jika digunakan di server nyata.
+- [Referensi Teknis Aplikasi](docs/fast-aksara.md) — dokumentasi teknis aplikasi dan struktur implementasi.
+
+Catatan: urutan pembelajaran bisa disesuaikan dengan kebutuhan kelas, namun dokumen ini berfungsi sebagai indeks utama untuk belajar dari awal sampai deployment.
+
+
