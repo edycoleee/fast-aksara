@@ -263,3 +263,57 @@ Waktu:
 - Gunakan pola "lihat hasil dulu -> pahami kode -> praktik kecil -> evaluasi".
 - Setiap pertemuan wajib ada output visual (halaman, tabel, form, atau fitur berjalan).
 - Bagi peran kelompok: tim frontend, tim backend, tim data, lalu integrasi bersama.
+
+
+
+
+
+Landing/Beranda
+- Navbar
+logo| beranda | visi | profil aksara | profil kelurahan | e-library | tunas | karya | cakra | kersa | hubungi kami 
+
+- Hero 
+
+BUKU UNTUK SEMUA GENERASI
+PPK ORMAWA 2026
+E-LIBRARY PPK ORMAWA
+NGREMBAKA AKSARA
+Ngrembaka Aksara adalah program penguatan literasi dan edupreneur skill lintas generasi yang hadir di Kelurahan Podorejo, Kecamatan Ngaliyan, Kota Semarang. Digagas oleh mahasiswa SGL PGSD Universitas Negeri Semarang melalui PPK ORMAWA tahun 2026.
+(Selengkapnya)
+(E-Library)
+
+--------------------
+
+AKSES CEPAT
+Baca, jelajahi, dan temukan program
+Portal Literasi
+Baca lebih mudah
+Koleksi belajar, program, dan pojok literasi dalam satu ruang yang rapi, ringan, dan mudah dijelajahi.
+
+E-Library
+Pojok Literasi
+Artikel
+E-LIBRARY
+5 artikel
+POJOK LITERASI
+3 artikel
+Literasi Lintas Generasi
+Tumbuh cerdas, mandiri, dan berdaya lewat bacaan yang berkelanjutan.
+Modul Pembelajaran
+Materi belajar utama dan panduan pembaca
+Buku Cerita
+Cerita lokal, karakter, dan imajinasi
+Tunas Ngrembaka
+Literasi anak, numerasi, dan budaya
+"Tumbuh dan berkembangnya ilmu pengetahuan"
+
+
+
+- Buku untuk semua : 
+- Kenapa Terasa mudah:
+- Ringkasan Program
+- PERTANYAAN YANG SERING DITANYAKAN
+- KATALOG UNGGULAN
+- KOLEKSI DIGITAL
+- PROGRAM LINTAS GENERASI
+- Footer
