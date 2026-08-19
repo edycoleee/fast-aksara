@@ -31,7 +31,10 @@
         <div class="col-lg-4">
           <div class="card card-aksara h-100 overflow-hidden">
             {% if item.link_gambar or item.gambar %}
-              <img src="{{ item.link_gambar or item.gambar }}" class="card-img-top" alt="{{ item.judul }}">
+              <button type="button" class="program-image-zoom-trigger p-0 border-0 bg-transparent w-100" data-bs-toggle="modal" data-bs-target="#programImageModal" aria-label="Buka gambar detail {{ item.judul }}">
+                <img src="{{ item.link_gambar or item.gambar }}" class="card-img-top" alt="{{ item.judul }}">
+              </button>
+              <div class="small text-muted px-4 pt-3">Klik gambar untuk melihat versi lebih besar.</div>
             {% elif item.link_video %}
               {% if 'youtube' in item.link_video or 'youtu.be' in item.link_video %}
               <div class="ratio ratio-16x9">
@@ -94,4 +97,20 @@
     </div>
   </div>
 </section>
+
+{% if item.link_gambar or item.gambar %}
+<div class="modal fade" id="programImageModal" tabindex="-1" aria-labelledby="programImageModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-xl">
+    <div class="modal-content border-0 shadow-lg program-image-modal-content">
+      <div class="modal-header border-0 pb-0">
+        <h5 class="modal-title fw-bold" id="programImageModalLabel">{{ item.judul }}</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body pt-2">
+        <img src="{{ item.link_gambar or item.gambar }}" class="program-image-modal-view" alt="{{ item.judul }}">
+      </div>
+    </div>
+  </div>
+</div>
+{% endif %}
 {% endblock %}

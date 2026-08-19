@@ -561,6 +561,22 @@ body {
   box-shadow: 0 16px 34px rgba(18,48,26,0.08);
 }
 
+.program-image-zoom-trigger {
+  cursor: zoom-in;
+}
+
+.program-image-modal-content {
+  background: linear-gradient(180deg, rgba(255,255,255,0.99), rgba(248,251,246,0.98));
+}
+
+.program-image-modal-view {
+  width: 100%;
+  max-height: 80vh;
+  object-fit: contain;
+  border-radius: 14px;
+  display: block;
+}
+
 .faq-wrap .accordion-item {
   border: 1px solid rgba(79,122,78,0.08);
   border-radius: 18px;
