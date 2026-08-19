@@ -7,6 +7,48 @@
       <h1 class="section-title mb-0">Kelola Artikel</h1>
       <a href="/admin" class="btn btn-sm btn-outline-secondary"><i class="fa-solid fa-arrow-left me-1"></i>Dashboard</a>
     </div>
+
+    {% if request.query_params.get('updated') == '1' %}
+    <div class="alert alert-success py-2" role="alert">
+      Data artikel berhasil diperbarui.
+    </div>
+    {% endif %}
+
+    {% if edit_item %}
+    <div class="card card-aksara p-4 mb-4 border-warning-subtle">
+      <div class="d-flex justify-content-between align-items-center gap-2 mb-3">
+        <h5 class="fw-bold mb-0" style="color:var(--color-dark);"><i class="fa-solid fa-pen-to-square me-2"></i>Edit Artikel</h5>
+        <a href="/admin/artikel" class="btn btn-sm btn-outline-secondary">Batal Edit</a>
+      </div>
+      <form method="post" action="/admin/artikel/edit/{{ edit_item.id }}" enctype="multipart/form-data">
+        <div class="row g-3">
+          <div class="col-md-6"><label class="form-label fw-semibold">Judul</label><input name="judul" class="form-control" value="{{ edit_item.judul }}" required /></div>
+          <div class="col-md-6">
+            <label class="form-label fw-semibold">Kategori</label>
+            <select name="kategori" class="form-select" required>
+              <option value="artikel-tunas" {{ 'selected' if edit_item.kategori == 'artikel-tunas' else '' }}>Artikel Tunas</option>
+              <option value="artikel-cakra" {{ 'selected' if edit_item.kategori == 'artikel-cakra' else '' }}>Artikel Cakra</option>
+              <option value="artikel-kersa-kesehatan" {{ 'selected' if edit_item.kategori == 'artikel-kersa-kesehatan' else '' }}>Artikel Kersa Kesehatan</option>
+              <option value="artikel-kersa-keterampilan" {{ 'selected' if edit_item.kategori == 'artikel-kersa-keterampilan' else '' }}>Artikel Kersa Keterampilan</option>
+            </select>
+          </div>
+          <div class="col-md-6"><label class="form-label fw-semibold">Ganti Gambar Cover <small class="text-muted">(opsional)</small></label><input type="file" name="gambar_file" class="form-control" accept="image/jpeg,image/png,image/webp" /></div>
+          <div class="col-md-6">
+            <label class="form-label fw-semibold">PDF Saat Ini</label>
+            <input class="form-control" value="{{ 'Tersedia' if edit_item.link_pdf else 'Belum ada PDF' }}" disabled />
+          </div>
+          <div class="col-12">
+            <div class="alert alert-warning py-2 mb-0 small">
+              File PDF yang sudah di-upload tidak dapat diubah dari menu edit untuk mencegah file sampah di server.
+            </div>
+          </div>
+          <div class="col-12"><label class="form-label fw-semibold">Deskripsi</label><textarea name="deskripsi" class="form-control" rows="2">{{ edit_item.deskripsi or '' }}</textarea></div>
+          <div class="col-12"><button type="submit" class="btn-aksara"><i class="fa-solid fa-floppy-disk me-1"></i>Update</button></div>
+        </div>
+      </form>
+    </div>
+    {% endif %}
+
     <div class="card card-aksara p-4 mb-5">
       <h5 class="fw-bold mb-3" style="color:var(--color-dark);"><i class="fa-solid fa-plus me-2"></i>Tambah Artikel</h5>
       <form method="post" action="/admin/artikel/tambah" enctype="multipart/form-data">
@@ -36,11 +78,19 @@
           {% for item in items %}
           <tr>
             <td>{{ loop.index }}</td><td>{{ item.judul }}</td>
-            <td><span class="badge-aksara">{{ item.kategori }}</span></td>
             <td>
-              <form method="post" action="/admin/artikel/hapus/{{ item.id }}" onsubmit="return confirm('Hapus?')">
-                <button type="submit" class="btn btn-sm btn-outline-danger"><i class="fa-solid fa-trash"></i></button>
-              </form>
+              <span class="badge-aksara">{{ item.kategori }}</span>
+              {% if item.link_pdf %}
+              <span class="badge text-bg-warning ms-1">PDF terkunci</span>
+              {% endif %}
+            </td>
+            <td>
+              <div class="d-flex gap-2">
+                <a href="/admin/artikel/edit/{{ item.id }}" class="btn btn-sm btn-outline-primary"><i class="fa-solid fa-pen"></i></a>
+                <form method="post" action="/admin/artikel/hapus/{{ item.id }}" onsubmit="return confirm('Hapus?')">
+                  <button type="submit" class="btn btn-sm btn-outline-danger"><i class="fa-solid fa-trash"></i></button>
+                </form>
+              </div>
             </td>
           </tr>
           {% endfor %}

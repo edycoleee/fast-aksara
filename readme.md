@@ -28,6 +28,52 @@ Website literasi berbasis FastAPI + Jinja2 + SQLite dengan admin CMS untuk menge
 	- CRUD Artikel (`/admin/artikel`)
 	- Pengaturan website (`/admin/settings`)
 
+## Preview Tampilan
+
+Berikut capture tampilan aplikasi yang sudah terbentuk agar dokumentasi lebih informatif.
+
+### Halaman Publik
+
+<p><strong>Landing Page</strong></p>
+<img src="docs/images/readme/landing-home.png" alt="Landing Page" width="900" />
+
+<p><strong>Pojok Literasi Tunas</strong></p>
+<img src="docs/images/readme/pojok-tunas.png" alt="Pojok Literasi Tunas" width="900" />
+
+<p><strong>E-Library</strong></p>
+<img src="docs/images/readme/elibrary.png" alt="E-Library" width="900" />
+
+### Admin CMS
+
+<p><strong>Login Admin</strong></p>
+<img src="docs/images/readme/admin-login.png" alt="Login Admin" width="900" />
+
+<p><strong>Dashboard Admin</strong></p>
+<img src="docs/images/readme/admin-dashboard.png" alt="Dashboard Admin" width="900" />
+
+<p><strong>Kelola Dokumentasi</strong></p>
+<img src="docs/images/readme/admin-dokumentasi.png" alt="Kelola Dokumentasi Admin" width="900" />
+
+<p><strong>Kelola E-Library</strong></p>
+<img src="docs/images/readme/admin-elibrary.png" alt="Kelola E-Library Admin" width="900" />
+
+<p><strong>Kelola Artikel</strong></p>
+<img src="docs/images/readme/admin-artikel.png" alt="Kelola Artikel Admin" width="900" />
+
+<p><strong>Pengaturan Situs</strong></p>
+<img src="docs/images/readme/admin-settings.png" alt="Pengaturan Situs Admin" width="900" />
+
+### Preview Mobile (Contoh)
+
+<p><strong>Landing Page (Mobile)</strong></p>
+<img src="docs/images/readme/mobile-landing-home.png" alt="Landing Page Mobile" width="360" />
+
+<p><strong>Pojok Literasi Tunas (Mobile)</strong></p>
+<img src="docs/images/readme/mobile-pojok-tunas.png" alt="Pojok Literasi Tunas Mobile" width="360" />
+
+<p><strong>Dashboard Admin (Mobile)</strong></p>
+<img src="docs/images/readme/mobile-admin-dashboard.png" alt="Dashboard Admin Mobile" width="360" />
+
 ## Dokumentasi
 
 Panduan berikut disediakan agar pengguna dan admin bisa langsung membuka alur yang dibutuhkan:

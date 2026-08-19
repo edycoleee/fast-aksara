@@ -68,7 +68,20 @@ def dokumentasi_admin_page(request: Request, admin=Depends(require_admin)):
 @router.get("/elibrary", name="admin_elibrary")
 def elibrary_list(request: Request, db: Session = Depends(get_db), admin=Depends(require_admin)):
     items = db.query(ELibrary).order_by(ELibrary.created_at.desc()).all()
-    return templates.TemplateResponse(request, "admin/elibrary_form.html", {"items": items})
+    return templates.TemplateResponse(request, "admin/elibrary_form.html", {
+        "items": items,
+        "edit_item": None,
+    })
+
+
+@router.get("/elibrary/edit/{item_id}")
+def elibrary_edit_page(item_id: int, request: Request, db: Session = Depends(get_db), admin=Depends(require_admin)):
+    items = db.query(ELibrary).order_by(ELibrary.created_at.desc()).all()
+    edit_item = db.query(ELibrary).filter(ELibrary.id == item_id).first()
+    return templates.TemplateResponse(request, "admin/elibrary_form.html", {
+        "items": items,
+        "edit_item": edit_item,
+    })
 
 
 @router.post("/elibrary/tambah")
@@ -87,7 +100,7 @@ async def elibrary_tambah(
         gambar=gambar_path,
     ))
     db.commit()
-    return RedirectResponse("/admin/elibrary", status_code=302)
+    return RedirectResponse("/admin/elibrary?updated=1", status_code=302)
 
 
 @router.post("/elibrary/hapus/{item_id}")
@@ -101,12 +114,53 @@ def elibrary_hapus(item_id: int, db: Session = Depends(get_db), admin=Depends(re
     return RedirectResponse("/admin/elibrary", status_code=302)
 
 
+@router.post("/elibrary/edit/{item_id}")
+async def elibrary_edit(
+    item_id: int,
+    judul: str = Form(...), kategori: str = Form(...),
+    deskripsi: str = Form(""), link: str = Form(""),
+    gambar_file: UploadFile = File(None),
+    db: Session = Depends(get_db), admin=Depends(require_admin),
+):
+    item = db.query(ELibrary).filter(ELibrary.id == item_id).first()
+    if item:
+        item.judul = judul
+        item.kategori = kategori
+        item.deskripsi = deskripsi
+
+        # Do not alter uploaded PDF metadata during edit to avoid orphan files.
+        if item.link_type != "internal":
+            item.link = link
+            item.link_type = "external"
+
+        if gambar_file and gambar_file.filename:
+            new_image = await save_image(gambar_file)
+            if new_image:
+                delete_file(item.gambar)
+                item.gambar = new_image
+        db.commit()
+    return RedirectResponse("/admin/elibrary", status_code=302)
+
+
 # ===== DOKUMENTASI =====
 
 @router.get("/dokumentasi", name="admin_dokumentasi")
 def dokumentasi_list(request: Request, db: Session = Depends(get_db), admin=Depends(require_admin)):
     items = db.query(Dokumentasi).order_by(Dokumentasi.created_at.desc()).all()
-    return templates.TemplateResponse(request, "admin/dokumentasi_form.html", {"items": items})
+    return templates.TemplateResponse(request, "admin/dokumentasi_form.html", {
+        "items": items,
+        "edit_item": None,
+    })
+
+
+@router.get("/dokumentasi/edit/{item_id}")
+def dokumentasi_edit_page(item_id: int, request: Request, db: Session = Depends(get_db), admin=Depends(require_admin)):
+    items = db.query(Dokumentasi).order_by(Dokumentasi.created_at.desc()).all()
+    edit_item = db.query(Dokumentasi).filter(Dokumentasi.id == item_id).first()
+    return templates.TemplateResponse(request, "admin/dokumentasi_form.html", {
+        "items": items,
+        "edit_item": edit_item,
+    })
 
 
 @router.post("/dokumentasi/tambah")
@@ -120,7 +174,7 @@ async def dokumentasi_tambah(
     db.add(Dokumentasi(judul=judul, kategori=kategori, deskripsi=deskripsi,
                        link_gambar=gambar_path, link_video=link_video))
     db.commit()
-    return RedirectResponse("/admin/dokumentasi", status_code=302)
+    return RedirectResponse("/admin/dokumentasi?updated=1", status_code=302)
 
 
 @router.post("/dokumentasi/hapus/{item_id}")
@@ -133,12 +187,49 @@ def dokumentasi_hapus(item_id: int, db: Session = Depends(get_db), admin=Depends
     return RedirectResponse("/admin/dokumentasi", status_code=302)
 
 
+@router.post("/dokumentasi/edit/{item_id}")
+async def dokumentasi_edit(
+    item_id: int,
+    judul: str = Form(...), kategori: str = Form(...),
+    deskripsi: str = Form(""), link_video: str = Form(""),
+    gambar_file: UploadFile = File(None),
+    db: Session = Depends(get_db), admin=Depends(require_admin),
+):
+    item = db.query(Dokumentasi).filter(Dokumentasi.id == item_id).first()
+    if item:
+        item.judul = judul
+        item.kategori = kategori
+        item.deskripsi = deskripsi
+        item.link_video = link_video
+
+        if gambar_file and gambar_file.filename:
+            new_image = await save_image(gambar_file)
+            if new_image:
+                delete_file(item.link_gambar)
+                item.link_gambar = new_image
+        db.commit()
+    return RedirectResponse("/admin/dokumentasi", status_code=302)
+
+
 # ===== ARTIKEL =====
 
 @router.get("/artikel", name="admin_artikel")
 def artikel_list(request: Request, db: Session = Depends(get_db), admin=Depends(require_admin)):
     items = db.query(Artikel).order_by(Artikel.created_at.desc()).all()
-    return templates.TemplateResponse(request, "admin/artikel_form.html", {"items": items})
+    return templates.TemplateResponse(request, "admin/artikel_form.html", {
+        "items": items,
+        "edit_item": None,
+    })
+
+
+@router.get("/artikel/edit/{item_id}")
+def artikel_edit_page(item_id: int, request: Request, db: Session = Depends(get_db), admin=Depends(require_admin)):
+    items = db.query(Artikel).order_by(Artikel.created_at.desc()).all()
+    edit_item = db.query(Artikel).filter(Artikel.id == item_id).first()
+    return templates.TemplateResponse(request, "admin/artikel_form.html", {
+        "items": items,
+        "edit_item": edit_item,
+    })
 
 
 @router.post("/artikel/tambah")
@@ -153,7 +244,7 @@ async def artikel_tambah(
     db.add(Artikel(judul=judul, kategori=kategori, deskripsi=deskripsi,
                    link_pdf=pdf_path, gambar=gambar_path))
     db.commit()
-    return RedirectResponse("/admin/artikel", status_code=302)
+    return RedirectResponse("/admin/artikel?updated=1", status_code=302)
 
 
 @router.post("/artikel/hapus/{item_id}")
@@ -163,6 +254,30 @@ def artikel_hapus(item_id: int, db: Session = Depends(get_db), admin=Depends(req
         delete_file(item.gambar)
         delete_file(item.link_pdf)
         db.delete(item)
+        db.commit()
+    return RedirectResponse("/admin/artikel", status_code=302)
+
+
+@router.post("/artikel/edit/{item_id}")
+async def artikel_edit(
+    item_id: int,
+    judul: str = Form(...), kategori: str = Form(...),
+    deskripsi: str = Form(""),
+    gambar_file: UploadFile = File(None),
+    db: Session = Depends(get_db), admin=Depends(require_admin),
+):
+    item = db.query(Artikel).filter(Artikel.id == item_id).first()
+    if item:
+        item.judul = judul
+        item.kategori = kategori
+        item.deskripsi = deskripsi
+
+        # PDF is intentionally not editable here to prevent orphan files on server.
+        if gambar_file and gambar_file.filename:
+            new_image = await save_image(gambar_file)
+            if new_image:
+                delete_file(item.gambar)
+                item.gambar = new_image
         db.commit()
     return RedirectResponse("/admin/artikel", status_code=302)
 
