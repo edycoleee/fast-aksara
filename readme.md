@@ -1,198 +1,419 @@
-# Branch Pembelajaran HTML & CSS
+# Branch Pembelajaran JavaScript
 
-Branch ini dibuat khusus untuk belajar HTML dan CSS dari materi dasar sampai siap membuat layout web yang rapi dan responsif.
+Branch ini berisi materi belajar JavaScript yang runtut dan praktis untuk membangun aplikasi web dari dasar sampai siap dipakai di proyek nyata.
 
-Referensi utama: [00-html.md](00-html.md)
+Referensi utama: `02-js.md`
 
-## Tujuan branch ini
+---
 
-Tujuan dari pembelajaran ini adalah agar siswa mampu:
-- memahami struktur dasar halaman HTML,
-- menggunakan tag HTML yang sering dipakai,
-- mengatur layout dengan CSS,
-- memahami display, flexbox, grid, dan positioning,
-- membuat navbar, card, hero section, dan halaman sederhana,
-- membuat layout yang responsif untuk layar kecil dan besar.
+## Tujuan belajar
+
+Tujuan utama dari pembelajaran ini adalah supaya siswa mampu:
+- memahami logika pemrograman JavaScript,
+- menulis program sederhana dengan benar,
+- mengubah tampilan HTML melalui DOM,
+- menangkap interaksi user dengan event,
+- memvalidasi form,
+- menggunakan array dan object,
+- belajar ES6 modern,
+- berinteraksi dengan API dan backend,
+- membuat halaman web yang lebih hidup dan dinamis.
 
 ---
 
 ## Urutan belajar yang disarankan
 
-### 1. HTML dasar
-Belajar tentang struktur dokumen HTML:
-- `<!DOCTYPE html>`
-- `<html>`, `<head>`, `<body>`
-- judul halaman dengan `<title>`
-- heading, paragraph, list, link, button, form
+Materi yang ada di `02-js.md` mengikuti urutan yang logis:
 
-### 2. CSS dasar
-Belajar cara menata tampilan:
-- warna,
-- font,
-- margin,
-- padding,
-- border,
-- background,
-- width dan height.
+1. Dasar JavaScript
+2. Fungsi dan scope
+3. Array dan object
+4. DOM (Document Object Model)
+5. Event listener
+6. Form validation
+7. ES6 modern
+8. Async JS dan fetch
+9. Manipulasi data di frontend
+10. State dan pola aplikasi sederhana
+11. Debugging dan latihan proyek nyata
 
-### 3. Display dan layout
-Pahami perbedaan jenis display:
-- `block`
-- `inline`
-- `inline-block`
-- `flex`
-- `grid`
-- `none`
+Jangan langsung masuk ke framework. Kuatkan dulu konsep dasar JavaScript, baru nanti framework akan terasa lebih mudah.
 
-### 4. Flexbox
-Flexbox adalah teknik utama untuk membuat layout modern.
+---
 
-Contoh konsep yang dipelajari:
-- `display: flex`
-- `flex-direction`
-- `justify-content: center | space-between`
-- `align-items`
-- `gap`
-- `flex-wrap`
+## 1. Dasar JavaScript
 
-### 5. Responsive design
-Belajar bagaimana tampilan berubah di layar kecil dengan media query:
+Ini adalah tahap paling penting.
 
-```css
-@media (max-width: 600px) {
-  .nav {
-    flex-direction: column;
-  }
+Yang harus dikuasai:
+- variabel `let` dan `const`
+- tipe data string, number, boolean, null, undefined
+- operator aritmatika, perbandingan, dan logika
+- kondisi `if`, `else if`, `else`
+- perulangan `for` dan `while`
+- fungsi dasar
+
+### Contoh:
+```js
+let nama = "Aksara";
+const usia = 16;
+
+if (usia >= 17) {
+  console.log("Dewasa");
+} else {
+  console.log("Masih siswa");
+}
+
+for (let i = 1; i <= 3; i++) {
+  console.log("Iterasi ke-" + i);
 }
 ```
 
-### 6. Komponen layout populer
-Latihan membuat elemen web seperti:
-- navbar,
-- hero section,
-- tombol CTA,
-- card produk,
-- gallery,
-- footer,
-- layout 2 kolom atau 3 kolom.
+### Fokus latihan:
+- menghitung jumlah bilangan,
+- menentukan nilai siswa,
+- menampilkan nama dengan urutan tertentu.
 
 ---
 
-## Topik utama dari materi HTML/CSS
+## 2. Fungsi dan scope
 
-### 1. Template halaman minimal
-```html
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dasar HTML CSS</title>
-</head>
-<body>
+Fungsi adalah blok kode yang bisa dipakai berulang.
 
-</body>
-</html>
+### Yang dipelajari:
+- function declaration,
+- function expression,
+- parameter dan return value,
+- arrow function,
+- scope lokal dan global,
+- hoisting dasar.
+
+### Contoh:
+```js
+function hitungLuas(panjang, lebar) {
+  return panjang * lebar;
+}
+
+const hasil = hitungLuas(5, 4);
+console.log(hasil);
+
+const tambah = (a, b) => a + b;
+console.log(tambah(3, 7));
 ```
 
-### 2. Display
-Jenis layout dasar:
-- block = turun satu baris
-- inline = sebaris
-- inline-block = dapat ukuran tetap
-- flex = layout modern
-- grid = layout kompleks
-- none = sembunyikan
-
-### 3. Flexbox latihan
-Contoh latihan dasar:
-- baris horizontal,
-- menu responsif,
-- center layout,
-- gallery wrap,
-- header dengan logo-menu-aksi.
-
-### 4. Box model
-Pahami:
-- margin,
-- padding,
-- border,
-- width,
-- height,
-- box-sizing.
-
-### 5. Positioning
-Belajar konsep posisi elemen:
-- static
-- relative
-- absolute
-- fixed
-- sticky
-
-### 6. Typography dan spacing
-Gunakan:
-- font-size,
-- font-weight,
-- line-height,
-- letter-spacing,
-- text-align.
-
-### 7. Styling visual
-Gunakan:
-- border-radius,
-- box-shadow,
-- background,
-- gradient,
-- hover effect.
+### Kegunaan:
+- validasi form,
+- kalkulasi data,
+- filter daftar,
+- buka/tutup modal,
+- kirim data ke API.
 
 ---
 
-## Rencana latihan
+## 3. Array dan object
 
-### Latihan 1: Struktur halaman sederhana
-Buat satu halaman yang berisi:
-- header,
-- nav,
-- main,
-- section,
-- footer.
+Data di aplikasi web biasanya berbentuk array dan object.
 
-### Latihan 2: Flexbox layout
-Buat:
-- 3 card berdampingan,
-- navbar dengan logo dan menu,
-- layout center.
+### Yang dipelajari:
+- array: `push`, `pop`, `shift`, `unshift`, `map`, `filter`, `find`
+- object: properti dan method
+- nested object
+- destructuring
 
-### Latihan 3: Responsif
-Ubah layout saat layar kecil menjadi:
-- menu turun ke bawah,
-- card berubah satu kolom,
-- content rapi di layar mobile.
+### Contoh:
+```js
+const artikel = [
+  { judul: "Aksara Jawa", kategori: "Budaya" },
+  { judul: "Sejarah Desa", kategori: "Sejarah" },
+  { judul: "Kebudayaan", kategori: "Budaya" }
+];
 
-### Latihan 4: Project mini
-Buat halaman seperti:
-- landing page sekolah,
-- halaman profil desa,
-- halaman produk sederhana,
-- halaman portofolio.
+const hasil = artikel.filter(item => item.kategori === "Budaya");
+console.log(hasil);
+
+const { judul } = artikel[0];
+console.log(judul);
+```
+
+### Latihan yang cocok:
+- menampilkan semua judul artikel,
+- filter artikel berdasarkan kategori,
+- ubah format object menjadi array baru.
 
 ---
 
-## Target akhir
+## 4. DOM (Document Object Model)
 
-Setelah mempelajari materi ini, siswa diharapkan bisa membuat halaman web sederhana yang rapi, responsif, dan siap dikembangkan ke tahap berikutnya seperti:
-- JavaScript dasar,
+DOM adalah cara JavaScript berinteraksi dengan HTML.
+
+### Yang dipelajari:
+- `getElementById()`
+- `querySelector()`
+- `querySelectorAll()`
+- `textContent`
+- `innerHTML`
+- `createElement()`
+- `remove()`
+
+### Contoh:
+```js
+const judul = document.querySelector("h1");
+judul.textContent = "Selamat Datang";
+
+const tombol = document.getElementById("tombol");
+tombol.addEventListener("click", () => {
+  alert("Tombol diklik");
+});
+```
+
+### Kenapa penting?
+Tanpa DOM, JavaScript tidak bisa:
+- mengubah teks,
+- menambah atau menghapus elemen,
+- menutup modal,
+- update data di halaman,
+- membuat halaman menjadi interaktif.
+
+---
+
+## 5. Event dan interaksi user
+
+Event adalah aksi yang dilakukan user, seperti klik, input, submit, dan hover.
+
+### Event utama:
+- `click`
+- `submit`
+- `input`
+- `change`
+- `keyup`
+- `mouseover`
+- `focus`
+- `blur`
+
+### Contoh:
+```js
+const button = document.querySelector("button");
+button.addEventListener("click", function () {
+  console.log("User menekan tombol");
+});
+
+const input = document.querySelector("input");
+input.addEventListener("input", function () {
+  console.log(input.value);
+});
+```
+
+### Penerapan di aplikasi:
+- tombol login,
+- tombol tambah artikel,
+- tombol edit dan hapus,
+- form pencarian,
+- menu mobile,
+- modal konfirmasi.
+
+---
+
+## 6. Validasi form dan data user
+
+Validasi sangat penting untuk menjaga data masuk dengan benar.
+
+### Yang dipelajari:
+- `required`
+- cek string kosong
+- cek panjang teks
+- cek email
+- cek angka
+- tampilkan pesan error
+
+### Contoh:
+```js
+const form = document.querySelector("form");
+
+form.addEventListener("submit", (e) => {
+  e.preventDefault();
+
+  const nama = document.getElementById("nama").value.trim();
+
+  if (!nama) {
+    alert("Nama tidak boleh kosong");
+    return;
+  }
+
+  console.log("Data valid:", nama);
+});
+```
+
+### Kegunaan:
+- form login admin,
+- form tambah artikel,
+- form edit dokumentasi,
+- form upload,
+- form pencarian,
+- validasi data user.
+
+---
+
+## 7. ES6 modern
+
+Setelah dasar kuat, siswa masuk ke JavaScript modern.
+
+### Yang dipelajari:
+- template literals: `` `teks ${variabel}` ``
+- spread operator: `...`
+- destructuring
+- default parameter
+- rest parameter
+- optional chaining: `?.`
+- modules: `import` dan `export`
+
+### Contoh:
+```js
+const nama = "Aksara";
+console.log(`Halo ${nama}`);
+
+const data = [1, 2, 3];
+const baru = [...data, 4];
+console.log(baru);
+
+const user = { nama: "Admin", role: "admin" };
+const { nama: namaUser } = user;
+console.log(namaUser);
+```
+
+---
+
+## 8. Async JavaScript dan fetch
+
+JavaScript modern juga harus bisa berkomunikasi dengan server.
+
+### Yang dipelajari:
+- `fetch()`
+- Promise
+- `async` dan `await`
+- menangani error
+- mengambil data dari API
+
+### Contoh:
+```js
+async function ambilData() {
+  const response = await fetch("/api/artikel");
+  const data = await response.json();
+  console.log(data);
+}
+```
+
+### Kegunaannya:
+- mengambil artikel dari backend,
+- menampilkan data ke halaman,
+- menambah dan menghapus data tanpa reload,
+- membuat aplikasi lebih dinamis.
+
+---
+
+## 9. Manipulasi data di frontend
+
+Setelah memahami array, object, DOM, dan API, siswa mulai memanipulasi data dengan lebih nyata.
+
+### Fokus:
+- menampilkan list data ke HTML,
+- filter data berdasarkan kategori,
+- mencari item,
+- menambah item baru,
+- mengubah item yang ada,
+- menampilkan status kosong jika data tidak ada.
+
+---
+
+## 10. State dan pola aplikasi sederhana
+
+Pada level lanjut, JavaScript tidak hanya dipakai untuk satu tombol, tapi untuk mengelola state aplikasi.
+
+### Yang dipelajari:
+- data aplikasi di variabel,
+- saat data berubah, tampilan ikut berubah,
+- fungsi reusable,
+- pola dasar aplikasi interaktif.
+
+### Contoh:
+- daftar artikel yang bisa ditambah,
+- menu aktif saat diklik,
+- filter kategori,
+- modal konfirmasi,
+- tombol edit dan delete.
+
+---
+
+## 11. Debugging dan latihan proyek nyata
+
+Pembelajaran JavaScript tidak lengkap tanpa latihan debugging.
+
+### Praktik penting:
+- membuka console browser,
+- mengecek `console.log()`,
+- membaca error message,
+- memeriksa elemen HTML di inspect,
+- mencoba satu perubahan kecil lalu cek hasilnya.
+
+### Latihan proyek:
+- halaman profil sederhana,
+- daftar artikel dengan tombol hapus,
+- form tambah data,
+- sidebar menu interaktif,
+- landing page sekolah/desa,
+- aplikasi CRUD sederhana.
+
+---
+
+## Target akhir pembelajaran
+
+Setelah mempelajari materi ini, siswa diharapkan mampu:
+- menulis JavaScript dasar dengan benar,
+- memanipulasi DOM,
+- menangani event user,
+- memvalidasi form,
+- menggunakan array dan object,
+- berinteraksi dengan backend API,
+- membuat halaman yang hidup dan interaktif.
+
+Ini adalah bekal utama sebelum masuk ke tahap berikutnya:
 - Jinja2,
-- FastAPI + template,
-- CRUD web app.
+- FastAPI,
+- integrasi frontend-backend,
+- CRUD aplikasi web.
 
 ---
 
-## Catatan
+## Kesimpulan
 
-Branch ini adalah tahap awal sebelum masuk ke JavaScript dan Jinja2. Artinya, fokus utama sekarang adalah membangun fondasi HTML dan CSS dengan latihan yang praktis dan bertahap.
+JavaScript adalah bahasa yang membuat web menjadi interaktif.
 
-Jika ingin lanjut ke tahap berikutnya, langkah berikutnya adalah:
-1. JavaScript dasar,
-2. Jinja2 untuk FastAPI,
-3. Integrasi HTML + CSS + JS + FastAPI.
+- HTML = struktur halaman
+- CSS = tampilan halaman
+- JavaScript = logika dan interaksi
+
+Tanpa JavaScript, website hanya statis. Dengan JavaScript, halaman bisa:
+- bereaksi saat user klik,
+- menampilkan data dinamis,
+- mengubah isi halaman,
+- memvalidasi input,
+- mengirim dan menerima data dari server.
+
+Itulah alasan JavaScript sangat penting dalam membangun aplikasi web modern.
+
+---
+
+## Rangkuman singkat
+
+JavaScript untuk aplikasi web ini belajar dari:
+- dasar program,
+- fungsi,
+- array/object,
+- DOM,
+- event,
+- validasi,
+- ES6,
+- async/fetch,
+- interaksi data,
+- proyek nyata.
+
+Semua itu akan menjadi bekal utama sebelum masuk ke bagian Jinja2 dan FastAPI.
