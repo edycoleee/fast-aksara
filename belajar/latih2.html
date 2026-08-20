@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Responsif: Baris → Kolom</title>
+    <style>
+        .nav {
+            display: flex;
+            flex-direction: row;
+            gap: 15px;
+        }
+
+        @media (max-width: 600px) {
+            .nav {
+                flex-direction: column;
+                /* berubah jadi vertikal */
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="nav">
+        <a>Home</a>
+        <a>About</a>
+        <a>Contact</a>
+    </div>
+</body>
+
+</html>
