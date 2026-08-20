@@ -1,419 +1,486 @@
-# Branch Pembelajaran JavaScript
+# Branch Pembelajaran Jinja2
 
-Branch ini berisi materi belajar JavaScript yang runtut dan praktis untuk membangun aplikasi web dari dasar sampai siap dipakai di proyek nyata.
+Branch ini dibuat untuk memahami Jinja2 sebagai template engine di FastAPI. Fokus pembelajaran adalah bagaimana backend mengirim data ke HTML dan bagaimana template menampilkan data secara dinamis.
 
-Referensi utama: `02-js.md`
+Referensi utama: `03-jinja.md`
 
 ---
 
 ## Tujuan belajar
 
-Tujuan utama dari pembelajaran ini adalah supaya siswa mampu:
-- memahami logika pemrograman JavaScript,
-- menulis program sederhana dengan benar,
-- mengubah tampilan HTML melalui DOM,
-- menangkap interaksi user dengan event,
-- memvalidasi form,
-- menggunakan array dan object,
-- belajar ES6 modern,
-- berinteraksi dengan API dan backend,
-- membuat halaman web yang lebih hidup dan dinamis.
+Setelah mempelajari materi ini, siswa diharapkan mampu:
+- memahami konsep template engine,
+- memahami hubungan FastAPI dan Jinja2,
+- mengirim data dari Python ke HTML,
+- menampilkan variabel dengan `{{ ... }}`,
+- membuat logika kondisi dengan `{% if %}`,
+- menampilkan data dalam daftar dengan `{% for %}`,
+- memahami template inheritance (`extends`),
+- membagi komponen reusable dengan `include` dan `block`,
+- membuat halaman web yang dinamis dari data backend.
 
 ---
 
-## Urutan belajar yang disarankan
+## Kenapa Jinja2 penting?
 
-Materi yang ada di `02-js.md` mengikuti urutan yang logis:
+JavaScript membuat halaman reaktif di browser. Jinja2 membuat halaman bisa dibuat dari data di server.
 
-1. Dasar JavaScript
-2. Fungsi dan scope
-3. Array dan object
-4. DOM (Document Object Model)
-5. Event listener
-6. Form validation
-7. ES6 modern
-8. Async JS dan fetch
-9. Manipulasi data di frontend
-10. State dan pola aplikasi sederhana
-11. Debugging dan latihan proyek nyata
+Contoh penggunaan Jinja2:
+- daftar artikel muncul otomatis,
+- halaman profil ditampilkan berdasarkan data user,
+- menu admin bisa ditentukan dari backend,
+- halaman dinamis dibuat tanpa menulis HTML satu per satu.
 
-Jangan langsung masuk ke framework. Kuatkan dulu konsep dasar JavaScript, baru nanti framework akan terasa lebih mudah.
+Jinja2 cocok untuk aplikasi seperti website Aksara, portal desa, dokumentasi, dan dashboard admin.
 
 ---
 
-## 1. Dasar JavaScript
+## Urutan belajar yang logis
 
-Ini adalah tahap paling penting.
+Pembelajaran Jinja2 sebaiknya dilakukan bertahap seperti ini:
 
-Yang harus dikuasai:
-- variabel `let` dan `const`
-- tipe data string, number, boolean, null, undefined
-- operator aritmatika, perbandingan, dan logika
-- kondisi `if`, `else if`, `else`
-- perulangan `for` dan `while`
-- fungsi dasar
+1. Pahami konsep template engine
+2. Pahami FastAPI sebagai backend
+3. Pahami route dan method HTTP
+4. Setup Jinja2 di FastAPI
+5. Gunakan variabel `{{ }}`
+6. Gunakan kondisi `{% if %}`
+7. Gunakan loop `{% for %}`
+8. Gunakan data object dan list
+9. Gunakan template inheritance (`extends`)
+10. Gunakan include dan reusable component
+11. Terapkan pada form, data nyata, dan halaman aplikasi
 
-### Contoh:
-```js
-let nama = "Aksara";
-const usia = 16;
+---
 
-if (usia >= 17) {
-  console.log("Dewasa");
-} else {
-  console.log("Masih siswa");
-}
+## 1. Konsep template engine
 
-for (let i = 1; i <= 3; i++) {
-  console.log("Iterasi ke-" + i);
-}
+Template engine adalah sistem yang menggabungkan:
+- data dari Python,
+- template HTML,
+- hasil akhirnya menjadi halaman web yang bisa tampil di browser.
+
+Alur dasar:
+
+```text
+Data Python -> Jinja2 -> HTML final -> browser
 ```
 
-### Fokus latihan:
-- menghitung jumlah bilangan,
-- menentukan nilai siswa,
-- menampilkan nama dengan urutan tertentu.
+### Contoh sederhana:
+
+```python
+@app.get("/halo")
+def halo(request: Request):
+    return templates.TemplateResponse(
+        "halo.html",
+        {"request": request, "judul": "Selamat Datang", "nama": "Ari"}
+    )
+```
+
+```html
+<h1>{{ judul }}</h1>
+<p>Halo, {{ nama }}!</p>
+```
+
+Hasil akhirnya di browser:
+
+```html
+<h1>Selamat Datang</h1>
+<p>Halo, Ari!</p>
+```
 
 ---
 
-## 2. Fungsi dan scope
+## 2. Konsep FastAPI sebelum Jinja2
 
-Fungsi adalah blok kode yang bisa dipakai berulang.
+Sebelum belajar Jinja2, kita harus paham bahwa FastAPI adalah backend yang menerima request dan menyiapkan data.
 
-### Yang dipelajari:
-- function declaration,
-- function expression,
-- parameter dan return value,
-- arrow function,
-- scope lokal dan global,
-- hoisting dasar.
+### Route
+Route adalah alamat URL yang bisa diakses browser, misalnya:
 
-### Contoh:
-```js
-function hitungLuas(panjang, lebar) {
-  return panjang * lebar;
-}
+```python
+@app.get("/")
+@app.get("/profil")
+@app.get("/artikel")
+```
 
-const hasil = hitungLuas(5, 4);
-console.log(hasil);
+### Method HTTP
+Method HTTP adalah jenis aksi yang dilakukan:
 
-const tambah = (a, b) => a + b;
-console.log(tambah(3, 7));
+- `GET` = ambil data atau halaman
+- `POST` = kirim data baru
+- `PUT` = ubah data yang sudah ada
+- `DELETE` = hapus data
+
+Contoh:
+
+```python
+from fastapi import FastAPI
+
+app = FastAPI()
+
+@app.get("/")
+def home():
+    return {"message": "Halaman utama"}
+
+@app.post("/artikel")
+def tambah_artikel():
+    return {"message": "Artikel ditambahkan"}
+```
+
+FastAPI mempersiapkan data, lalu Jinja2 menampilkan data itu ke HTML.
+
+---
+
+## 3. Setup Jinja2 di FastAPI
+
+### Langkah install
+```bash
+pip install jinja2
+```
+
+### Struktur folder umum
+```text
+backend/
+|-- app/
+|   |-- main.py
+|   |-- templates/
+|       |-- base.html
+|       |-- landing.html
+```
+
+### Konfigurasi FastAPI
+```python
+from fastapi import FastAPI, Request
+from fastapi.templating import Jinja2Templates
+
+app = FastAPI()
+templates = Jinja2Templates(directory="app/templates")
+```
+
+### Render template
+```python
+@app.get("/")
+def landing(request: Request):
+    return templates.TemplateResponse("landing.html", {"request": request, "judul": "Aksara"})
+```
+
+### Penjelasan:
+- `request` wajib ada agar template bisa bekerja,
+- `judul` adalah data yang dikirim ke template,
+- `landing.html` adalah halaman yang akan dirender.
+
+---
+
+## 4. Variabel di Jinja2
+
+Variable ditulis dengan `{{ ... }}`.
+
+### Contoh backend
+```python
+@app.get("/profil")
+def profil(request: Request):
+    context = {
+        "request": request,
+        "nama": "Ari",
+        "asal": "Podorejo",
+        "umur": 17,
+    }
+    return templates.TemplateResponse("profil.html", context)
+```
+
+### Contoh template
+```html
+<h1>Halo, {{ nama }}</h1>
+<p>Asal: {{ asal }}</p>
+<p>Umur: {{ umur }}</p>
+```
+
+### Hasil browser
+```html
+<h1>Halo, Ari</h1>
+<p>Asal: Podorejo</p>
+<p>Umur: 17</p>
+```
+
+### Latihan kecil
+- tampilkan nama siswa,
+- tampilkan kategori artikel,
+- tampilkan tanggal hari ini.
+
+---
+
+## 5. Kondisi dengan `if`
+
+Jinja2 mendukung logika kondisional.
+
+### Sintaks
+```html
+{% if kondisi %}
+    ...
+{% else %}
+    ...
+{% endif %}
+```
+
+### Contoh
+```html
+{% if login %}
+    <p>Anda sudah login sebagai {{ nama }}</p>
+{% else %}
+    <p>Silakan login terlebih dahulu</p>
+{% endif %}
 ```
 
 ### Kegunaan:
-- validasi form,
-- kalkulasi data,
-- filter daftar,
-- buka/tutup modal,
-- kirim data ke API.
+- cek status login,
+- tampilkan tombol login/logout,
+- tampilkan pesan admin/user,
+- tampilkan status stok atau data kosong.
 
 ---
 
-## 3. Array dan object
+## 6. Loop dengan `for`
 
-Data di aplikasi web biasanya berbentuk array dan object.
+Loop dipakai untuk menampilkan data dalam bentuk daftar.
 
-### Yang dipelajari:
-- array: `push`, `pop`, `shift`, `unshift`, `map`, `filter`, `find`
-- object: properti dan method
-- nested object
-- destructuring
-
-### Contoh:
-```js
-const artikel = [
-  { judul: "Aksara Jawa", kategori: "Budaya" },
-  { judul: "Sejarah Desa", kategori: "Sejarah" },
-  { judul: "Kebudayaan", kategori: "Budaya" }
-];
-
-const hasil = artikel.filter(item => item.kategori === "Budaya");
-console.log(hasil);
-
-const { judul } = artikel[0];
-console.log(judul);
+### Sintaks
+```html
+{% for item in daftar %}
+    {{ item }}
+{% endfor %}
 ```
 
-### Latihan yang cocok:
-- menampilkan semua judul artikel,
-- filter artikel berdasarkan kategori,
-- ubah format object menjadi array baru.
+### Contoh backend
+```python
+@app.get("/artikel")
+def artikel(request: Request):
+    daftar = ["Aksara Jawa", "Sejarah Desa", "Budaya Lokal"]
+    return templates.TemplateResponse("artikel.html", {"request": request, "daftar": daftar})
+```
+
+### Contoh template
+```html
+<ul>
+  {% for item in daftar %}
+    <li>{{ item }}</li>
+  {% endfor %}
+</ul>
+```
+
+### Output browser
+```html
+<ul>
+  <li>Aksara Jawa</li>
+  <li>Sejarah Desa</li>
+  <li>Budaya Lokal</li>
+</ul>
+```
+
+### Kegunaan:
+- daftar artikel,
+- e-library,
+- katalog dokumentasi,
+- card berita,
+- list data dari database.
 
 ---
 
-## 4. DOM (Document Object Model)
+## 7. Data object dan list of object
 
-DOM adalah cara JavaScript berinteraksi dengan HTML.
+Jinja2 juga kuat saat data yang dikirim berbentuk object atau list object.
 
-### Yang dipelajari:
-- `getElementById()`
-- `querySelector()`
-- `querySelectorAll()`
-- `textContent`
-- `innerHTML`
-- `createElement()`
-- `remove()`
+### Contoh backend
+```python
+artikel = [
+    {"judul": "Aksara Jawa", "kategori": "Budaya"},
+    {"judul": "Sejarah Desa", "kategori": "Sejarah"},
+]
+```
 
-### Contoh:
-```js
-const judul = document.querySelector("h1");
-judul.textContent = "Selamat Datang";
+### Contoh template
+```html
+{% for item in artikel %}
+  <div class="card">
+    <h3>{{ item.judul }}</h3>
+    <p>{{ item.kategori }}</p>
+  </div>
+{% endfor %}
+```
 
-const tombol = document.getElementById("tombol");
-tombol.addEventListener("click", () => {
-  alert("Tombol diklik");
-});
+Ini sangat sering dipakai di aplikasi nyata.
+
+---
+
+## 8. Empty state / data kosong
+
+Data tidak selalu ada. Kadang daftar kosong.
+
+### Contoh
+```html
+{% if artikel %}
+  {% for item in artikel %}
+    <p>{{ item.judul }}</p>
+  {% endfor %}
+{% else %}
+  <p>Belum ada data.</p>
+{% endif %}
 ```
 
 ### Kenapa penting?
-Tanpa DOM, JavaScript tidak bisa:
-- mengubah teks,
-- menambah atau menghapus elemen,
-- menutup modal,
-- update data di halaman,
-- membuat halaman menjadi interaktif.
+User perlu tahu kalau data memang belum ada, bukan halaman yang kosong.
 
 ---
 
-## 5. Event dan interaksi user
+## 9. Template inheritance (`extends`)
 
-Event adalah aksi yang dilakukan user, seperti klik, input, submit, dan hover.
+Jinja2 mendukung template dasar yang bisa dipakai berulang.
 
-### Event utama:
-- `click`
-- `submit`
-- `input`
-- `change`
-- `keyup`
-- `mouseover`
-- `focus`
-- `blur`
+### `base.html`
+```html
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>{% block title %}Aksara{% endblock %}</title>
+  </head>
+  <body>
+    <header>
+      <nav>Menu</nav>
+    </header>
 
-### Contoh:
-```js
-const button = document.querySelector("button");
-button.addEventListener("click", function () {
-  console.log("User menekan tombol");
-});
-
-const input = document.querySelector("input");
-input.addEventListener("input", function () {
-  console.log(input.value);
-});
+    <main>
+      {% block content %}{% endblock %}
+    </main>
+  </body>
+</html>
 ```
 
-### Penerapan di aplikasi:
-- tombol login,
-- tombol tambah artikel,
-- tombol edit dan hapus,
-- form pencarian,
-- menu mobile,
-- modal konfirmasi.
+### `landing.html`
+```html
+{% extends "base.html" %}
 
----
+{% block title %}Landing Page{% endblock %}
 
-## 6. Validasi form dan data user
-
-Validasi sangat penting untuk menjaga data masuk dengan benar.
-
-### Yang dipelajari:
-- `required`
-- cek string kosong
-- cek panjang teks
-- cek email
-- cek angka
-- tampilkan pesan error
-
-### Contoh:
-```js
-const form = document.querySelector("form");
-
-form.addEventListener("submit", (e) => {
-  e.preventDefault();
-
-  const nama = document.getElementById("nama").value.trim();
-
-  if (!nama) {
-    alert("Nama tidak boleh kosong");
-    return;
-  }
-
-  console.log("Data valid:", nama);
-});
+{% block content %}
+  <h1>Selamat Datang di Aksara</h1>
+  <p>Ini halaman utama website.</p>
+{% endblock %}
 ```
 
 ### Kegunaan:
-- form login admin,
-- form tambah artikel,
-- form edit dokumentasi,
-- form upload,
-- form pencarian,
-- validasi data user.
+- navbar sama untuk semua halaman,
+- footer bisa dipakai ulang,
+- halaman lebih konsisten,
+- kode tidak berulang.
 
 ---
 
-## 7. ES6 modern
+## 10. Include untuk komponen reusable
 
-Setelah dasar kuat, siswa masuk ke JavaScript modern.
+Jinja2 juga bisa memanggil template lain dengan `{% include %}`.
 
-### Yang dipelajari:
-- template literals: `` `teks ${variabel}` ``
-- spread operator: `...`
-- destructuring
-- default parameter
-- rest parameter
-- optional chaining: `?.`
-- modules: `import` dan `export`
-
-### Contoh:
-```js
-const nama = "Aksara";
-console.log(`Halo ${nama}`);
-
-const data = [1, 2, 3];
-const baru = [...data, 4];
-console.log(baru);
-
-const user = { nama: "Admin", role: "admin" };
-const { nama: namaUser } = user;
-console.log(namaUser);
+### `navbar.html`
+```html
+<nav>
+  <a href="/">Home</a>
+  <a href="/beranda">Beranda</a>
+  <a href="/elibrary">E-Library</a>
+</nav>
 ```
 
----
-
-## 8. Async JavaScript dan fetch
-
-JavaScript modern juga harus bisa berkomunikasi dengan server.
-
-### Yang dipelajari:
-- `fetch()`
-- Promise
-- `async` dan `await`
-- menangani error
-- mengambil data dari API
-
-### Contoh:
-```js
-async function ambilData() {
-  const response = await fetch("/api/artikel");
-  const data = await response.json();
-  console.log(data);
-}
+### `base.html`
+```html
+<body>
+  {% include "navbar.html" %}
+  {% block content %}{% endblock %}
+</body>
 ```
 
-### Kegunaannya:
-- mengambil artikel dari backend,
-- menampilkan data ke halaman,
-- menambah dan menghapus data tanpa reload,
-- membuat aplikasi lebih dinamis.
+### Kegunaan:
+- navbar,
+- sidebar,
+- footer,
+- alert box,
+- tombol aksi reuse.
 
 ---
 
-## 9. Manipulasi data di frontend
+## 11. Form dan Jinja2
 
-Setelah memahami array, object, DOM, dan API, siswa mulai memanipulasi data dengan lebih nyata.
+Jinja2 sering dipakai untuk form agar value default bisa tampil otomatis.
 
-### Fokus:
-- menampilkan list data ke HTML,
-- filter data berdasarkan kategori,
-- mencari item,
-- menambah item baru,
-- mengubah item yang ada,
-- menampilkan status kosong jika data tidak ada.
+```html
+<form method="post">
+  <input type="text" name="judul" value="{{ artikel.judul if artikel else '' }}">
+  <textarea name="isi">{{ artikel.isi if artikel else '' }}</textarea>
+  <button type="submit">Simpan</button>
+</form>
+```
 
----
-
-## 10. State dan pola aplikasi sederhana
-
-Pada level lanjut, JavaScript tidak hanya dipakai untuk satu tombol, tapi untuk mengelola state aplikasi.
-
-### Yang dipelajari:
-- data aplikasi di variabel,
-- saat data berubah, tampilan ikut berubah,
-- fungsi reusable,
-- pola dasar aplikasi interaktif.
-
-### Contoh:
-- daftar artikel yang bisa ditambah,
-- menu aktif saat diklik,
-- filter kategori,
-- modal konfirmasi,
-- tombol edit dan delete.
+### Artinya:
+- kalau data ada, tampilkan datanya,
+- kalau tidak ada, tampilkan kosong,
+- cocok untuk form edit dan tambah data.
 
 ---
 
-## 11. Debugging dan latihan proyek nyata
+## 12. Hubungan Jinja2 dengan JavaScript
 
-Pembelajaran JavaScript tidak lengkap tanpa latihan debugging.
+Jinja2 dan JavaScript bekerja bersama-sama.
 
-### Praktik penting:
-- membuka console browser,
-- mengecek `console.log()`,
-- membaca error message,
-- memeriksa elemen HTML di inspect,
-- mencoba satu perubahan kecil lalu cek hasilnya.
+- Jinja2 menyiapkan HTML dari data backend,
+- JavaScript membuat halaman lebih interaktif di browser,
+- FastAPI menjadi penghubung data.
 
-### Latihan proyek:
-- halaman profil sederhana,
-- daftar artikel dengan tombol hapus,
-- form tambah data,
-- sidebar menu interaktif,
-- landing page sekolah/desa,
-- aplikasi CRUD sederhana.
+### Contoh alur:
+```text
+Jinja2 menampilkan list artikel
+JavaScript menangkap klik tombol edit
+FastAPI menerima request dan menyimpan perubahan
+```
+
+Jadi:
+- Jinja2 = menampilkan data
+- JavaScript = interaksi user
+- FastAPI = backend yang memproses data
 
 ---
 
 ## Target akhir pembelajaran
 
-Setelah mempelajari materi ini, siswa diharapkan mampu:
-- menulis JavaScript dasar dengan benar,
-- memanipulasi DOM,
-- menangani event user,
-- memvalidasi form,
-- menggunakan array dan object,
-- berinteraksi dengan backend API,
-- membuat halaman yang hidup dan interaktif.
-
-Ini adalah bekal utama sebelum masuk ke tahap berikutnya:
-- Jinja2,
-- FastAPI,
-- integrasi frontend-backend,
-- CRUD aplikasi web.
+Setelah memahami Jinja2, siswa siap untuk:
+- membuat halaman dinamis dengan data Python,
+- menampilkan list dan object di HTML,
+- membuat layout dinamis yang terhubung dengan backend,
+- lanjut ke CRUD web app,
+- menghubungkan Jinja2, FastAPI, dan JavaScript secara bersamaan.
 
 ---
 
 ## Kesimpulan
 
-JavaScript adalah bahasa yang membuat web menjadi interaktif.
+Jinja2 adalah jembatan antara backend dan frontend.
 
-- HTML = struktur halaman
-- CSS = tampilan halaman
-- JavaScript = logika dan interaksi
+Dengan Jinja2, kita bisa:
+- mengambil data dari Python,
+- menyiapkan template HTML,
+- menampilkan isi yang berubah sesuai data,
+- membuat halaman aplikasi lebih rapi dan dinamis.
 
-Tanpa JavaScript, website hanya statis. Dengan JavaScript, halaman bisa:
-- bereaksi saat user klik,
-- menampilkan data dinamis,
-- mengubah isi halaman,
-- memvalidasi input,
-- mengirim dan menerima data dari server.
-
-Itulah alasan JavaScript sangat penting dalam membangun aplikasi web modern.
+Tanpa Jinja2, kita harus menulis HTML satu per satu. Dengan Jinja2, kita bisa membuat halaman yang dibuat dari data secara otomatis.
 
 ---
 
-## Rangkuman singkat
+## Ringkasan singkat
 
-JavaScript untuk aplikasi web ini belajar dari:
-- dasar program,
-- fungsi,
-- array/object,
-- DOM,
-- event,
-- validasi,
-- ES6,
-- async/fetch,
-- interaksi data,
-- proyek nyata.
+Belajar Jinja2 itu berarti belajar:
+- route dan data backend,
+- variabel `{{ }}`,
+- kondisi `{% if %}`,
+- loop `{% for %}`,
+- data object dan list,
+- template inheritance,
+- reusable component,
+- dan integrasi dengan FastAPI dan JavaScript.
 
-Semua itu akan menjadi bekal utama sebelum masuk ke bagian Jinja2 dan FastAPI.
+Itulah fondasi penting sebelum masuk ke aplikasi web yang lebih kompleks.
