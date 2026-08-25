@@ -1,6 +1,10 @@
 **Cheat Sheet CSS Layout **  
 
 # 🟩 0. **Template** — halaman minimal html
+
+- buat folder baru, belajar
+- buat file latih1.html
+
 ```html
 <!DOCTYPE html>
 <html lang="en">
@@ -8,12 +12,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dasar HTML CSS</title>
+    <style>
+        /* CSS bisa ditulis di sini */
+    </style>
 </head>
+
+<!-- 
+Bodi yang berisi konten halaman web. Semua elemen HTML akan berada di dalam tag <body>. -->
+
 <body>
-    
+    <h2>Belajar CSS Layout</h2>
 </body>
 </html>
 ```
+- jalankan file html ini dengan klik kanan > Open with Live Server (VSCode) atau buka di browser
+
 
 ---
 
@@ -28,16 +41,231 @@
 - **none** — sembunyikan elemen  
 - **contents** — wrapper hilang, isi tetap tampil  
 
+### Contoh praktik (supaya tidak hafalan)
+
+Tujuan: lihat langsung perbedaan perilaku setiap `display`.
+
+### HTML
+
+latih2.html
+
+```html
+<h3>1) block vs inline vs inline-block</h3>
+
+<div class="box block">Block A</div>
+<div class="box block">Block B</div>
+
+<span class="box inline">Inline A</span>
+<span class="box inline">Inline B</span>
+
+<span class="box inline-block">Inline-Block A</span>
+<span class="box inline-block">Inline-Block B</span>
+
+<hr>
+
+<h3>2) flex</h3>
+<div class="flex-wrap-demo">
+  <div class="item">1</div>
+  <div class="item">2</div>
+  <div class="item">3</div>
+</div>
+
+<hr>
+
+<h3>3) grid</h3>
+<div class="grid-demo">
+  <div class="item">A</div>
+  <div class="item">B</div>
+  <div class="item">C</div>
+  <div class="item">D</div>
+</div>
+
+<hr>
+
+<h3>4) none</h3>
+<p class="hilang">Teks ini disembunyikan dengan display: none;</p>
+<p>Teks ini tetap tampil.</p>
+
+<hr>
+
+<h3>5) contents</h3>
+<div class="wrapper-contents">
+  <span class="tag">Tag 1</span>
+  <span class="tag">Tag 2</span>
+</div>
+```
+
+### CSS
+```css
+body {
+  font-family: Arial, sans-serif;
+}
+
+.box {
+  background: #d7f0d3;
+  border: 1px solid #2d6a4f;
+  padding: 8px;
+  margin: 4px;
+}
+
+/* block: selalu turun baris */
+.block {
+  display: block;
+  width: 180px;
+}
+
+/* inline: tetap sebaris, width/height diabaikan */
+.inline {
+  display: inline;
+  width: 180px;
+  height: 50px;
+}
+
+/* inline-block: sebaris tapi width/height bekerja */
+.inline-block {
+  display: inline-block;
+  width: 180px;
+  height: 50px;
+}
+
+/* flex */
+.flex-wrap-demo {
+  display: flex;
+  gap: 10px;
+  background: #f3f6f4;
+  padding: 10px;
+}
+
+.item {
+  background: #95d5b2;
+  padding: 12px 16px;
+  border-radius: 6px;
+}
+
+/* grid */
+.grid-demo {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  background: #f3f6f4;
+  padding: 10px;
+}
+
+/* none: elemen hilang dari layout */
+.hilang {
+  display: none;
+}
+
+/* contents: wrapper seolah tidak ada */
+.wrapper-contents {
+  display: contents;
+}
+
+.tag {
+  display: inline-block;
+  background: #cfe8ff;
+  border: 1px solid #3b82f6;
+  padding: 6px 10px;
+  border-radius: 999px;
+  margin-right: 6px;
+}
+```
+
+### Yang harus diamati saat praktik
+- `block`: elemen A dan B turun ke baris baru.
+- `inline`: tetap sebaris, tapi `width` dan `height` tidak terasa efeknya.
+- `inline-block`: tetap sebaris, dan `width`/`height` aktif.
+- `flex`: item otomatis berjajar rapi dengan `gap`.
+- `grid`: item masuk ke kolom-kolom terstruktur.
+- `none`: elemen benar-benar hilang, tidak mengambil ruang.
+- `contents`: wrapper hilang dari layout, anaknya tetap tampil.
+
+### Pengertian: kenapa pakai `<span>` dan `<div>`?
+
+- `<div>` dipakai saat kita butuh **wadah blok** untuk kelompok konten.
+  Secara default, `<div>` bersifat `display: block`, jadi elemen ini mulai dari baris baru dan biasanya dipakai untuk membagi bagian halaman (section kecil, card, wrapper, container).
+
+- `<span>` dipakai saat kita butuh **wadah kecil di dalam teks**.
+  Secara default, `<span>` bersifat `display: inline`, jadi tidak turun baris dan cocok untuk memberi style pada potongan kata/kalimat (misalnya mewarnai 1 kata, memberi badge kecil, highlight teks).
+
+- Kenapa perlu dibedakan?
+  Karena pemilihan elemen membantu struktur HTML tetap rapi:
+  - Pakai `<div>` untuk pengelompokan layout.
+  - Pakai `<span>` untuk pengelompokan teks inline.
+
+- Catatan penting:
+  Keduanya bisa diubah perilakunya dengan CSS `display`, tetapi pilihan elemen yang tepat dari awal akan membuat kode lebih mudah dibaca dan dipelihara.
+
+### Mini latihan: uji beda `<div>` vs `<span>`
+
+### HTML
+
+- latih3.html
+
+```html
+<section class="latihan-span-div">
+  <h4>Contoh div (block)</h4>
+  <div class="kotak">Kotak A (div)</div>
+  <div class="kotak">Kotak B (div)</div>
+
+  <h4>Contoh span (inline)</h4>
+  <p>
+    Teks ini punya <span class="label">Label A</span>
+    dan <span class="label">Label B</span> dalam satu baris.
+  </p>
+</section>
+```
+
+### CSS
+```css
+.latihan-span-div {
+  padding: 12px;
+  border: 1px solid #d8dee9;
+  border-radius: 10px;
+  background: #f8fafc;
+}
+
+.kotak {
+  background: #dbeafe;
+  border: 1px solid #60a5fa;
+  padding: 10px;
+  margin-bottom: 8px;
+}
+
+.label {
+  background: #fee2e2;
+  border: 1px solid #f87171;
+  padding: 2px 8px;
+  border-radius: 999px;
+}
+```
+
+### Yang perlu dicek
+- Perhatikan `div` otomatis turun ke baris baru.
+- Perhatikan `span` tetap sebaris dengan teks di kiri-kanannya.
+- Ubah `.label` menjadi `display: block`, lalu lihat apa yang berubah.
+- Ubah `.kotak` menjadi `display: inline`, lalu bandingkan dampaknya.
 ---
 
 # 🟦 2. **Flexbox** — layout paling sering dipakai
 
 ### Properti penting:
 - `flex-direction: row | column`  
-- `justify-content: center | space-between | flex-end`  
+Susunan horizontal atau vertikal
+- `justify-content: center | space-between | flex-end` 
+artinya mengatur posisi horizontal anak-anak flex, berbagai opsi:  
+  - `center` = rata tengah  
+  - `space-between` = jarak antar elemen merata  
+  - `flex-end` = semua elemen ke kanan 
 - `align-items: center | flex-start | stretch`  
+artinya mengatur posisi vertikal anak-anak flex, berbagai opsi:  
+  - `center` = rata tengah  
+  - `flex-start` = semua elemen ke atas  
+  - `stretch` = semua elemen menyesuaikan tinggi container
 - `flex-wrap: wrap`  
+artinya jika elemen tidak muat di satu baris, maka akan turun ke baris berikutnya
 - `gap: 10px`  
+artinya jarak antar elemen flex, lebih rapi daripada pakai margin
 
 ### Contoh dasar:
 ```css
@@ -243,9 +471,13 @@ Tujuan: Logo kiri, menu tengah, tombol kanan.
 
 ### Properti penting:
 - `grid-template-columns: repeat(3, 1fr)`  
+artinya membuat 3 kolom dengan ukuran sama
 - `grid-template-rows`  
+artinya membuat baris dengan ukuran tertentu
 - `gap`  
+artinya jarak antar kolom dan baris
 - `place-items: center`  
+artinya menempatkan semua item di tengah (horizontal + vertikal)
 
 ### Contoh:
 ```css
