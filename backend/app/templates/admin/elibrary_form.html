@@ -30,7 +30,7 @@
               <option value="ebook" {{ 'selected' if edit_item.kategori == 'ebook' else '' }}>E-Book</option>
               <option value="buku-cerita" {{ 'selected' if edit_item.kategori == 'buku-cerita' else '' }}>Buku Cerita</option>
               <option value="buku-literasi-digital" {{ 'selected' if edit_item.kategori == 'buku-literasi-digital' else '' }}>Literasi Digital</option>
-              <option value="buku-keterampilan" {{ 'selected' if edit_item.kategori == 'buku-keterampilan' else '' }}>Life Skills</option>
+              <option value="keterampilan-hidup" {{ 'selected' if edit_item.kategori == 'keterampilan-hidup' or edit_item.kategori == 'buku-keterampilan' else '' }}>Keterampilan Hidup</option>
             </select>
           </div>
           <div class="col-md-3">
@@ -73,7 +73,7 @@
               <option value="ebook">E-Book</option>
               <option value="buku-cerita">Buku Cerita</option>
               <option value="buku-literasi-digital">Literasi Digital</option>
-              <option value="buku-keterampilan">Life Skills</option>
+              <option value="keterampilan-hidup">Keterampilan Hidup</option>
             </select>
           </div>
           <div class="col-md-3">
@@ -102,7 +102,16 @@
           <tr>
             <td>{{ loop.index }}</td>
             <td>{{ item.judul }}</td>
-            <td><span class="badge-aksara">{{ item.kategori }}</span></td>
+            <td>
+              <span class="badge-aksara">
+                {% if item.kategori == 'modul-pembelajaran' %}Modul Pembelajaran
+                {% elif item.kategori == 'ebook' %}E-Book
+                {% elif item.kategori == 'buku-cerita' %}Buku Cerita
+                {% elif item.kategori == 'buku-literasi-digital' %}Literasi Digital
+                {% elif item.kategori == 'keterampilan-hidup' or item.kategori == 'buku-keterampilan' %}Keterampilan Hidup
+                {% else %}{{ item.kategori }}{% endif %}
+              </span>
+            </td>
             <td>
               <small>{{ item.link_type }}</small>
               {% if item.link_type == 'internal' %}

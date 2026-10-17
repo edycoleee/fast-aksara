@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Panduan CMS — Ngrembaka Aksara</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet" />
+  <style>
+    body { font-family: 'Poppins', sans-serif; background: #f4f8f4; color: #1f2a20; }
+    .guide-card { border: none; border-radius: 14px; box-shadow: 0 8px 28px rgba(19, 53, 22, 0.08); }
+    .badge-aksara { background: #e7f4e7; color: #1b5e20; border-radius: 999px; padding: 0.35rem 0.7rem; font-size: 0.78rem; }
+    .section-title { color: #1b5e20; font-weight: 700; }
+    .btn-aksara { background: #1b5e20; color: #fff; border: none; }
+    .btn-aksara:hover { background: #2f7d33; color: #fff; }
+  </style>
+</head>
+<body>
+  <main class="container py-5">
+    <div class="guide-card bg-white p-4 p-md-5">
+      <div class="d-flex flex-wrap justify-content-between align-items-start gap-3 mb-4">
+        <div>
+          <span class="badge-aksara">Panduan Admin</span>
+          <h1 class="h3 mt-2 section-title mb-2">Dokumentasi Penggunaan CMS Ngrembaka Aksara</h1>
+          <p class="text-muted mb-0">Panduan ini menjelaskan cara login, memakai dashboard, mengatur settings aplikasi, dan menggunakan semua fungsi CMS.</p>
+        </div>
+        <a href="/admin/login" class="btn btn-outline-success">Kembali ke Login</a>
+      </div>
+
+      <section class="mb-4">
+        <h2 class="h5 section-title">1. Cara Login Admin</h2>
+        <ol class="mb-0">
+          <li>Buka halaman <strong>/admin/login</strong>.</li>
+          <li>Masukkan username dan password admin.</li>
+          <li>Klik tombol <strong>Masuk</strong>.</li>
+          <li>Jika berhasil, Anda akan masuk ke dashboard admin.</li>
+        </ol>
+      </section>
+
+      <section class="mb-4">
+        <h2 class="h5 section-title">2. Fungsi Halaman Dashboard</h2>
+        <ul class="mb-0">
+          <li>Melihat ringkasan total data E-Library, Dokumentasi, dan Artikel.</li>
+          <li>Akses cepat ke menu pengelolaan konten.</li>
+          <li>Akses ke halaman Pengaturan Situs dan Dokumentasi Admin.</li>
+        </ul>
+      </section>
+
+      <section class="mb-4">
+        <h2 class="h5 section-title">3. Fungsi CMS: E-Library</h2>
+        <ul class="mb-0">
+          <li>Tambah data konten E-Library (judul, kategori, deskripsi, cover).</li>
+          <li>Pilih sumber konten: link eksternal atau upload file PDF.</li>
+          <li>Edit data yang sudah ada.</li>
+          <li>Hapus data yang tidak dipakai.</li>
+        </ul>
+      </section>
+
+      <section class="mb-4">
+        <h2 class="h5 section-title">4. Fungsi CMS: Dokumentasi</h2>
+        <ul class="mb-0">
+          <li>Tambah dokumentasi kegiatan beserta gambar.</li>
+          <li>Tambahkan link video (opsional).</li>
+          <li>Edit dan hapus data dokumentasi.</li>
+        </ul>
+      </section>
+
+      <section class="mb-4">
+        <h2 class="h5 section-title">5. Fungsi CMS: Artikel</h2>
+        <ul class="mb-0">
+          <li>Tambah artikel beserta deskripsi, gambar, dan file PDF (opsional).</li>
+          <li>Edit artikel kapan saja.</li>
+          <li>Hapus artikel yang sudah tidak relevan.</li>
+        </ul>
+      </section>
+
+      <section class="mb-4">
+        <h2 class="h5 section-title">6. Fungsi Settings Aplikasi</h2>
+        <ul class="mb-0">
+          <li>Ubah identitas situs: nama, tagline, alamat, email, Instagram, YouTube.</li>
+          <li>Atur peta Google Maps embed.</li>
+          <li>Atur logo institusi via URL atau upload file langsung.</li>
+          <li>Jika upload logo, sistem otomatis resize ke 96x96 px saat disimpan.</li>
+          <li>Atur SMTP email (host, port, user, password, TLS, dan email tujuan form kontak).</li>
+          <li>Atur teks pembaruan terakhir di footer.</li>
+        </ul>
+      </section>
+
+      <section class="mb-2">
+        <h2 class="h5 section-title">7. Alur Pakai Harian yang Disarankan</h2>
+        <ol class="mb-0">
+          <li>Login admin.</li>
+          <li>Cek dashboard untuk melihat ringkasan data.</li>
+          <li>Kelola konten (E-Library/Dokumentasi/Artikel) sesuai kebutuhan.</li>
+          <li>Perbarui Settings jika ada perubahan identitas, logo, peta, atau SMTP.</li>
+          <li>Setelah simpan, cek hasil di halaman publik.</li>
+        </ol>
+      </section>
+
+      <div class="mt-4 d-flex flex-wrap gap-2">
+        <a href="/admin/login" class="btn btn-aksara">Masuk ke Admin</a>
+        <a href="/" class="btn btn-outline-secondary">Lihat Website Publik</a>
+      </div>
+    </div>
+  </main>
+</body>
+</html>

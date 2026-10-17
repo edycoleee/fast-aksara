@@ -13,7 +13,7 @@
     {% endif %}
 
     <div class="card card-aksara p-4">
-      <form method="post" action="/admin/settings/save">
+      <form method="post" action="/admin/settings/save" enctype="multipart/form-data">
         <div class="row g-4">
           {% for key, label in setting_keys %}
           <div class="col-12 {% if key == 'gmap_embed_url' %}col-lg-12{% else %}col-md-6{% endif %}">
@@ -21,6 +21,27 @@
             {% if key == 'gmap_embed_url' %}
             <textarea name="{{ key }}" class="form-control font-monospace" rows="3" placeholder="https://www.google.com/maps/embed?pb=...">{{ settings.get(key, '') }}</textarea>
             <small class="text-muted">Buka Google Maps → Share → Embed a map → salin URL src dari iframe</small>
+            {% elif key in ['logo_unnes_url', 'logo_pgsd_url', 'logo_kelurahan_url'] %}
+            <input name="{{ key }}" class="form-control" value="{{ settings.get(key, '') }}" placeholder="https://... atau biarkan jika pakai upload" />
+            <div class="mt-2">
+              <input type="file" name="{{ key }}_file" class="form-control" accept="image/png,image/jpeg,image/webp" />
+              <small class="text-muted">Upload opsional. Jika dipilih, file akan dipakai menggantikan URL dan otomatis di-resize ke 96x96 px.</small>
+            </div>
+            {% if settings.get(key, '') %}
+            <div class="mt-2 d-flex align-items-center gap-2">
+              <img src="{{ settings.get(key, '') }}" alt="Preview {{ label }}" style="width:48px;height:48px;object-fit:contain;border:1px solid #dee2e6;border-radius:8px;background:#fff;padding:4px;" />
+              <small class="text-muted">Preview logo saat ini.</small>
+            </div>
+            {% endif %}
+            {% elif key == 'smtp_password' %}
+            <input type="password" name="{{ key }}" class="form-control" value="{{ settings.get(key, '') }}" placeholder="Gunakan app password bila diperlukan" />
+            {% elif key == 'smtp_use_tls' %}
+            {% set tls_val = (settings.get(key, '') or 'true')|lower %}
+            <select name="{{ key }}" class="form-select">
+              <option value="true" {{ 'selected' if tls_val in ['true', '1', 'yes', 'on'] else '' }}>true (direkomendasikan)</option>
+              <option value="false" {{ 'selected' if tls_val in ['false', '0', 'no', 'off'] else '' }}>false</option>
+            </select>
+            <small class="text-muted">Pilih true untuk server SMTP yang menggunakan STARTTLS (umumnya port 587).</small>
             {% else %}
             <input name="{{ key }}" class="form-control" value="{{ settings.get(key, '') }}" />
             {% endif %}
@@ -31,6 +52,17 @@
           <button type="submit" class="btn-aksara"><i class="fa-solid fa-floppy-disk me-1"></i>Simpan Pengaturan</button>
         </div>
       </form>
+    </div>
+
+    <div class="card card-aksara p-4 mt-4">
+      <h6 class="fw-bold mb-3" style="color:var(--color-dark);"><i class="fa-solid fa-envelope-circle-check me-2"></i>Panduan Singkat SMTP</h6>
+      <ul class="mb-0 text-muted small">
+        <li><strong>smtp_host</strong>: contoh <code>smtp.gmail.com</code> atau SMTP provider Anda.</li>
+        <li><strong>smtp_port</strong>: biasanya <code>587</code> (TLS) atau <code>465</code> (SSL khusus, tidak dipakai di mode ini).</li>
+        <li><strong>smtp_username</strong>: email pengirim.</li>
+        <li><strong>smtp_password</strong>: password/app password email pengirim.</li>
+        <li><strong>email_to</strong>: email penerima dari form kontak. Jika kosong, sistem pakai Email Kontak Utama.</li>
+      </ul>
     </div>
 
     <!-- Preview Maps -->

@@ -12,7 +12,15 @@
   <meta property="og:description" content="Portal literasi dan E-Library PPK ORMAWA untuk masyarakat, siswa, dan pendamping belajar di Kelurahan Podorejo, Semarang." />
   <meta property="og:url" content="https://aksara.fun/" />
   <meta property="og:site_name" content="Ngrembaka Aksara" />
+  <meta property="og:image" content="https://aksara.fun/static/images/og-image.svg" />
+  <meta property="og:image:alt" content="Ngrembaka Aksara - E-Library Literasi Podorejo" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Ngrembaka Aksara | E-Library Literasi Podorejo" />
+  <meta name="twitter:description" content="Portal literasi lintas generasi untuk warga Kelurahan Podorejo." />
+  <meta name="twitter:image" content="https://aksara.fun/static/images/og-image.svg" />
   <link rel="canonical" href="https://aksara.fun/" />
+  <link rel="icon" type="image/svg+xml" href="{{ url_for('static', path='images/favicon.svg') }}" />
+  <link rel="shortcut icon" href="{{ url_for('static', path='images/favicon.svg') }}" />
   <title>{% block title %}Ngrembaka Aksara | E-Library & Pojok Literasi PPK ORMAWA{% endblock %}</title>
 
   <!-- Bootstrap 5 -->
@@ -27,6 +35,10 @@
   {% block head %}{% endblock %}
 </head>
 <body>
+{% set contact_email = site('email') or 'ppkosglpgsdunnes@gmail.com' %}
+{% set logo_unnes_url = site('logo_unnes_url') or '/static/images/logo-unnes.svg' %}
+{% set logo_pgsd_url = site('logo_pgsd_url') or '/static/images/logo-pgsd.svg' %}
+{% set logo_kelurahan_url = site('logo_kelurahan_url') or '/static/images/logo-kelurahan.svg' %}
 
 <!-- ===== NAVBAR ===== -->
 <nav class="navbar navbar-expand-lg navbar-dark sticky-top" style="background-color: var(--color-dark);">
@@ -44,7 +56,7 @@
           <a class="nav-link" href="/"><i class="fa-solid fa-house me-1"></i>Beranda</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="/beranda"><i class="fa-solid fa-eye me-1"></i>Visi</a>
+          <a class="nav-link" href="/visi"><i class="fa-solid fa-eye me-1"></i>Visi</a>
         </li>
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">
@@ -63,15 +75,15 @@
             <i class="fa-solid fa-seedling me-1"></i>Pojok Literasi
           </a>
           <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="/pojok-literasi/tunas">🌱 Tunas Ngrembaka</a></li>
-            <li><a class="dropdown-item" href="/pojok-literasi/karya">🎨 Karya Ngrembaka</a></li>
-            <li><a class="dropdown-item" href="/pojok-literasi/cakra">⚙️ Cakra Ngrembaka</a></li>
-            <li><a class="dropdown-item" href="/pojok-literasi/kersa">🌿 Kersa Ngrembaka</a></li>
+            <li><a class="dropdown-item" href="/pojok-literasi/tunas"><i class="fa-solid fa-seedling me-2 text-success"></i>Tunas Ngrembaka</a></li>
+            <li><a class="dropdown-item" href="/pojok-literasi/karya"><i class="fa-solid fa-palette me-2 text-primary"></i>Karya Ngrembaka</a></li>
+            <li><a class="dropdown-item" href="/pojok-literasi/cakra"><i class="fa-solid fa-gears me-2 text-warning"></i>Cakra Ngrembaka</a></li>
+            <li><a class="dropdown-item" href="/pojok-literasi/kersa"><i class="fa-solid fa-leaf me-2" style="color:#4f7a4e;"></i>Kersa Ngrembaka</a></li>
           </ul>
         </li>
         <li class="nav-item ms-lg-2">
-          <a class="btn btn-aksara-outline" href="https://wa.me/{{ site('whatsapp_number', '6281234567890') }}" target="_blank">
-            <i class="fa-brands fa-whatsapp me-1"></i>{{ site('whatsapp_label', 'Hubungi Kami') }}
+          <a class="btn btn-aksara-outline" href="/kirim-email">
+            <i class="fa-solid fa-envelope me-1"></i>{{ site('contact_label', 'Hubungi Kami') }}
           </a>
         </li>
       </ul>
@@ -103,15 +115,32 @@
         <h6 class="fw-bold mb-3"><i class="fa-solid fa-address-card me-2"></i>Kontak</h6>
         <ul class="list-unstyled small text-white-50">
           {% if site('alamat') %}<li class="mb-2"><i class="fa-solid fa-location-dot me-2"></i>{{ site('alamat') }}</li>{% endif %}
-          {% if site('email') %}<li class="mb-2"><i class="fa-solid fa-envelope me-2"></i>{{ site('email') }}</li>{% endif %}
-          {% if site('whatsapp_number') %}<li><i class="fa-brands fa-whatsapp me-2"></i>+{{ site('whatsapp_number') }}</li>{% endif %}
+          <li class="mb-2"><i class="fa-solid fa-envelope me-2"></i>{{ contact_email }}</li>
+          {% if site('instagram_url') %}
+          <li>
+            <i class="fa-brands fa-instagram me-2"></i>
+            <a href="{{ site('instagram_url') }}" target="_blank" rel="noopener" class="footer-link">@ppko_sglpgsdunnes</a>
+          </li>
+          {% endif %}
+          {% if site('youtube_url') %}
+          <li class="mt-1">
+            <i class="fa-brands fa-youtube me-2"></i>
+            <a href="{{ site('youtube_url') }}" target="_blank" rel="noopener" class="footer-link">YouTube Program</a>
+          </li>
+          {% endif %}
         </ul>
-        <a href="https://wa.me/{{ site('whatsapp_number') }}" target="_blank" class="btn btn-sm btn-success mt-2">
-          <i class="fa-brands fa-whatsapp me-1"></i>{{ site('whatsapp_label', 'WhatsApp') }}
+        <a href="/kirim-email" class="btn btn-sm btn-success mt-2">
+          <i class="fa-solid fa-envelope me-1"></i>{{ site('contact_label', 'Kirim Email') }}
         </a>
       </div>
 
       <div class="col-md-4">
+        <h6 class="fw-bold mb-3"><i class="fa-solid fa-people-group me-2"></i>Mitra Program</h6>
+        <div class="footer-logo-row mb-3">
+          <img src="{{ logo_unnes_url }}" alt="Logo UNNES" class="footer-logo-tile" loading="lazy" />
+          <img src="{{ logo_pgsd_url }}" alt="Logo PGSD" class="footer-logo-tile" loading="lazy" />
+          <img src="{{ logo_kelurahan_url }}" alt="Logo Kelurahan Podorejo" class="footer-logo-tile" loading="lazy" />
+        </div>
         <ul class="list-unstyled small">
           <li><a href="/elibrary" class="footer-link"><i class="fa-solid fa-chevron-right me-1"></i>E-Library</a></li>
           <li><a href="/pojok-literasi/tunas" class="footer-link"><i class="fa-solid fa-chevron-right me-1"></i>Tunas Ngrembaka</a></li>
@@ -124,8 +153,11 @@
 
     <hr class="border-secondary mt-4" />
     <p class="text-center text-white-50 small mb-0">
-      &copy; 2026 PPK ORMAWA Ngrembaka Aksara &mdash; Sub Gugus Latih PGSD UNNES.
+      &copy; 2026 PPK ORMAWA Ngrembaka Aksara &mdash; SGL PGSD UNNES (Sub Gugus Latih PGSD UNNES).
       Hak cipta dilindungi.
+    </p>
+    <p class="text-center text-white-50 small mt-2 mb-0">
+      Pembaruan terakhir: {{ site('last_updated', '17 Oktober 2026') }}
     </p>
   </div>
 </footer>

@@ -1,8 +1,10 @@
 import os
 import uuid
+from io import BytesIO
 from pathlib import Path
 
 from fastapi import HTTPException, UploadFile
+from PIL import Image, ImageOps
 
 UPLOAD_DIR = Path("app/static/uploads")
 IMAGE_DIR = UPLOAD_DIR / "images"
@@ -52,6 +54,34 @@ async def save_image(file: UploadFile) -> str:
     IMAGE_DIR.mkdir(parents=True, exist_ok=True)
     filename = uuid.uuid4().hex + _ext_from_mime(mime)
     (IMAGE_DIR / filename).write_bytes(data)
+    return f"/static/uploads/images/{filename}"
+
+
+async def save_image_resized(file: UploadFile, width: int, height: int) -> str:
+    """Simpan gambar yang di-resize agar dimensinya konsisten."""
+    if not file or not file.filename:
+        return ""
+
+    data, _ = await _read_and_validate(file, ALLOWED_IMAGE_MIME, MAX_IMAGE_MB)
+
+    try:
+        image = Image.open(BytesIO(data))
+        image = ImageOps.exif_transpose(image)
+    except Exception as exc:
+        raise HTTPException(400, f"File gambar tidak valid: {exc}") from exc
+
+    # Keep aspect ratio and place image at center on transparent canvas.
+    image = image.convert("RGBA")
+    resized = ImageOps.contain(image, (width, height), Image.Resampling.LANCZOS)
+    canvas = Image.new("RGBA", (width, height), (255, 255, 255, 0))
+    offset_x = (width - resized.width) // 2
+    offset_y = (height - resized.height) // 2
+    canvas.paste(resized, (offset_x, offset_y), resized)
+
+    IMAGE_DIR.mkdir(parents=True, exist_ok=True)
+    filename = uuid.uuid4().hex + ".png"
+    output_path = IMAGE_DIR / filename
+    canvas.save(output_path, format="PNG", optimize=True)
     return f"/static/uploads/images/{filename}"
 
 

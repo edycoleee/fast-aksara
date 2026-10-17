@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Favicon Ngrembaka Aksara">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#12301A"/>
+      <stop offset="100%" stop-color="#4F7A4E"/>
+    </linearGradient>
+  </defs>
+  <rect width="64" height="64" rx="14" fill="url(#g)"/>
+  <path d="M17 45V19h5l10 10 10-10h5v26h-6V29l-9 8-9-8v16z" fill="#FFFFFF"/>
+</svg>

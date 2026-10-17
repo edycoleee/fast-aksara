@@ -11,25 +11,43 @@ pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 DEFAULT_SETTINGS = {
     "nama_site":       "Ngrembaka Aksara",
     "tagline_site":    "Tumbuh dan berkembangnya ilmu pengetahuan",
-    "whatsapp_number": "6281234567890",
-    "whatsapp_label":  "Hubungi Kami",
+    "contact_label":   "Kirim Email",
     "alamat":          "Balai Kelurahan Podorejo, Kec. Ngaliyan, Kota Semarang",
-    "email":           "",
-    "gmap_embed_url":  (
-        "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3959.8"
-        "!2d110.33!3d-7.01!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1"
-        "!3m3!1m2!1s0x0%3A0x0!2zKi4uKg!5e0!3m2!1sid!2sid!4v1"
-    ),
+    "email":           "ppkosglpgsdunnes@gmail.com",
+    "instagram_url":   "https://instagram.com/ppko_sglpgsdunnes",
+    "youtube_url":     "",
+    "last_updated":    "17 Oktober 2026",
+    "logo_unnes_url":  "/static/images/logo-unnes.svg",
+    "logo_pgsd_url":   "/static/images/logo-pgsd.svg",
+    "logo_kelurahan_url": "/static/images/logo-kelurahan.svg",
+    "smtp_host":       "",
+    "smtp_port":       "587",
+    "smtp_username":   "",
+    "smtp_password":   "",
+    "smtp_use_tls":    "true",
+    "email_to":        "",
+    "gmap_embed_url":  "https://www.google.com/maps?q=Balai+Kelurahan+Podorejo+Semarang&output=embed",
 }
 
 # Label untuk form admin settings
 SETTING_KEYS = [
     ("nama_site",       "Nama Website"),
     ("tagline_site",    "Tagline / Slogan"),
-    ("whatsapp_number", "Nomor WhatsApp (format: 628xxx)"),
-    ("whatsapp_label",  "Label Tombol WhatsApp"),
+    ("contact_label",   "Label Tombol Kontak"),
     ("alamat",          "Alamat Lokasi"),
-    ("email",           "Email Kontak"),
+    ("email",           "Email Kontak Utama"),
+    ("instagram_url",   "Link Instagram"),
+    ("youtube_url",     "Link YouTube Program"),
+    ("last_updated",    "Pembaruan Terakhir (teks)"),
+    ("logo_unnes_url",  "URL Logo UNNES"),
+    ("logo_pgsd_url",   "URL Logo PGSD"),
+    ("logo_kelurahan_url", "URL Logo Kelurahan"),
+    ("smtp_host",       "SMTP Host"),
+    ("smtp_port",       "SMTP Port"),
+    ("smtp_username",   "SMTP Username / Email Pengirim"),
+    ("smtp_password",   "SMTP Password / App Password"),
+    ("smtp_use_tls",    "SMTP Use TLS (true/false)"),
+    ("email_to",        "Email Tujuan Form Kontak (opsional)"),
     ("gmap_embed_url",  "URL Embed Google Maps"),
 ]
 
@@ -65,8 +83,17 @@ def seed_settings() -> None:
     db = SessionLocal()
     try:
         for key, value in DEFAULT_SETTINGS.items():
-            if not db.query(models.SiteSettings).filter(models.SiteSettings.key == key).first():
+            row = db.query(models.SiteSettings).filter(models.SiteSettings.key == key).first()
+            if not row:
                 db.add(models.SiteSettings(key=key, value=value))
+                continue
+
+            # Normalize legacy placeholders so contact and map remain usable
+            # on older databases that were seeded before defaults changed.
+            if key == "email" and not (row.value or "").strip():
+                row.value = value
+            if key == "gmap_embed_url" and "0x0%3A0x0" in (row.value or ""):
+                row.value = value
         db.commit()
     finally:
         db.close()

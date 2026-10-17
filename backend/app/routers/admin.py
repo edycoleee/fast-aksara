@@ -7,9 +7,15 @@ from app.jinja import templates
 from app.models import AdminUser, ELibrary, Dokumentasi, Artikel, SiteSettings
 from app.security import create_token, get_current_admin, require_admin, pwd_context
 from app.settings import SETTING_KEYS
-from app.upload import save_image, save_pdf, delete_file
+from app.upload import save_image, save_pdf, delete_file, save_image_resized
 
 router = APIRouter(prefix="/admin", tags=["admin"])
+
+
+def normalize_elibrary_kategori(kategori: str) -> str:
+    if kategori == "buku-keterampilan":
+        return "keterampilan-hidup"
+    return kategori
 
 
 # ===== AUTH =====
@@ -19,6 +25,11 @@ def login_page(request: Request):
     if get_current_admin(request):
         return RedirectResponse("/admin", status_code=302)
     return templates.TemplateResponse(request, "admin/login.html", {"error": None})
+
+
+@router.get("/panduan-cms", name="admin_panduan_cms")
+def panduan_cms_page(request: Request):
+    return templates.TemplateResponse(request, "admin/panduan_cms.html", {})
 
 
 @router.post("/login")
@@ -91,6 +102,7 @@ async def elibrary_tambah(
     gambar_file: UploadFile = File(None), pdf_file: UploadFile = File(None),
     db: Session = Depends(get_db), admin=Depends(require_admin),
 ):
+    kategori = normalize_elibrary_kategori(kategori)
     gambar_path = await save_image(gambar_file) if gambar_file and gambar_file.filename else ""
     pdf_path = await save_pdf(pdf_file) if pdf_file and pdf_file.filename else ""
     db.add(ELibrary(
@@ -122,6 +134,7 @@ async def elibrary_edit(
     gambar_file: UploadFile = File(None),
     db: Session = Depends(get_db), admin=Depends(require_admin),
 ):
+    kategori = normalize_elibrary_kategori(kategori)
     item = db.query(ELibrary).filter(ELibrary.id == item_id).first()
     if item:
         item.judul = judul
@@ -296,9 +309,30 @@ def settings_page(request: Request, db: Session = Depends(get_db), admin=Depends
 @router.post("/settings/save")
 async def settings_save(request: Request, db: Session = Depends(get_db), admin=Depends(require_admin)):
     form = await request.form()
+
+    logo_size_map = {
+        "logo_unnes_url": (96, 96),
+        "logo_pgsd_url": (96, 96),
+        "logo_kelurahan_url": (96, 96),
+    }
+
     for key, _ in SETTING_KEYS:
         value = form.get(key, "")
         row = db.query(SiteSettings).filter(SiteSettings.key == key).first()
+
+        # For logo settings, allow upload file and auto-resize on save.
+        if key in logo_size_map:
+            file_key = f"{key}_file"
+            upload_file = form.get(file_key)
+            if upload_file and getattr(upload_file, "filename", ""):
+                width, height = logo_size_map[key]
+                uploaded_path = await save_image_resized(upload_file, width=width, height=height)
+                if uploaded_path:
+                    old_value = row.value if row else ""
+                    if old_value.startswith("/static/uploads/images/"):
+                        delete_file(old_value)
+                    value = uploaded_path
+
         if row:
             row.value = value
         else:

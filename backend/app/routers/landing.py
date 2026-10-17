@@ -11,11 +11,11 @@ router = APIRouter()
 @router.get("/", name="landing")
 def landing_page(request: Request, db: Session = Depends(get_db)):
     elibrary_categories = [
-        ("modul-pembelajaran", "Modul Pembelajaran"),
-        ("ebook", "E-Book"),
-        ("buku-cerita", "Buku Cerita"),
-        ("buku-literasi-digital", "Literasi Digital"),
-        ("buku-keterampilan", "Life Skills"),
+        ("modul-pembelajaran", ["modul-pembelajaran"]),
+        ("ebook", ["ebook"]),
+        ("buku-cerita", ["buku-cerita"]),
+        ("buku-literasi-digital", ["buku-literasi-digital"]),
+        ("keterampilan-hidup", ["keterampilan-hidup", "buku-keterampilan"]),
     ]
     pojok_categories = [
         ("tunas", "Tunas Ngrembaka"),
@@ -27,7 +27,10 @@ def landing_page(request: Request, db: Session = Depends(get_db)):
     def count_items(model, kategori: str) -> int:
         return db.query(func.count(model.id)).filter(model.kategori == kategori).scalar() or 0
 
-    elibrary_counts = {slug: count_items(ELibrary, slug) for slug, _label in elibrary_categories}
+    def count_items_in(model, kategoris: list[str]) -> int:
+        return db.query(func.count(model.id)).filter(model.kategori.in_(kategoris)).scalar() or 0
+
+    elibrary_counts = {slug: count_items_in(ELibrary, slugs) for slug, slugs in elibrary_categories}
     pojok_counts = {
         "tunas": count_items(Dokumentasi, "dokumentasi-tunas") + count_items(Artikel, "artikel-tunas"),
         "karya": (
@@ -44,5 +47,7 @@ def landing_page(request: Request, db: Session = Depends(get_db)):
         "elibrary_total": sum(elibrary_counts.values()),
         "pojok_counts": pojok_counts,
         "pojok_total": sum(pojok_counts.values()),
+        "karya_total": pojok_counts["karya"],
+        "cakra_total": pojok_counts["cakra"],
     }
     return templates.TemplateResponse(request, "landing.html", context)

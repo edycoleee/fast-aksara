@@ -10,7 +10,7 @@ from app.jinja import templates
 from app.settings import seed_admin, seed_settings, get_setting
 from app.routers import (
     landing, beranda, profil_aksara, profil_kelurahan,
-    elibrary, tunas, karya, cakra, kersa, admin,
+    elibrary, tunas, karya, cakra, kersa, admin, kirim_email,
 )
 
 
@@ -40,10 +40,12 @@ def robots_txt():
 def sitemap_xml():
     urls = [
         "https://aksara.fun/",
+        "https://aksara.fun/visi",
         "https://aksara.fun/beranda",
         "https://aksara.fun/profil/ngrembaka-aksara",
         "https://aksara.fun/profil/kelurahan-podorejo",
         "https://aksara.fun/elibrary",
+        "https://aksara.fun/kirim-email",
         "https://aksara.fun/pojok-literasi/tunas",
         "https://aksara.fun/pojok-literasi/karya",
         "https://aksara.fun/pojok-literasi/cakra",
@@ -72,4 +74,5 @@ app.include_router(tunas.router)
 app.include_router(karya.router)
 app.include_router(cakra.router)
 app.include_router(kersa.router)
+app.include_router(kirim_email.router)
 app.include_router(admin.router)

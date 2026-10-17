@@ -6,12 +6,12 @@
     <div class="row align-items-center g-4">
       <div class="col-lg-8">
         <span class="badge-aksara mb-3 d-inline-block">Pojok Literasi Remaja</span>
-        <h1 class="fw-bold mb-3">🎨 Karya Ngrembaka</h1>
+        <h1 class="fw-bold mb-3"><i class="fa-solid fa-palette me-2"></i>Karya Ngrembaka</h1>
         <p class="lead mb-0" style="color:rgba(255,255,255,0.85);">"Ananta" Tanpa Batas, kreativitas remaja yang tak terkira.</p>
       </div>
       <div class="col-lg-4 text-lg-end">
         <div class="card card-aksara p-4 bg-white bg-opacity-10 border-0 text-white program-hero-card">
-          <div class="fs-1 mb-2">✨</div>
+          <div class="fs-1 mb-2"><i class="fa-solid fa-wand-magic-sparkles"></i></div>
           <strong>Fokus Program</strong>
           <p class="mb-0 small" style="color:rgba(255,255,255,0.85);">Literasi digital, desain visual, konten kreatif, dan hasil karya yang siap dipublikasikan.</p>
         </div>
@@ -60,6 +60,12 @@
         </div>
       </div>
     </div>
+
+    {% if karya_digital_total + karya_sosmed_total + carousel_total == 0 %}
+    <div class="alert alert-warning border-0 mb-5" role="alert">
+      <strong>Segera hadir.</strong> Konten Karya Ngrembaka sedang disiapkan dan akan ditambahkan bertahap.
+    </div>
+    {% endif %}
 
     <section class="section-white py-4 rounded-4 px-3 px-lg-4 mb-5">
       <div class="d-flex flex-column flex-lg-row align-items-lg-end justify-content-between gap-2 mb-4">
