@@ -1,5 +1,5 @@
 from datetime import datetime
-from sqlalchemy import Column, Integer, String, Text, DateTime
+from sqlalchemy import Boolean, Column, DateTime, ForeignKey, Integer, String, Text, UniqueConstraint
 from app.database import Base
 
 
@@ -57,3 +57,48 @@ class SiteSettings(Base):
 
     key = Column(String(100), primary_key=True)
     value = Column(Text, nullable=True, default="")
+
+
+class ChatUser(Base):
+    __tablename__ = "chat_user"
+
+    id = Column(Integer, primary_key=True, index=True)
+    username = Column(String(50), unique=True, nullable=False, index=True)
+    display_name = Column(String(100), nullable=False)
+    hashed_password = Column(String(255), nullable=False)
+    is_active = Column(Boolean, nullable=False, default=True)
+    last_seen_at = Column(DateTime, nullable=True)
+    created_at = Column(DateTime, nullable=False, default=datetime.utcnow)
+
+
+class ChatConversation(Base):
+    __tablename__ = "chat_conversation"
+    __table_args__ = (
+        UniqueConstraint(
+            "participant_one_id",
+            "participant_two_id",
+            name="uq_chat_conversation_participants",
+        ),
+    )
+
+    id = Column(Integer, primary_key=True, index=True)
+    participant_one_id = Column(Integer, ForeignKey("chat_user.id"), nullable=False, index=True)
+    participant_two_id = Column(Integer, ForeignKey("chat_user.id"), nullable=False, index=True)
+    message_version = Column(Integer, nullable=False, default=0)
+    created_at = Column(DateTime, nullable=False, default=datetime.utcnow)
+
+
+class ChatMessage(Base):
+    __tablename__ = "chat_message"
+
+    id = Column(Integer, primary_key=True, index=True)
+    conversation_id = Column(
+        Integer, ForeignKey("chat_conversation.id"), nullable=False, index=True
+    )
+    sender_id = Column(Integer, ForeignKey("chat_user.id"), nullable=False, index=True)
+    content = Column(Text, nullable=False, default="")
+    attachment_path = Column(String(500), nullable=True)
+    attachment_thumbnail_path = Column(String(500), nullable=True)
+    attachment_name = Column(String(255), nullable=True)
+    attachment_type = Column(String(50), nullable=True)
+    created_at = Column(DateTime, nullable=False, default=datetime.utcnow, index=True)

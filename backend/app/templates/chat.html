@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex,nofollow">
+  <title>Private Chat — Ngrembaka Aksara</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', path='css/chat.css') }}">
+</head>
+<body class="chat-app-page">
+  <main class="chat-shell">
+    <aside class="chat-sidebar" id="chatSidebar">
+      <header class="chat-profile">
+        <span class="chat-avatar" aria-hidden="true">{{ current_user.display_name[:1] | upper }}</span>
+        <span class="chat-profile-text">
+          <strong>{{ current_user.display_name }}</strong>
+          <small>Private Chat</small>
+        </span>
+        <a class="chat-logout" href="/chat/logout" title="Keluar">Keluar</a>
+      </header>
+
+      <div class="chat-sidebar-heading">
+        <h2>Percakapan</h2>
+        <button class="chat-new-button" id="newChatButton" type="button" aria-label="Mulai percakapan">+</button>
+      </div>
+      <div class="chat-person-list" id="conversationList" aria-live="polite">
+        <p class="chat-muted">Memuat percakapan...</p>
+      </div>
+    </aside>
+
+    <section class="chat-panel">
+      <header class="chat-header">
+        <button class="chat-menu-button" id="menuButton" type="button" aria-label="Buka daftar percakapan">☰</button>
+        <div class="chat-partner">
+          <span class="chat-avatar chat-avatar-small" id="partnerAvatar" aria-hidden="true">?</span>
+          <span>
+            <strong id="partnerName">Pilih percakapan</strong>
+            <small id="partnerStatus"><span class="chat-offline-dot"></span>Offline</small>
+          </span>
+        </div>
+        <div class="chat-header-actions">
+          <span class="chat-connection" id="connectionStatus">Menghubungkan...</span>
+          <button class="chat-clear-button" id="clearChatButton" type="button" disabled>Clear Chat</button>
+        </div>
+      </header>
+
+      <div class="chat-messages" id="messages" aria-live="polite" aria-label="Riwayat pesan">
+        <div class="chat-empty-state" id="emptyState">
+          <span aria-hidden="true">💬</span>
+          <h2>Mulai percakapan privat</h2>
+          <p>Pilih pengguna di daftar atau tekan tombol tambah.</p>
+        </div>
+      </div>
+
+      <div class="chat-error" id="chatError" role="alert" hidden></div>
+
+      <form class="chat-composer" id="messageForm">
+        <input id="attachmentInput" type="file" accept="image/jpeg,image/png,image/webp,application/pdf" hidden>
+        <button class="chat-icon-button" id="attachmentButton" type="button" title="Kirim foto atau PDF" disabled>📎</button>
+        <div class="chat-input-wrap">
+          <textarea id="messageInput" rows="1" maxlength="4000" placeholder="Ketik pesan..." disabled></textarea>
+          <small id="attachmentName" hidden></small>
+        </div>
+        <button class="chat-send-button" id="sendButton" type="submit" disabled>Kirim</button>
+      </form>
+    </section>
+  </main>
+
+  <script>
+    window.chatCurrentUserId = {{ current_user.id }};
+  </script>
+  <script src="{{ url_for('static', path='js/chat.js') }}"></script>
+</body>
+</html>

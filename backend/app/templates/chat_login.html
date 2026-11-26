@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex,nofollow">
+  <title>Login Private Chat — Ngrembaka Aksara</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', path='css/chat.css') }}">
+</head>
+<body class="chat-login-page">
+  <main class="chat-login-card">
+    <a class="chat-brand" href="/">
+      <span class="chat-brand-icon" aria-hidden="true">A</span>
+      <span>
+        <strong>Private Chat</strong>
+        <small>Ngrembaka Aksara</small>
+      </span>
+    </a>
+
+    <div class="chat-login-heading">
+      <p class="chat-eyebrow">Ruang percakapan privat</p>
+      <h1>Masuk untuk melanjutkan</h1>
+      <p>Gunakan akun chat yang diberikan pengelola.</p>
+    </div>
+
+    {% if error %}
+    <div class="chat-alert chat-alert-error" role="alert">{{ error }}</div>
+    {% endif %}
+
+    <form method="post" action="/chat/login" class="chat-login-form">
+      <label for="username">Username</label>
+      <input id="username" name="username" type="text" autocomplete="username" required autofocus>
+
+      <label for="password">Password</label>
+      <input id="password" name="password" type="password" autocomplete="current-password" required>
+
+      <button type="submit" class="chat-primary-button">Masuk ke Chat</button>
+    </form>
+
+    <a
+      class="chat-call-button"
+      href="https://kos.sulfat.site/api/v1/messages/send?t=6285122769501&amp;m=Halo&amp;s=lumbungsari1"
+      target="_blank"
+      rel="noopener noreferrer"
+    >Call</a>
+
+    <a class="chat-back-link" href="/">← Kembali ke website</a>
+  </main>
+</body>
+</html>

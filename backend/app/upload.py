@@ -9,12 +9,15 @@ from PIL import Image, ImageOps
 UPLOAD_DIR = Path("app/static/uploads")
 IMAGE_DIR = UPLOAD_DIR / "images"
 PDF_DIR = UPLOAD_DIR / "pdf"
+CHAT_UPLOAD_DIR = Path("app/private_uploads/chat")
 
 ALLOWED_IMAGE_MIME = {"image/jpeg", "image/png", "image/webp"}
 ALLOWED_PDF_MIME = {"application/pdf"}
 
 MAX_IMAGE_MB = int(os.getenv("MAX_UPLOAD_IMAGE_MB", "2"))
 MAX_PDF_MB = int(os.getenv("MAX_UPLOAD_PDF_MB", "20"))
+MAX_CHAT_IMAGE_MB = 5
+MAX_CHAT_PDF_MB = 10
 
 
 def _ext_from_mime(mime: str) -> str:
@@ -94,6 +97,68 @@ async def save_pdf(file: UploadFile) -> str:
     filename = uuid.uuid4().hex + ".pdf"
     (PDF_DIR / filename).write_bytes(data)
     return f"/static/uploads/pdf/{filename}"
+
+
+async def save_chat_attachment(
+    file: UploadFile,
+) -> tuple[str, str, str, str | None]:
+    if not file or not file.filename:
+        raise HTTPException(400, "File lampiran wajib dipilih")
+
+    data = await file.read()
+    if len(data) > MAX_CHAT_PDF_MB * 1024 * 1024:
+        raise HTTPException(400, f"Ukuran file melebihi {MAX_CHAT_PDF_MB} MB")
+
+    mime = ""
+    if data.startswith(b"\xff\xd8\xff"):
+        mime = "image/jpeg"
+    elif data.startswith(b"\x89PNG"):
+        mime = "image/png"
+    elif data.startswith(b"RIFF") and len(data) >= 12 and data[8:12] == b"WEBP":
+        mime = "image/webp"
+    elif data.startswith(b"%PDF"):
+        mime = "application/pdf"
+
+    if mime not in ALLOWED_IMAGE_MIME | ALLOWED_PDF_MIME:
+        raise HTTPException(400, "Lampiran harus berupa JPG, PNG, WebP, atau PDF")
+
+    if mime in ALLOWED_IMAGE_MIME and len(data) > MAX_CHAT_IMAGE_MB * 1024 * 1024:
+        raise HTTPException(400, f"Ukuran gambar melebihi {MAX_CHAT_IMAGE_MB} MB")
+
+    CHAT_UPLOAD_DIR.mkdir(parents=True, exist_ok=True)
+    extension = _ext_from_mime(mime)
+    identifier = uuid.uuid4().hex
+    stored_path = CHAT_UPLOAD_DIR / f"{identifier}{extension}"
+    thumbnail_path = None
+
+    if mime in ALLOWED_IMAGE_MIME:
+        try:
+            image = Image.open(BytesIO(data))
+            image.verify()
+            image = Image.open(BytesIO(data))
+            image = ImageOps.exif_transpose(image)
+            image.thumbnail((560, 560), Image.Resampling.LANCZOS)
+            thumb_file = CHAT_UPLOAD_DIR / f"{identifier}_thumb.webp"
+            image.convert("RGB").save(thumb_file, format="WEBP", quality=82)
+            thumbnail_path = str(thumb_file)
+        except Exception as exc:
+            raise HTTPException(400, "File gambar tidak valid") from exc
+    elif not data.rstrip().endswith(b"%%EOF"):
+        raise HTTPException(400, "File PDF tidak valid")
+
+    stored_path.write_bytes(data)
+    attachment_type = "image" if mime in ALLOWED_IMAGE_MIME else "pdf"
+    return str(stored_path), thumbnail_path, attachment_type, mime
+
+
+def resolve_private_file(path: str) -> Path:
+    base = CHAT_UPLOAD_DIR.resolve()
+    file_path = Path(path).resolve()
+    if not file_path.is_relative_to(base):
+        raise HTTPException(400, "Path lampiran tidak valid")
+    if not file_path.is_file():
+        raise HTTPException(404, "Lampiran tidak ditemukan")
+    return file_path
 
 
 def delete_file(path: str) -> None:

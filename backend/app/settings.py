@@ -1,4 +1,5 @@
 import os
+import logging
 from dotenv import load_dotenv
 from passlib.context import CryptContext
 from app.database import SessionLocal
@@ -7,6 +8,7 @@ from app import models
 load_dotenv()
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+logger = logging.getLogger(__name__)
 
 DEFAULT_SETTINGS = {
     "nama_site":       "Ngrembaka Aksara",
@@ -75,6 +77,50 @@ def seed_admin() -> None:
                 hashed_password=pwd_context.hash(password),
             ))
             db.commit()
+    finally:
+        db.close()
+
+
+def seed_chat_users() -> None:
+    credentials = [
+        (
+            os.getenv("CHAT_USER1_USERNAME", "").strip(),
+            os.getenv("CHAT_USER1_PASSWORD", ""),
+        ),
+        (
+            os.getenv("CHAT_USER2_USERNAME", "").strip(),
+            os.getenv("CHAT_USER2_PASSWORD", ""),
+        ),
+    ]
+    db = SessionLocal()
+    try:
+        usernames = []
+        changed = False
+        for index, (username, password) in enumerate(credentials, start=1):
+            if not username or not password:
+                logger.warning(
+                    "CHAT_USER%d_USERNAME/PASSWORD belum lengkap; akun %d tidak dibuat",
+                    index,
+                    index,
+                )
+                continue
+            usernames.append(username)
+            existing = db.query(models.ChatUser).filter(
+                models.ChatUser.username == username
+            ).first()
+            if existing:
+                continue
+            db.add(models.ChatUser(
+                username=username,
+                display_name=username,
+                hashed_password=pwd_context.hash(password),
+                is_active=True,
+            ))
+            changed = True
+        if changed:
+            db.commit()
+        if len(usernames) == 2 and usernames[0] == usernames[1]:
+            logger.warning("CHAT_USER1_USERNAME dan CHAT_USER2_USERNAME tidak boleh sama")
     finally:
         db.close()
 

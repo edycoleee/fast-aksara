@@ -7,10 +7,10 @@ from fastapi.staticfiles import StaticFiles
 from app.database import Base, engine
 from app import models  # noqa: F401
 from app.jinja import templates
-from app.settings import seed_admin, seed_settings, get_setting
+from app.settings import get_setting, seed_admin, seed_chat_users, seed_settings
 from app.routers import (
     landing, beranda, profil_aksara, profil_kelurahan,
-    elibrary, tunas, karya, cakra, kersa, admin, kirim_email,
+    elibrary, tunas, karya, cakra, kersa, admin, kirim_email, chat,
 )
 
 
@@ -18,6 +18,7 @@ from app.routers import (
 async def lifespan(app: FastAPI):
     Base.metadata.create_all(bind=engine)
     seed_admin()
+    seed_chat_users()
     seed_settings()
     templates.env.globals["site"] = get_setting
     yield
@@ -75,4 +76,5 @@ app.include_router(karya.router)
 app.include_router(cakra.router)
 app.include_router(kersa.router)
 app.include_router(kirim_email.router)
+app.include_router(chat.router)
 app.include_router(admin.router)

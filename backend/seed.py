@@ -7,6 +7,7 @@ from dotenv import load_dotenv
 from passlib.context import CryptContext
 from app.database import SessionLocal, engine, Base
 from app import models  # noqa: F401
+from app.settings import seed_chat_users
 
 load_dotenv()
 
@@ -37,3 +38,4 @@ else:
     print(f"Akun admin dibuat: username='{ADMIN_USERNAME}'")
 
 db.close()
+seed_chat_users()
